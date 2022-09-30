@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@yield('title') | GPS Monitoring</title>
+  <title>@yield('title') | GPS HRMS</title>
 
   <meta name="csrf-token" content="{{csrf_token()}}"/>
 
@@ -49,7 +49,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <img src="{{asset('assets/img/pngwing.com.png')}}" class="img-circle elevation-2" style="width:30px; height:30px" alt="User Image">
-          <span><b>{{Auth::User()->first_name." ".Auth::User()->last_name}}</b></span>
+          <span><b>{{Auth::User()->fullname}}</b></span>
         </a>
         <div class="dropdown-menu dropdown-menu-md">
           <a href="#" user-id="{{Auth::User()->id}}" class="dropdown-item btn-edit-user-master-password" style="text-align: center"><i class="fas fa-cog"> Ubah Password</i></a>
@@ -67,11 +67,11 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-light-primary elevation-4" style="background: linen;">
+  <aside class="main-sidebar sidebar-light-primary elevation-4" style="background:lightcyan">
     <!-- Brand Logo -->
     <a href="{{route('dashboard.index')}}" class="brand-link" style="text-align: center">
       <img src="{{asset('assets/img/logogpstext.png')}}" alt="GPS Logo" class="brand-image" style="margin-left: -5px; margin-right: 0; max-height: 50px; margin-top: -0.5rem;">
-      <span class="brand-text font-weight-light"><strong>Monitoring</strong></span>
+      <span class="brand-text font-weight-light"><strong>HRMS</strong></span>
     </a>
 
     <!-- Sidebar -->
@@ -91,37 +91,28 @@
           
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
+              <i class="nav-icon fas fa-users-cog"></i>
               <p>
-                Master
+                User Management
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              @if (Auth::user()->role !=1)
+              @if (Auth::user()->jabatan !=1)
               <li class="nav-item">
                 <a href="{{route('dashboard.users.index')}}" class="nav-link" style="color: #343a40;">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
-                    P.I.C
+                    User
                     </p>
                 </a>
               </li>
               @endif
               <li class="nav-item">
-                <a href="{{route('outlet.index')}}" class="nav-link" style="color: #343a40;">
+                <a href="#" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-building"></i>
-                    Tenant
-                  </p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{route('useroutlet.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fa fa-user"></i></i>
-                    User Tenant
+                    Department
                   </p>
                 </a>
               </li>
@@ -130,38 +121,39 @@
                 <a href="{{route('jabatan.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-user-tie"></i></i>
-                    Jabatan User
+                    Jabatan
                   </p>
                 </a>
               </li>
             </ul>
           </li>
-          
+
           <li class="nav-item">
-            <a href="{{route('posts.index')}}" class="nav-link">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-line"></i>
               <p>
-                <i class="nav-icon fas fa-image"></i>
-                Riwayat Kunjungan
+                K.P.I
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
-          @if (Auth::user()->role !=1)
-          <li class="nav-item">
-            <a href="{{route('reports.index')}}" class="nav-link" style="color: #343a40;">
-              <p>
-                <i class="nav-icon fas fa-book-open"></i>
-                Laporan Absensi
-              </p>
-            </a>
-          </li>
-          @endif
-          <li class="nav-item"">
-            <a href="{{route('dashboard.attendances.index')}}" class="nav-link">
-              <p>
-                <i class="nav-icon fas fa-clock"></i>
-                Riwayat Absensi
-              </p>
-            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link" style="color: #343a40">
+                  <p>
+                    <i class="nav-icon fas fa-clipboard"></i>
+                      List K.P.I
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('kpi.postkpi')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fas fa-tasks"></i>
+                    Post K.P.I
+                  </p>
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
@@ -171,7 +163,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="wrapper" style="background: linen;">
+  <div class="wrapper" style="background: lightcyan;">
     <!-- Main content -->
     @yield('content')
     <!-- /.content -->
@@ -205,7 +197,7 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="first_name" type="text" name="first_name">{{Auth::User()->first_name}} {{Auth::User()->last_name}}</label>
+          <label for="fullname" type="text" name="first_name">{{Auth::User()->fullname}}</label>
         </div>
         <div class="form-group">
           <label for="password">Password <span style="font-size: 10px; color:red">*Kosongkan jika tidak ingin merubah password</span></label>

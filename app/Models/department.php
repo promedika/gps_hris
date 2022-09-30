@@ -4,18 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Post;
 
-class PostHeader extends Model
+class department extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'user_fullname',
-        'work_hour',
-        'status',
-        'created_at'
-
+        'name',
     ];
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostHeaderTable extends Migration
+class CreateKpiHeadersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreatePostHeaderTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_header', function (Blueprint $table) {
-            $table->string('id');
-            $table->string('user_id');
-            $table->string('user_fullname');
-            $table->string('work_hour');
-            $table->string('status');
+        Schema::create('kpi_headers', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreatePostHeaderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_header');
+        Schema::dropIfExists('kpi_headers');
     }
 }

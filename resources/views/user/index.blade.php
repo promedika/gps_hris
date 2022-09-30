@@ -11,7 +11,7 @@
 
 @section('content')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="background: linen">
+  <div class="content-wrapper" style="background: lightcyan">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -66,7 +66,7 @@
                     <tbody>
                       @foreach ($users as $user)
                             <tr>
-                                <td>{{$user->first_name}} {{$user->last_name}}</td>
+                                <td>{{$user->fullname}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{date('d-m-Y', strtotime($user->start_date))}}</td>
                                 <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
@@ -131,7 +131,7 @@
       <form action="" method="post" accept-charset="utf-8" id="form-signup">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Buat P.I.C Baru</h4>
+        <h4 class="modal-title">Buat User Baru</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -140,14 +140,9 @@
       <!-- Modal body -->
       <div class="modal-body">
         <div class="form-group">
-          <label for="first_name">Nama Depan</label>
-          <input type="text" name="first_name" id="first_name" class="form-control" required>
-          <span id="errorFirstName" class="text-red"></span>
-        </div>
-        <div class="form-group">
-          <label for="last_name">Nama Belakang</label>
-          <input type="text" name="last_name" id="last_name" class="form-control"required>
-          <span id="errorLastName" class="text-red"></span>
+          <label for="fullname">Nama Depan</label>
+          <input type="text" name="fullname" id="fullname" class="form-control" required>
+          <span id="errorFullName" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
@@ -167,19 +162,19 @@
               <option value="1">Marketing</option>
               <option value="2">H.R Department</option>
           </select>
-          <span id="errorRole" class="text-red"></span>
+          <span id="errorDepartment" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="Role">Role</label>
-          <select class="form-control" id="role" name="role"required>
-              <option value="" style="display:none;">Pilih Role</option>
-              @if (Auth::user()->role ==0)
+          <label for="Jabatan">Jabatan</label>
+          <select class="form-control" id="jabatan" name="jabatan"required>
+              <option value="" style="display:none;">Pilih Jabatan</option>
+              @if (Auth::user()->jabatan ==0)
               <option value="0">Admin</option>
               @endif
               <option value="1">Marketing Member</option>
               <option value="2">Marketing Report</option>
           </select>
-          <span id="errorRole" class="text-red"></span>
+          <span id="errorJabatan" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="start_date">Tanggal Bergabung</label>
@@ -220,14 +215,9 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="first_name">Nama Depan</label>
-          <input type="text" name="first_name" id="first_name_update" class="form-control" required>
-          <span id="errorFirstName" class="text-red"></span>
-        </div>
-        <div class="form-group">
-          <label for="last_name">Nama Belakang</label>
-          <input type="text" name="last_name" id="last_name_update" class="form-control" required>
-          <span id="errorLastName" class="text-red"></span>
+          <label for="fullname">Nama Depan</label>
+          <input type="text" name="fullname" id="fullname_update" class="form-control" required>
+          <span id="errorFullName" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
@@ -250,16 +240,16 @@
           <span id="errorDepartment" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="Role">Role</label>
-          <select class="form-control" id="role_update" name="role" required>
-              <option value="" style="display:none;">Select Role</option>
-              @if (Auth::user()->role == 0)
+          <label for="Jabatan">Jabatan</label>
+          <select class="form-control" id="jabatan_update" name="jabatan" required>
+              <option value="" style="display:none;">Select Jabatan</option>
+              @if (Auth::user()->jabatan == 0)
               <option value="0">Admin</option>
               @endif
               <option value="1">Marketing Member</option>
               <option value="2">Marketing Report</option>
           </select>
-          <span id="errorRole" class="text-red"></span>
+          <span id="errorJabatan" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="start_date">Tanggal Bergabung</label>
@@ -388,12 +378,11 @@
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorFirstName').text(response.responseJSON.errors.first_name);
-                        $('#errorLastName').text(response.responseJSON.errors.last_name);
+                        $('#errorFullName').text(response.responseJSON.errors.fullname);\
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
-                        $('#errorRole').text(response.responseJSON.errors.role);
+                        $('#errorJabatan').text(response.responseJSON.errors.jabatan);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);
 
@@ -417,23 +406,21 @@
                     },
                     success:function(data){
                         console.log('success edit');
-                        $('#first_name_update').val(data.data.first_name);
-                        $('#last_name_update').val(data.data.last_name);
+                        $('#fullname_update').val(data.data.fullname);
                         $('#email_update').val(data.data.email);
                         $('#password_update').val(data.data.password);
                         $('#department_update').val(data.data.department);
-                        $('#role_update').val(data.data.role);
+                        $('#jabatan_update').val(data.data.jabatan);
                         $('#start_date_update').val(data.data.start_date);
                         $('#end_date_update').val(data.data.end_date);
                         $('#status_update').val(data.data.status);
                     },
                     error:function(response){
-                        $('#errorFirstName').text(response.responseJSON.errors.first_name);
-                        $('#errorLastName').text(response.responseJSON.errors.last_name);
+                        $('#errorFullName').text(response.responseJSON.errors.fullname);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
-                        $('#errorRole').text(response.responseJSON.errors.role);
+                        $('#errorJabatan').text(response.responseJSON.errors.jabatan);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);
                     }
@@ -450,12 +437,11 @@
                     data:formData,
                     data:{
                       id:userID,
-                      first_name:$('#first_name_update').val(),
-                      last_name:$('#last_name_update').val(),
+                      fullname:$('#fullname_update').val(),
                       email:$('#email_update').val(),
                       password:$('#password_update').val(),
                       department:$('#department_update').val(),
-                      role:$('#role_update').val(),
+                      jabatan:$('#jabatan_update').val(),
                       start_date:$('#start_date_update').val(),
                       end_date:$('#end_date_update').val(),
                       status:$('#status_update').val(),
@@ -469,12 +455,12 @@
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorFirstName').text(response.responseJSON.errors.first_name);
+                        $('#errorFullName').text(response.responseJSON.errors.fullname);
                         $('#errorLastName').text(response.responseJSON.errors.last_name);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
-                        $('#errorRole').text(response.responseJSON.errors.role);
+                        $('#errorJabatan').text(response.responseJSON.errors.jabatan);
                         $('#errorStartDate').text(response.responseJSON.errors.start_date);
                         $('#errorEndDate').text(response.responseJSON.errors.end_date);
 

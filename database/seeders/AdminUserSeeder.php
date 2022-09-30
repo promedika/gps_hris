@@ -16,11 +16,10 @@ class AdminUserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'first_name' => 'Super',
-            'last_name' =>  'User',
+            'fullname' => 'Super user',
             'email' =>  'superuser@gps.co.id',
             'password' =>   Hash::make('promedika'),
-            'role'  =>  '0',
+            'jabatan'  =>  '0',
             'created_by' => '1',
             'updated_by' => '1',
             'start_date' => '2022-05-09',

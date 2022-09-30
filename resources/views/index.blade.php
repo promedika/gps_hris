@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="background: linen;">
+<div class="content-wrapper" style="background: lightcyan;">
   <!-- Content Header (Page header) -->
   <div class="content-header">
     <div class="container-fluid">
@@ -26,7 +26,7 @@
   <section class="content">
   	<div class="container-fluid">
   		<div class="row">
-          <div class="col-lg-3 col-6">
+          {{-- <div class="col-lg-3 col-6">
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
@@ -42,14 +42,14 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
         <!-- /.row -->
   	</div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
 </div>
 
-<div class="modal fade in" id="modalCreateNewAtt"> 
+{{-- <div class="modal fade in" id="modalCreateNewAtt"> 
   <div class="modal-header" style="background-color:#17a2b8;border-bottom:none;width:100%">
     <h4 class="modal-title" style="text-align: center;margin-left:40%;color:white">Absensi</h4>
     <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -141,13 +141,13 @@
             Absensi
           </button></a>
         </div>
-      </form>
-      </div>
-  </div>
-</div>
+      </form> --}}
+      {{-- </div> --}}
+  {{-- </div> --}}
+{{-- </div> --}}
 @endsection
 @section('custom_script_js')
-<script>
+{{-- <script>
 $(document).ready(function(){
   $.ajaxSetup({
       headers: {
@@ -249,5 +249,5 @@ $(document).ready(function(){
     return true;
   }
 })
-</script>
+</script> --}}
 @endsection
