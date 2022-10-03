@@ -137,6 +137,24 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @if (Auth::user()->jabatan !=1)
+              <li class="nav-item">
+                <a href="{{route('bobot.index')}}" class="nav-link" style="color: #343a40">
+                  <p>
+                    <i class="nav-icon fas fa-weight-hanging"></i>
+                      Bobot
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('kategori.index')}}" class="nav-link" style="color: #343a40">
+                  <p>
+                    <i class="nav-icon fas fa-dna"></i>
+                      Kategori Pertanyaan
+                  </p>
+                </a>
+              </li>
+              @endif
               <li class="nav-item">
                 <a href="#" class="nav-link" style="color: #343a40">
                   <p>

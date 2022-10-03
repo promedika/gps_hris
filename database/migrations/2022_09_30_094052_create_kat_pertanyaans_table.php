@@ -15,6 +15,8 @@ class CreateKatPertanyaansTable extends Migration
     {
         Schema::create('kat_pertanyaans', function (Blueprint $table) {
             $table->id();
+            $table->string('kategori');
+            $table->string('nama');
             $table->timestamps();
         });
     }

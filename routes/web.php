@@ -71,6 +71,17 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/jabatan/delete','App\Http\Controllers\JabatanController@destroy')->name('jabatan.delete');
 
    Route::get('/kpi','App\Http\Controllers\KpiController@create')->name('kpi.postkpi'); 
+   
+   Route::get('/bobot','App\Http\Controllers\BobotController@index')->name('bobot.index');
+    Route::post('/bobot/create','App\Http\Controllers\BobotController@store')->name('bobot.create');
+    Route::post('/bobot/edit','App\Http\Controllers\BobotController@edit')->name('bobot.edit');
+    Route::post('/bobot/update','App\Http\Controllers\BobotController@update')->name('bobot.update');
+    Route::post('/bobot/delete','App\Http\Controllers\BobotController@destroy')->name('bobot.delete');
 
+    Route::get('/kategori','App\Http\Controllers\KatPertanyaanController@index')->name('kategori.index');
+    Route::post('/kategori/create','App\Http\Controllers\KatPertanyaanController@store')->name('kategori.create');
+    Route::post('/kategori/edit','App\Http\Controllers\KatPertanyaanController@edit')->name('kategori.edit');
+    Route::post('/kategori/update','App\Http\Controllers\KatPertanyaanController@update')->name('kategori.update');
+    Route::post('/kategori/delete','App\Http\Controllers\KatPertanyaanController@destroy')->name('kategori.delete');
 });
 

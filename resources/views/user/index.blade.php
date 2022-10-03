@@ -99,7 +99,7 @@
         @csrf
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Import Data P.I.C</h4>
+        <h4 class="modal-title">Import Data Karyawan</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -108,7 +108,7 @@
       <div class="modal-body">
         <div class="form-group">
           <p><font color="red">* Format file harus .xlsx atau .xls</font></p>
-          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/pic_template.xlsx')}}">Download Template</a><br><br>
+          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/user_template.xlsx')}}">Download Template</a><br><br>
           <label for="name">Pilih File</label>
           <input type="file" name="file" class="name" id="name" accept=".xlsx, .xls" required >
           <span id="errorName" class="text-red"></span>
@@ -140,9 +140,14 @@
       <!-- Modal body -->
       <div class="modal-body">
         <div class="form-group">
-          <label for="fullname">Nama Depan</label>
+          <label for="fullname">Nama Lengkap</label>
           <input type="text" name="fullname" id="fullname" class="form-control" required>
           <span id="errorFullName" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="nik">N.I.K</label>
+          <input type="text" name="nik" id="nik" class="form-control"required>
+          <span id="errorNik" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
@@ -215,9 +220,14 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="fullname">Nama Depan</label>
+          <label for="fullname">Nama Lengkap</label>
           <input type="text" name="fullname" id="fullname_update" class="form-control" required>
           <span id="errorFullName" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="nik">N.I.K</label>
+          <input type="text" name="nik" id="nik_update" class="form-control"required>
+          <span id="errorNik" class="text-red"></span>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
@@ -378,7 +388,8 @@
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorFullName').text(response.responseJSON.errors.fullname);\
+                        $('#errorFullName').text(response.responseJSON.errors.fullname);
+                        $('#errorNik').text(response.responseJSON.errors.nik);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
@@ -407,6 +418,7 @@
                     success:function(data){
                         console.log('success edit');
                         $('#fullname_update').val(data.data.fullname);
+                        $('#nik_update').val(data.data.nik);
                         $('#email_update').val(data.data.email);
                         $('#password_update').val(data.data.password);
                         $('#department_update').val(data.data.department);
@@ -417,6 +429,7 @@
                     },
                     error:function(response){
                         $('#errorFullName').text(response.responseJSON.errors.fullname);
+                        $('#errorNik').text(response.responseJSON.errors.nik);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
@@ -438,7 +451,8 @@
                     data:{
                       id:userID,
                       fullname:$('#fullname_update').val(),
-                      email:$('#email_update').val(),
+                      nik:$('#nik_update').val(),
+                      email:$('#email_update').val(), 
                       password:$('#password_update').val(),
                       department:$('#department_update').val(),
                       jabatan:$('#jabatan_update').val(),
@@ -456,6 +470,7 @@
                     },
                     error:function(response){
                         $('#errorFullName').text(response.responseJSON.errors.fullname);
+                        $('#errorNik').text(response.responseJSON.errors.nik);
                         $('#errorLastName').text(response.responseJSON.errors.last_name);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);

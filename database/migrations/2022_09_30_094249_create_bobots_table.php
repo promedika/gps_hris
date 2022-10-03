@@ -15,6 +15,10 @@ class CreateBobotsTable extends Migration
     {
         Schema::create('bobots', function (Blueprint $table) {
             $table->id();
+            $table->integer('department_id')->nullable();
+            $table->integer('jabatan_id')->nullable();
+            $table->integer('kat_id');
+            $table->string('nilai');
             $table->timestamps();
         });
     }

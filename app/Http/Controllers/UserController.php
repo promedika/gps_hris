@@ -50,21 +50,22 @@ class UserController extends Controller
 
         // dd($request);
         $this->validate($request,[
-            'first_name'=>'required',
+            'fullname'=>'required',
+            'nik'=>'required',
             'email'=>'required|unique:users|email',
             'password'=>'required',
             'department' =>'required',
-            'role'=>'required',
+            'jabatan'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
         ]);
         $user = new user();
-        $user->first_name = $request->first_name;
-        $user->last_name = isset($request->last_name) ? $request->last_name : ' ';
+        $user->fullname = $request->fullname;
+        $user->nik = $request->nik;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->department = $request->department;
-        $user->role = $request->role;
+        $user->jabatan = $request->jabatan;
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;
         $user->created_by = Auth::User()->id;
@@ -110,9 +111,10 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $this->validate($request,[
-            'first_name'=>'required',
+            'fullname'=>'required',
+            'nik'=>'required',
             'email'=>'required|email',
-            'role'=>'required',
+            'jabatan'=>'required',
             'department'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
@@ -121,13 +123,13 @@ class UserController extends Controller
         
         $id = $request->id;
         $user = User::find($id);
-        $user->first_name = $request->first_name;
-        $user->last_name = isset($request->last_name) ? $request->last_name : ' ';
+        $user->fullname = $request->fullname;
+        $user->nik = $request->nik;
         $user->email = $request->email;
         if($request->password !='' && strlen(trim($request->password)) > 0){
             $user->password = Hash::make($request->password);
         }
-        $user->role = $request->role;
+        $user->jabatan = $request->jabatan;
         $user->department = $request->department;
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;

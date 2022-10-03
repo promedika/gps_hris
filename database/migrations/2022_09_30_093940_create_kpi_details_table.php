@@ -15,6 +15,7 @@ class CreateKpiDetailsTable extends Migration
     {
         Schema::create('kpi_details', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id');
             $table->timestamps();
         });
     }
