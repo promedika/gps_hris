@@ -83,5 +83,11 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/kategori/edit','App\Http\Controllers\KatPertanyaanController@edit')->name('kategori.edit');
     Route::post('/kategori/update','App\Http\Controllers\KatPertanyaanController@update')->name('kategori.update');
     Route::post('/kategori/delete','App\Http\Controllers\KatPertanyaanController@destroy')->name('kategori.delete');
+
+    Route::get('/department','App\Http\Controllers\DepartmentController@index')->name('department.index');
+    Route::post('/department/create','App\Http\Controllers\DepartmentController@store')->name('department.create');
+    Route::post('/department/edit','App\Http\Controllers\DepartmentController@edit')->name('department.edit');
+    Route::post('/department/update','App\Http\Controllers\DepartmentController@update')->name('department.update');
+    Route::post('/department/delete','App\Http\Controllers\DepartmentController@destroy')->name('department.delete');
 });
 

@@ -109,7 +109,7 @@
               </li>
               @endif
               <li class="nav-item">
-                <a href="#" class="nav-link" style="color: #343a40;">
+                <a href="{{route('department.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-building"></i>
                     Department
