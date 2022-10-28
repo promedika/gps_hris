@@ -55,22 +55,74 @@
                   <table class="table table-bordered table-hover" id="table">
                     <thead>
                       <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Status</th>
+                        <th>No</th>
+                        <th>Employee No</th>
+                        <th>Employee Name</th>
+                        <th>Birth Date</th>
+                        <th>Gender</th>
+                        <th>Religion</th>
+                        <th>Marital Status</th>
+                        <th>Education Level</th>
+                        <th>Join Date</th>
+                        <th>Employment Status</th>
+                        <th>Employment Start Date</th>
+                        <th>Employment End Date</th>
+                        <th>Length Of Service</th>
+                        <th>Employee Position</th>
+                        <th>Organization Unit</th>
+                        <th>Job Title</th>
+                        <th>Job Status</th>
+                        <th>level</th>
+                        <th>Grade Category</th>
+                        <th>Work Location</th>
+                        <th>Employee Status</th>
+                        <th>Direct Supervisor</th>
+                        <th>Immediate Manager</th>
+                        <th>Termination Date</th>
+                        <th>Terminate Reason</th>
+                        <th>Resignation</th>
+                        <th>Area</th>
+                        <th>Kota</th>
+                        <th>Division</th>
+                        <th>Department</th>
+                        <th>Function</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach ($users as $user)
                             <tr>
+                                <td>{{$user->id}}</td>
+                                <td>{{$user->nik}}</td>
                                 <td>{{$user->fullname}}</td>
-                                <td>{{$user->email}}</td>
+                                <td>{{$user->birth_date}}</td>
+                                <td>{{$user->gender}}</td>
+                                <td>{{$user->religion}}</td>
+                                <td>{{$user->marital_status}}</td>
+                                <td>{{$user->education_level}}</td>
+                                <td>{{$user->join_date}}</td>
+                                <td>{{$user->employment_status}}</td>
                                 <td>{{date('d-m-Y', strtotime($user->start_date))}}</td>
                                 <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
-                                <td>{{$user->status}}</td>
+                                <td>{{$user->length_of_service}}</td>
+                                <td>{{$user->jabatan}}</td>
+                                <td>{{$user->organization_unit}}</td>
+                                <td>{{$user->job_title}}</td>
+                                <td>{{$user->job_status}}</td>
+                                <td>{{$user->level}}</td>
+                                <td>{{$user->grade_category}}</td>
+                                <td>{{$user->work_location}}</td>
+                                <td>{{$user->employee_status}}</td>
+                                <td>{{$user->direct_supervisor}}</td>
+                                <td>{{$user->immediate_manager}}</td>
+                                <td>{{$user->termination_date}}</td>
+                                <td>{{$user->terminate_reason}}</td>
+                                <td>{{$user->resignation}}</td>
+                                <td>{{$user->area}}</td>
+                                <td>{{$user->kota}}</td>
+                                <td>{{$user->division}}</td>
+                                <td>{{$user->department}}</td>
+                                <td>{{$user->function}}</td>
                                 <td>
                                   <a href="#" user-id="{{$user->id}}" title="" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
                                   <a href="#" user-id="{{$user->id}}" data-user="{{$user->first_name.' '.$user->last_name}}" title="" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
@@ -131,7 +183,7 @@
       <form action="" method="post" accept-charset="utf-8" id="form-signup">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Buat User Baru</h4>
+        <h4 class="modal-title">CREATE NEW EMPLOYEE</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -140,56 +192,266 @@
       <!-- Modal body -->
       <div class="modal-body">
         <div class="form-group">
-          <label for="fullname">Nama Lengkap</label>
-          <input type="text" name="fullname" id="fullname" class="form-control" required>
-          <span id="errorFullName" class="text-red"></span>
-        </div>
-        <div class="form-group">
-          <label for="nik">N.I.K</label>
+          <label for="nik">EMPLOYEE NO</label>
           <input type="text" name="nik" id="nik" class="form-control"required>
           <span id="errorNik" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" name="email" id="email" class="form-control"required>
-          <span id="errorEmail" class="text-red"></span>
+          <label for="fullname">EMPLOYEE NAME</label>
+          <input type="text" name="fullname" id="fullname" class="form-control" required>
+          <span id="errorFullName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="birth_date">BIRTH DATE</label>
+          <input type="date" name="birth_date" id="birth_date" class="form-control"required>
+          <span id="errorBirthDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="password">PASSWORD</label>
           <input type="password" name="password" id="password" class="form-control"required>
           <span id="errorPassword" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="department">Departemen</label>
-          <select class="form-control" id="department" name="department"required>
-              <option value="" style="display:none;">Pilih departemen</option>
-              <option value="0">IT</option>
-              <option value="1">Marketing</option>
-              <option value="2">H.R Department</option>
+          <label for="gender">GENDER</label>
+          <select class="form-control" id="gender" name="gender"required>
+              <option value="" style="display:none;">CHOOSE GENDER</option>
+              <option value="MEN">MEN</option>
+              <option value="WOMEN">WOMEN</option>
+          </select>
+          <span id="errorGender" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="religion">RELIGION</label>
+          <select class="form-control" id="religion" name="religion"required>
+              <option value="" style="display:none;">CHOOSE RELIGION</option>
+              <option value="ISLAM">ISLAM</option>
+              <option value="CHRISTIAN">CHRISTIAN</option>
+              <option value="CATHOLIC">CATHOLIC</option>
+              <option value="HINDUISM">HINDUISM</option>
+              <option value="BUDDHISM">BUDDHISM</option>
+              <option value="OTHER">OTHER</option>
+          </select>
+          <span id="errorReligion" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="marital_status">MARITAL STATUS</label>
+          <select class="form-control" id="marital_status" name="marital_status"required>
+              <option value="" style="display:none;">CHOOSE STATUS</option>
+              <option value="SINGLE">SINGLE</option>
+              <option value="MARRIED">MARRIED</option>
+              <option value="DIVORCED">DIVORCED</option>
+              <option value="WIDOW">WIDOW</option>
+              <option value="WIDOWER">WIDOWER</option>
+          </select>
+          <span id="errorMaritalStatus" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="education_level">EDUCATION LEVEL</label>
+          <select class="form-control" id="education_level" name="education_level"required>
+              <option value="" style="display:none;">CHOOSE LEVEL</option>
+              <option value="SD">SD</option>
+              <option value="SMP">SMP</option>
+              <option value="SMA/SMK">SMA/SMK</option>
+              <option value="DIPLOMA 1">DIPLOMA 1</option>
+              <option value="DIPLOMA 2">DIPLOMA 2</option>
+              <option value="DIPLOMA 3">DIPLOMA 3</option>
+              <option value="DIPLOMA 4">DIPLOMA 4</option>
+              <option value="STRATA 1">STRATA 1</option>
+              <option value="STRATA 2">STRATA 2</option>
+              <option value="STRATA 3">STRATA 3</option>
+          </select>
+          <span id="errorEducationLevel" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="join_date">JOIN DATE</label>
+          <input type="date" name="join_date" id="join_date" class="form-control"required>
+          <span id="errorJoinDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="employment_status">EMPLOYMENT STATUS</label>
+          <select class="form-control" id="employment_status" name="employment_status"required>
+              <option value="" style="display:none;">CHOOSE STATUS</option>
+              @foreach ($emp_stats as $emp_stat)
+              <option value="{{$emp_stat->id}}">
+                {{$emp_stat->emp_stat_name}}
+              </option>
+              @endforeach
           </select>
           <span id="errorDepartment" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="Jabatan">Jabatan</label>
-          <select class="form-control" id="jabatan" name="jabatan"required>
-              <option value="" style="display:none;">Pilih Jabatan</option>
-              @if (Auth::user()->jabatan ==0)
-              <option value="0">Admin</option>
-              @endif
-              <option value="1">Marketing Member</option>
-              <option value="2">Marketing Report</option>
-          </select>
-          <span id="errorJabatan" class="text-red"></span>
-        </div>
-        <div class="form-group">
-          <label for="start_date">Tanggal Bergabung</label>
+          <label for="start_date">EMPLOYMENT START DATE</label>
           <input type="date" name="start_date" id="start_date" class="form-control"required>
           <span id="errorStartDate" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="end_date">Tanggal Keluar</label>
+          <label for="end_date">EMPLOYMENT END DATE</label>
           <input type="date" name="end_date" id="end_date" class="form-control"required>
           <span id="errorEndDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="Jabatan">EMPLOYEE POSITION</label>
+          <select class="form-control" id="jabatan" name="jabatan"required>
+              <option value="" style="display:none;">CHOOSE POSITION</option>
+              @foreach ($jabatans as $jabatan)
+              <option value="{{$jabatan->id}}">
+                {{$jabatan->jab_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorJabatan" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="organization_unit">ORGANIZATION UNIT</label>
+          <select class="form-control" id="organization_unit" name="organization_unit"required>
+              <option value="" style="display:none;">CHOOSE UNIT</option>
+              <option value="OPERATIONAL">OPERATIONAL</option>
+              <option value="CORPORATE">CORPORATE</option>
+          </select>
+          <span id="errorOrganizationUnit" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="job_title">JOB TITLE</label>
+          <select class="form-control" id="job_title" name="job_title"required>
+              <option value="" style="display:none;">CHOOSE TITLE</option>
+              <option value="DIRECT WORKER">DIRECT WORKER</option>
+              <option value="NON DIRECT WORKER">NON DIRECT WORKER</option>
+          </select>
+          <span id="errorJobTitle" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="job_status">JOB STATUS</label>
+          <select class="form-control" id="job_status" name="job_status"required>
+              <option value="" style="display:none;">CHOOSE STATUS</option>
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+          </select>
+          <span id="errorJobStatus" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="level">LEVEL</label>
+          <select class="form-control" id="level" name="level"required>
+              <option value="" style="display:none;">CHOOSE LEVEL</option>
+              @foreach ($levels as $level)
+              <option value="{{$level->id}}">
+                {{$level->lev_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorLevel" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="grade_category">GRADE CATEGORY</label>
+          <select class="form-control" id="grade_category" name="grade_category"required>
+              <option value="" style="display:none;">CHOOSE CATEGORY</option>
+              @foreach ($grades as $grade)
+              <option value="{{$grade->id}}">
+                {{$grade->grade_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorGradeCategory" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="work_location">WORK LOCATION</label>
+          <input type="text" name="work_location" id="work_location" class="form-control"required>
+          <span id="errorWork_Location" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="employee_status">EMPLOYEE STATUS</label>
+          <select class="form-control" id="employee_status" name="employee_status"required>
+              <option value="" style="display:none;">CHOOSE STATUS</option>
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+          </select>
+          <span id="errorJobStatus" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="direct_supervisor">DIRECT SUPERVISOR</label>
+          <select class="form-control" id="direct_supervisor" name="direct_supervisor"required>
+              <option value="" style="display:none;">CHOOSE SUPERVISOR</option>
+              @foreach ($users as $user)
+              <option value="{{$user->id}}">
+                {{$user->fullname}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorDirectSupervisor" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="immediate_manager">IMMEDIATE MANAGER</label>
+          <select class="form-control" id="immediate_manager" name="immediate_manager"required>
+              <option value="" style="display:none;">CHOOSE MANAGER</option>
+              @foreach ($users as $user)
+              <option value="{{$user->id}}">
+                {{$user->fullname}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorImmediateManager" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="termination_date">TERMINATION DATE</label>
+          <input type="date" name="termination_date" id="termination_date" class="form-control"required>
+          <span id="errorTerminationDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="terminate_reason">TERMINATE REASON</label>
+          <input type="text" name="terminate_reason" id="terminate_reason" class="form-control" required>
+          <span id="errorTerminateReason" class="text-red"></span>
+        </div>
+        <div>
+          <label for="resignation">RESIGNATION</label>
+          <input type="file" name="resignation" id="resignation" class="form-control">
+          <span id="errorResignation" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="area">AREA</label>
+          <select class="form-control" id="area" name="area">
+            <option value="" style="display: none">CHOOSE AREA</option>
+            @foreach ($provinces as $id => $name)
+              <option value="{{$id}}">
+                {{$name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorArea" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="kota">CITY</label>
+          <select name="kota" id="kota" class="form-control">
+            <option value="">CHOOSE CITIES</option>
+          <span id="errorCity" class="text-red"></span>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="division">DIVISION</label>
+          <select class="form-control" id="division" name="division"required>
+              <option value="" style="display:none;">CHOOSE DIVISION</option>
+              @foreach ($divisions as $division)
+              <option value="{{$division->id}}">
+                {{$division->div_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorDivision" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="department">DEPARTMENT</label>
+          <select class="form-control" id="department" name="department"required>
+              <option value="" style="display:none;">CHOOSE DEPARTMENT</option>
+              @foreach ($departments as $department)
+              <option value="{{$department->id}}">
+                {{$department->dep_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorDepartment" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="function">FUNCTION</label>
+          <input type="text" name="function" id="function" class="form-control" required>
+          <span id="errorFunction" class="text-red"></span>
         </div>
       </div>
 
@@ -208,77 +470,269 @@
 <div class="modal fade in" id="modalEditUser" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
+      <form action="" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Ubah P.I.C</h4>
+        <h4 class="modal-title">EDIT EMPLOYEE</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <input type="hidden" name="id" id="id" class="form-control">
-      <!-- Modal body -->  
+
+      <!-- Modal body -->
       <div class="modal-body">
         <div class="form-group">
-          <label for="fullname">Nama Lengkap</label>
-          <input type="text" name="fullname" id="fullname_update" class="form-control" required>
-          <span id="errorFullName" class="text-red"></span>
-        </div>
-        <div class="form-group">
-          <label for="nik">N.I.K</label>
+          <label for="nik">EMPLOYEE NO</label>
           <input type="text" name="nik" id="nik_update" class="form-control"required>
           <span id="errorNik" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" name="email" id="email_update" class="form-control" readonly>
-          <span id="errorEmail" class="text-red"></span>
+          <label for="fullname">EMPLOYEE NAME</label>
+          <input type="text" name="fullname" id="fullname_update" class="form-control" required>
+          <span id="errorFullName" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="password">Password <span style="font-size: 10px; color:red">*Kosongkan jika tidak ingin merubah password</span></label>
-          <input type="password" name="password" id="password_update" class="form-control">
+          <label for="birth_date">BIRTH DATE</label>
+          <input type="date" name="birth_date" id="birth_date_update" class="form-control"required>
+          <span id="errorBirthDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="password">PASSWORD</label>
+          <input type="password" name="password" id="password_update" class="form-control"required>
           <span id="errorPassword" class="text-red"></span>
         </div>
         <div class="form-group">
-        <label for="department">Departemen</label>
-          <select class="form-control" id="department_update" name="department"required>
-              <option value="" style="display:none;">Pilih departemen</option>
-              <option value="0">IT</option>
-              <option value="1">Marketing</option>
-              <option value="2">H.R Department</option>
+          <label for="gender">GENDER</label>
+          <select class="form-control" id="gender" name="gender_update"required>
+              <option value="" style="display:none;">CHOOSE GENDER</option>
+              <option value="MEN">MEN</option>
+              <option value="WOMEN">WOMEN</option>
+          </select>
+          <span id="errorGender" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="religion">RELIGION</label>
+          <select class="form-control" id="religion_update" name="religion"required>
+              <option value="" style="display:none;">CHOOSE RELIGION</option>
+              <option value="ISLAM">ISLAM</option>
+              <option value="CHRISTIAN">CHRISTIAN</option>
+              <option value="CATHOLIC">CATHOLIC</option>
+              <option value="HINDUISM">HINDUISM</option>
+              <option value="BUDDHISM">BUDDHISM</option>
+              <option value="OTHER">OTHER</option>
+          </select>
+          <span id="errorReligion" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="marital_status">MARITAL STATUS</label>
+          <select class="form-control" id="marital_status_update" name="marital_status"required>
+              <option value="" style="display:none;">CHOOSE STATUS</option>
+              <option value="SINGLE">SINGLE</option>
+              <option value="MARRIED">MARRIED</option>
+              <option value="DIVORCED">DIVORCED</option>
+              <option value="WIDOW">WIDOW</option>
+              <option value="WIDOWER">WIDOWER</option>
+          </select>
+          <span id="errorMaritalStatus" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="education_level">EDUCATION LEVEL</label>
+          <select class="form-control" id="education_level_update" name="education_level"required>
+              <option value="" style="display:none;">CHOOSE LEVEL</option>
+              <option value="SD">SD</option>
+              <option value="SMP">SMP</option>
+              <option value="SMA/SMK">SMA/SMK</option>
+              <option value="DIPLOMA 1">DIPLOMA 1</option>
+              <option value="DIPLOMA 2">DIPLOMA 2</option>
+              <option value="DIPLOMA 3">DIPLOMA 3</option>
+              <option value="DIPLOMA 4">DIPLOMA 4</option>
+              <option value="STRATA 1">STRATA 1</option>
+              <option value="STRATA 2">STRATA 2</option>
+              <option value="STRATA 3">STRATA 3</option>
+          </select>
+          <span id="errorEducationLevel" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="join_date">JOIN DATE</label>
+          <input type="date" name="join_date" id="join_date_update" class="form-control"required>
+          <span id="errorJoinDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="employment_status">EMPLOYMENT STATUS</label>
+          <select class="form-control" id="employment_status_update" name="employment_status"required>
+              <option value="" style="display:none;">CHOOSE STATUS</option>
+              @foreach ($emp_stats as $emp_stat)
+              <option value="{{$emp_stat->id}}">
+                {{$emp_stat->emp_stat_name}}
+              </option>
+              @endforeach
           </select>
           <span id="errorDepartment" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="Jabatan">Jabatan</label>
-          <select class="form-control" id="jabatan_update" name="jabatan" required>
-              <option value="" style="display:none;">Select Jabatan</option>
-              @if (Auth::user()->jabatan == 0)
-              <option value="0">Admin</option>
-              @endif
-              <option value="1">Marketing Member</option>
-              <option value="2">Marketing Report</option>
+          <label for="start_date">EMPLOYMENT START DATE</label>
+          <input type="date" name="start_date" id="start_date_update" class="form-control"required>
+          <span id="errorStartDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="end_date">EMPLOYMENT END DATE</label>
+          <input type="date" name="end_date" id="end_date_update" class="form-control"required>
+          <span id="errorEndDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="Jabatan">EMPLOYEE POSITION</label>
+          <select class="form-control" id="jabatan_update" name="jabatan"required>
+              <option value="" style="display:none;">CHOOSE POSITION</option>
+              @foreach ($jabatans as $jabatan)
+              <option value="{{$jabatan->id}}">
+                {{$jabatan->jab_name}}
+              </option>
+              @endforeach
           </select>
           <span id="errorJabatan" class="text-red"></span>
         </div>
         <div class="form-group">
-          <label for="start_date">Tanggal Bergabung</label>
-          <input type="date" name="start_date" id="start_date_update" class="form-control" required>
-          <span id="errorStartDate" class="text-red"></span>
-        </div>
-        <div class="form-group">
-          <label for="end_date">Tanggal Keluar</label>
-          <input type="date" name="end_date" id="end_date_update" class="form-control" required>
-          <span id="errorEndDate" class="text-red"></span>
-        </div>
-        <div class="form-group">
-          <label for="end_date">Status</label>
-          <select name="status" id="status_update" class="form-control" required>
-            <option value="" style="display:none;">Select Status</option>
-              <option value="active">Active</option>
-              <option value="expired">Expired</option>
+          <label for="organization_unit">ORGANIZATION UNIT</label>
+          <select class="form-control" id="organization_unit_update" name="organization_unit"required>
+              <option value="" style="display:none;">CHOOSE UNIT</option>
+              <option value="OPERATIONAL">OPERATIONAL</option>
+              <option value="CORPORATE">CORPORATE</option>
           </select>
-          <span id="errorStatus" class="text-red"></span>
+          <span id="errorOrganizationUnit" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="job_title">JOB TITLE</label>
+          <select class="form-control" id="job_title_update" name="job_title"required>
+              <option value="" style="display:none;">CHOOSE TITLE</option>
+              <option value="DIRECT WORKER">DIRECT WORKER</option>
+              <option value="NON DIRECT WORKER">NON DIRECT WORKER</option>
+          </select>
+          <span id="errorJobTitle" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="job_status">JOB STATUS</label>
+          <select class="form-control" id="job_status_update" name="job_status"required>
+              <option value="" style="display:none;">CHOOSE STATUS</option>
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+          </select>
+          <span id="errorJobStatus" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="level">LEVEL</label>
+          <select class="form-control" id="level_update" name="level"required>
+              <option value="" style="display:none;">CHOOSE LEVEL</option>
+              @foreach ($levels as $level)
+              <option value="{{$level->id}}">
+                {{$level->lev_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorLevel" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="grade_category">GRADE CATEGORY</label>
+          <select class="form-control" id="grade_category_update" name="grade_category"required>
+              <option value="" style="display:none;">CHOOSE CATEGORY</option>
+              @foreach ($grades as $grade)
+              <option value="{{$grade->id}}">
+                {{$grade->grade_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorGradeCategory" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="work_location">WORK LOCATION</label>
+          <input type="text" name="work_location_update" id="work_location" class="form-control"required>
+          <span id="errorWork_Location" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="employee_status">EMPLOYEE STATUS</label>
+          <select class="form-control" id="employee_status_update" name="employee_status"required>
+              <option value="" style="display:none;">CHOOSE STATUS</option>
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+          </select>
+          <span id="errorJobStatus" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="direct_supervisor">DIRECT SUPERVISOR</label>
+          <select class="form-control" id="direct_supervisor_update" name="direct_supervisor"required>
+              <option value="" style="display:none;">CHOOSE SUPERVISOR</option>
+              @foreach ($users as $user)
+              <option value="{{$user->id}}">
+                {{$user->fullname}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorDirectSupervisor" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="immediate_manager">IMMEDIATE MANAGER</label>
+          <select class="form-control" id="immediate_manager_update" name="immediate_manager"required>
+              <option value="" style="display:none;">CHOOSE MANAGER</option>
+              @foreach ($users as $user)
+              <option value="{{$user->id}}">
+                {{$user->fullname}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorImmediateManager" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="termination_date">TERMINATION DATE</label>
+          <input type="date" name="termination_date" id="termination_date_update" class="form-control"required>
+          <span id="errorTerminationDate" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="terminate_reason">TERMINATE REASON</label>
+          <input type="text" name="terminate_reason" id="terminate_reason_update" class="form-control" required>
+          <span id="errorTerminateReason" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="resignation">RESIGNATION</label>
+          <input type="file" name="resignation" id="resignation_update" class="form-control">
+          <span id="errorResignation" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="area">AREA</label>
+          <input type="text" name="area" id="area_update" class="form-control"required>
+          <span id="errorArea" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="kota">CITY</label>
+          <select name="kota" id="kota_update" class="form-control"required>
+          <span id="errorCity" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="division">DIVISION</label>
+          <select class="form-control" id="division_update" name="division"required>
+              <option value="" style="display:none;">CHOOSE DIVISION</option>
+              @foreach ($divisions as $division)
+              <option value="{{$division->id}}">
+                {{$division->div_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorDivision" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="department">DEPARTMENT</label>
+          <select class="form-control" id="department_update" name="department"required>
+              <option value="" style="display:none;">CHOOSE DEPARTMENT</option>
+              @foreach ($departments as $department)
+              <option value="{{$department->id}}">
+                {{$department->dep_name}}
+              </option>
+              @endforeach
+          </select>
+          <span id="errorDepartment" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="function">FUNCTION</label>
+          <input type="text" name="function" id="function_update" class="form-control" required>
+          <span id="errorFunction" class="text-red"></span>
         </div>
       </div>
 
@@ -291,7 +745,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- The Modal -->
 <div class="modal fade in" id="modalDeleteUser" data-backdrop="static" data-keyboard="false">
@@ -366,6 +819,28 @@
 
         $('.btn-add-user').click(function(){
             $('#modalCreateUser').modal('show');
+            var site_url = "{{ url('/') }}";
+            $('#area').on('change', function () {
+            var idProvince = this.value;
+            $("#kota").html('');
+            $.ajax({
+                url: site_url + "/api/fetch-cities",
+                type: "POST",
+                data: {
+                    province_code: idProvince,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    $('#kota').html('<option value="">CHOOSE CITIES</option>');
+                    $.each(result, function( key, value ) {
+                        let val = value.id + '|' + value.name
+                        $("#kota").append('<option value="' + val + '">' + value.name + '</option>');
+                    });
+                }
+            });
+        });    
 
             $('#form-signup').submit(function(e){
                 e.preventDefault();
@@ -403,7 +878,7 @@
                 })
             })
         })
-
+   
 
         jQuery("body").on("click", ".btn-edit-user", function(e) {
             $('#modalEditUser').modal('show');
@@ -417,19 +892,41 @@
                     },
                     success:function(data){
                         console.log('success edit');
-                        $('#fullname_update').val(data.data.fullname);
                         $('#nik_update').val(data.data.nik);
-                        $('#email_update').val(data.data.email);
+                        $('#fullname_update').val(data.data.fullname);
+                        $('#birth_date_update').val(data.data.birth_date);
                         $('#password_update').val(data.data.password);
-                        $('#department_update').val(data.data.department);
-                        $('#jabatan_update').val(data.data.jabatan);
+                        $('#gender_update').val(data.data.gender);
+                        $('#religion_update').val(data.data.religion);
+                        $('#marital_status_update').val(data.data.marital_status);
+                        $('#education_level_update').val(data.data.education_level);
+                        $('#join_date_update').val(data.data.join_date);
+                        $('#employment_status_update').val(data.data.employment_status);
                         $('#start_date_update').val(data.data.start_date);
                         $('#end_date_update').val(data.data.end_date);
+                        $('#jabatan_update').val(data.data.jabatan);
+                        $('#organization_unit_update').val(data.data.organization_unit);
+                        $('#job_title_update').val(data.data.job_title);
+                        $('#job_status_update').val(data.data.job_status);
+                        $('#level_update').val(data.data.level_update);
+                        $('#grade_category_update').val(data.data.grade_category);
+                        $('#work_location_update').val(data.data.work_location);
+                        $('#employee_status_update').val(data.data.employee_status);
+                        $('#direct_supervisor_update').val(data.data.direct_supervisor);
+                        $('#immediate_manager_update').val(data.data.immediate_manager);
+                        $('#termination_date_update').val(data.data.termination_date);
                         $('#status_update').val(data.data.status);
+                        $('#terminate_reason_update').val(data.data.terminate_reason);
+                        $('#resignation_update').val(data.data.resignation);
+                        $('#area_update').val(data.data.area);
+                        $('#city_update').val(data.data.city);
+                        $('#division_update').val(data.data.division);
+                        $('#department_update').val(data.data.department);
+                        $('#function_update').val(data.data.function);
                     },
                     error:function(response){
-                        $('#errorFullName').text(response.responseJSON.errors.fullname);
                         $('#errorNik').text(response.responseJSON.errors.nik);
+                        $('#errorFullName').text(response.responseJSON.errors.fullname);
                         $('#errorEmail').text(response.responseJSON.errors.email);
                         $('#errorPassword').text(response.responseJSON.errors.password);
                         $('#errorDepartment').text(response.responseJSON.errors.department);
@@ -450,15 +947,36 @@
                     data:formData,
                     data:{
                       id:userID,
-                      fullname:$('#fullname_update').val(),
                       nik:$('#nik_update').val(),
-                      email:$('#email_update').val(), 
+                      fullname:$('#fullname_update').val(),
+                      birth_date:$('#birthdate_update').val(),
                       password:$('#password_update').val(),
-                      department:$('#department_update').val(),
-                      jabatan:$('#jabatan_update').val(),
+                      gender:$('#gender_update').val(),
+                      religion:$('#religion_update').val(),
+                      marital_status:$('#marital_status_update').val(),
+                      education_level:$('#education_level_update').val(),
+                      join_date:$('#join_date_update').val(),
+                      employment_status:$('#employment_status_update').val(),
                       start_date:$('#start_date_update').val(),
                       end_date:$('#end_date_update').val(),
-                      status:$('#status_update').val(),
+                      jabatan:$('#jabatan_update').val(),
+                      organization_unit:$('#oragnization_unit_update').val(),
+                      job_title:$('#job_title_update').val(),
+                      job_status:$('#job_status_update').val(),
+                      level:$('#level_update').val(),
+                      grade_category:$('#grade_category_update').val(),
+                      work_location:$('#work_location_update').val(),
+                      employee_status:$('#employee_status_update').val(),
+                      direct_supervisor:$('#direct_supervisor_update').val(),
+                      immediate_manager:$('#immediate_manager_update').val(),
+                      termination_date:$('#termination_date_update').val(),
+                      terminate_reason:$('#terminate_reason_update').val(),
+                      resignation:$('#resignation_update').val(),
+                      area:$('#area_update').val(),
+                      kota:$('#kota_update').val(),
+                      division:$('#division_update').val(),
+                      department:$('#department_update').val(),
+                      function:$('#function_update').val()
                     },
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);

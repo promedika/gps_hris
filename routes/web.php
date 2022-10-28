@@ -62,7 +62,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/users/upload', 'App\Http\Controllers\UserController@uploadUsers')->name('dashboard.users.upload');
 
     // Route::get('dropdown', [DropdownController::class, 'index']);
-    Route::post('api/fetch-useroutlet',[DropdownController::class, 'fetchUserOutlet']);
+    Route::post('api/fetch-cities',[DropdownController::class, 'fetchCities']);
 
     Route::get('/jabatan','App\Http\Controllers\JabatanController@index')->name('jabatan.index');
     Route::post('/jabatan/create','App\Http\Controllers\JabatanController@store')->name('jabatan.create');

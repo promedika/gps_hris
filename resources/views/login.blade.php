@@ -35,7 +35,7 @@
           </div>
         @endif
         <div class="input-group mb-3">
-          <input class="form-control" placeholder="Email" type="email" name="email" required>
+          <input class="form-control" placeholder="N.I.K" type="text" name="nik" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>

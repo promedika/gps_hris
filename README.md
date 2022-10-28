@@ -7,15 +7,15 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## Tentang Aplikasi GPS HRMS
+## Tentang Aplikasi GPS HRIS
 
-Aplikasi GPS HRMS digunakan untuk keperluan HR Department.
+Aplikasi GPS HRIS digunakan untuk keperluan HR Department.
 
-## Cara Install Aplikasi GPS HRMS
+## Cara Install Aplikasi GPS HRIS
 
 - Download atau clone dari repository git.
 - Setting dan sesuaikan file .env yg digunakan.
-- Buka command line dan pindah ke directory root gps hrms.
+- Buka command line dan pindah ke directory root gps hris.
 - Jalankan "composer install"
 - Buat folder public di dalam folder storage/app/
 - Buat folder posts, clock_in_img, dan clock_out_img di dalam folder storage/app/public/

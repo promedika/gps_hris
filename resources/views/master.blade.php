@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@yield('title') | GPS HRMS</title>
+  <title>@yield('title') | GPS HRIS</title>
 
   <meta name="csrf-token" content="{{csrf_token()}}"/>
 
@@ -71,7 +71,7 @@
     <!-- Brand Logo -->
     <a href="{{route('dashboard.index')}}" class="brand-link" style="text-align: center">
       <img src="{{asset('assets/img/logogpstext.png')}}" alt="GPS Logo" class="brand-image" style="margin-left: -5px; margin-right: 0; max-height: 50px; margin-top: -0.5rem;">
-      <span class="brand-text font-weight-light"><strong>HRMS</strong></span>
+      <span class="brand-text font-weight-light"><strong>HRIS</strong></span>
     </a>
 
     <!-- Sidebar -->

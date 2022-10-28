@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJabatanTable extends Migration
+class CreateProvincesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateJabatanTable extends Migration
      */
     public function up()
     {
-        Schema::create('jabatans', function (Blueprint $table) {
-            $table->id();
-            $table->string('jab_name');
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+        Schema::create(config('laravolt.indonesia.table_prefix').'provinces', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->char('code', 2)->unique();
+            $table->string('name', 255);
+            $table->text('meta')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateJabatanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jabatans');
+        Schema::drop(config('laravolt.indonesia.table_prefix').'provinces');
     }
 }

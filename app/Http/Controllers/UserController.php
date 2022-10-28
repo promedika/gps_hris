@@ -10,7 +10,14 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Exception;
 use Illuminate\Support\Facades\File;
+use App\Models\EmpStatus;
+use App\Models\GradeCategory;
+use App\Models\Jabatan;
+use App\Models\Level;
+use App\Models\Division;
+use App\Models\Department;
 use PhpParser\Node\Stmt\Switch_;
+use Laravolt\Indonesia\Models\Province;
 
 class UserController extends Controller
 {
@@ -23,7 +30,14 @@ class UserController extends Controller
     {
         if(Auth::User()->role != 1){
         $users = User::all();
-        return view('user.index', compact('users'));
+        $emp_stats = EmpStatus::all();
+        $jabatans = Jabatan::all();
+        $levels = Level::all();
+        $grades = GradeCategory::all();
+        $divisions = Division::all();
+        $departments = Department::all();
+        $provinces = Province::pluck('name','code');
+        return view('user.index', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces'));
         }else{
         return redirect('error.404');
         }
@@ -52,25 +66,41 @@ class UserController extends Controller
         $this->validate($request,[
             'fullname'=>'required',
             'nik'=>'required',
-            'email'=>'required|unique:users|email',
             'password'=>'required',
-            'department' =>'required',
-            'jabatan'=>'required',
-            'start_date'=>'required',
-            'end_date'=>'required',
         ]);
         $user = new user();
-        $user->fullname = $request->fullname;
         $user->nik = $request->nik;
-        $user->email = $request->email;
+        $user->fullname = $request->fullname;
+        $user->birth_date = $request->birth_date;
         $user->password = Hash::make($request->password);
-        $user->department = $request->department;
-        $user->jabatan = $request->jabatan;
+        $user->gender = $request->gender;
+        $user->religion = $request->religiion;
+        $user->marital_status = $request->marital_status;
+        $user->education_level = $request->education_level;
+        $user->join_date = $request->join_date;
+        $user->employment_status = $request->employment_status;
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;
+        $user->jabatan = $request->jabatan;
+        $user->organization_unit = $request->organization_unit;
+        $user->job_title = $request->job_title;
+        $user->job_status = $request->job_status;
+        $user->level = $request->level;
+        $user->grade_category = $request->grade_category;
+        $user->work_location = $request->work_location;
+        $user->employee_status = $request->employee_status;
+        $user->direct_supervisor = $request->direct_supervisor;
+        $user->immediate_manager = $request->immediate_manager;
+        $user->termination_date = $request->termination_date;
+        $user->terminate_reason = $request->terminate_reason;
+        $user->resignation = $request->resignation;
+        $user->area = $request->area;
+        $user->kota = $request->kota;
+        $user->division = $request->division;
+        $user->department = $request->department;
+        $user->function = $request->function;
         $user->created_by = Auth::User()->id;
         $user->updated_by = Auth::User()->id;
-        $user->status = 'active';
         $user->save();
 
         return redirect(route('dashboard.users.index'));
@@ -113,28 +143,44 @@ class UserController extends Controller
         $this->validate($request,[
             'fullname'=>'required',
             'nik'=>'required',
-            'email'=>'required|email',
-            'jabatan'=>'required',
-            'department'=>'required',
-            'start_date'=>'required',
-            'end_date'=>'required',
         ]);
 
         
         $id = $request->id;
         $user = User::find($id);
-        $user->fullname = $request->fullname;
         $user->nik = $request->nik;
-        $user->email = $request->email;
+        $user->fullname = $request->fullname;
         if($request->password !='' && strlen(trim($request->password)) > 0){
             $user->password = Hash::make($request->password);
         }
-        $user->jabatan = $request->jabatan;
-        $user->department = $request->department;
+        $user->birth_date = $request->birthdate;
+        $user->gender = $request->gender;
+        $user->religion = $request->religiion;
+        $user->marital_status = $request->marital_status;
+        $user->education_level = $request->education_level;
+        $user->join_date = $request->join_date;
+        $user->employment_status = $request->employment_status;
         $user->start_date = $request->start_date;
         $user->end_date = $request->end_date;
+        $user->jabatan = $request->jabatan;
+        $user->organization_unit = $request->organization_unit;
+        $user->job_title = $request->job_title;
+        $user->job_status = $request->job_status;
+        $user->level = $request->level;
+        $user->grade_category = $request->grade_category;
+        $user->work_location = $request->work_location;
+        $user->employee_status = $request->employee_status;
+        $user->direct_supervisor = $request->direct_supervisor;
+        $user->immediate_manager = $request->immediate_manager;
+        $user->termination_date = $request->termination_date;
+        $user->terminate_reason = $request->terminate_reason;
+        $user->resignation = $request->resignation;
+        $user->area = $request->area;
+        $user->kota = $request->kota;
+        $user->division = $request->division;
+        $user->department = $request->department;
+        $user->function = $request->function;
         $user->updated_by = Auth::User()->id;
-        $user->status = $request->status;
         $user->save();
         return redirect(route('dashboard.users.index'));
     }

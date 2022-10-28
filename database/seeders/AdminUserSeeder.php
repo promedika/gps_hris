@@ -17,14 +17,14 @@ class AdminUserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'fullname' => 'Super user',
-            'email' =>  'superuser@gps.co.id',
+            'nik' =>  '123456',
             'password' =>   Hash::make('promedika'),
             'jabatan'  =>  '0',
             'created_by' => '1',
             'updated_by' => '1',
             'start_date' => '2022-05-09',
             'end_date' => '3022-05-09',
-            'status' => 'active'
+            'job_status' => 'active'
         ]);
     }
 }
