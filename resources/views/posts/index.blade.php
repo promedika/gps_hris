@@ -9,7 +9,7 @@
 @endsection
 @section('content')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="background: linen">
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">

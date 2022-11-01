@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 @endsection
 @section('content')
-<div class="content-wrapper" style="background: linen">
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">

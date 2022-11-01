@@ -67,7 +67,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-light-primary elevation-4" style="background:lightcyan">
+  <aside class="main-sidebar sidebar-light-primary elevation-4" style="background:#c6dfdf">
     <!-- Brand Logo -->
     <a href="{{route('dashboard.index')}}" class="brand-link" style="text-align: center">
       <img src="{{asset('assets/img/logogpstext.png')}}" alt="GPS Logo" class="brand-image" style="margin-left: -5px; margin-right: 0; max-height: 50px; margin-top: -0.5rem;">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | GPS Monitoring</title>
+  <title>Login | GPS HRIS</title>
 
   <!-- favicon -->
   <link rel="icon" type="image/x-icon" href="{{asset('/assets/img/favicon.ico')}}">

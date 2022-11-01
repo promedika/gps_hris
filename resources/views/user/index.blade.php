@@ -11,7 +11,7 @@
 
 @section('content')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="background: lightcyan">
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -503,7 +503,7 @@
         </div>
         <div class="form-group">
           <label for="gender">GENDER</label>
-          <select class="form-control" id="gender" name="gender_update"required>
+          <select class="form-control" id="gender_update" name="gender_update"required>
               <option value="" style="display:none;">CHOOSE GENDER</option>
               <option value="MEN">MEN</option>
               <option value="WOMEN">WOMEN</option>
@@ -644,7 +644,7 @@
         </div>
         <div class="form-group">
           <label for="work_location">WORK LOCATION</label>
-          <input type="text" name="work_location_update" id="work_location" class="form-control"required>
+          <input type="text" name="work_location_update" id="work_location_update" class="form-control"required>
           <span id="errorWork_Location" class="text-red"></span>
         </div>
         <div class="form-group">
@@ -821,26 +821,28 @@
             $('#modalCreateUser').modal('show');
             var site_url = "{{ url('/') }}";
             $('#area').on('change', function () {
-            var idProvince = this.value;
-            $("#kota").html('');
-            $.ajax({
-                url: site_url + "/api/fetch-cities",
-                type: "POST",
-                data: {
-                    province_code: idProvince,
-                    _token: '{{csrf_token()}}'
-                },
-                dataType: 'json',
-                success: function (result) {
-                    console.log(result);
-                    $('#kota').html('<option value="">CHOOSE CITIES</option>');
-                    $.each(result, function( key, value ) {
-                        let val = value.id + '|' + value.name
-                        $("#kota").append('<option value="' + val + '">' + value.name + '</option>');
-                    });
-                }
-            });
-        });    
+                var idProvince = this.value;
+                $("#kota").html('');
+
+                jQuery.ajax({
+                    method: "post",
+                    url: site_url + "/api/fetch-cities",
+                    data: {
+                        province_code: idProvince,
+                        _token: '{{csrf_token()}}'
+                    },
+                    beforeSend: function() {
+                    },
+                    success:function(result){
+                        $('#kota').html('<option value="">CHOOSE CITIES</option>');
+                        $.each(result, function( key, value ) {
+                            let val = value.id;
+                            $("#kota").append('<option value="' + val + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+
+            });    
 
             $('#form-signup').submit(function(e){
                 e.preventDefault();
