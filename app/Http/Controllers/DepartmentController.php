@@ -41,7 +41,7 @@ class DepartmentController extends Controller
             'name'   => 'required',
         ]);
         $department = new department();
-        $department->name = $request->name;
+        $department->dep_name = $request->name;
         $department->created_by = Auth::User()->id;
         $department->updated_by = Auth::User()->id;
         $department->save();
@@ -88,7 +88,7 @@ class DepartmentController extends Controller
         ]);
         $id = $request->id;
         $department = Department::find($id);
-        $department->name = $request->name;
+        $department->dep_name = $request->name;
         $department->updated_by = Auth::User()->id;
         $department->save();
         return redirect(route('department.index'));

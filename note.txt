@@ -1,1 +1,94 @@
-For note
+data yag dijadikan master sendiri:
+
+1. employment status
+2. level
+3. grade category
+4. division
+5. department
+
+-------------------------------------------------------
+
+data yg ditampilin saat:
+
+-------------------------------------------------------
+
+create data:
+
+Employee No.	
+Employee Name	
+Birth Date	
+Gender	
+Religion	
+Marital Status	
+Education Level	
+Join Date	
+Employment Status	
+Employment Start Date	
+Employment End Date	
+Length Of Service	
+Employee Position	
+Organization Unit
+Job Title	
+Job Status	
+Level	
+Grade Category	
+Work Location	
+Area	
+Kota	
+Division	
+Department	
+
+-------------------------------------------------------
+
+edit data:
+
+No (hidden)
+Employee No.	
+Employee Name	
+Birth Date	
+Gender	
+Religion	
+Marital Status	
+Education Level	
+Join Date	
+Employment Status	
+Employment Start Date	
+Employment End Date	
+Length Of Service	
+Employee Position	
+Organization Unit
+Job Title	
+Job Status	
+Level	
+Grade Category	
+Work Location	
+Employee Status	
+Direct Supervisor	
+Immediate Manager	
+Area	
+Kota	
+Division	
+Department	
+
+-------------------------------------------------------
+
+terminate data :
+
+Employee No.	
+Employee Name	
+Join Date	
+Employment Status	
+Employment End Date	
+Employee Position	
+Organization Unit
+Job Status	
+Level	
+Grade Category	
+Employee Status		
+Termination Date	
+Terminate Reason	
+Resignation	
+
+-------------------------------------------------------
+
+-------------------------------------------------------

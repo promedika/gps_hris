@@ -52,7 +52,7 @@
                           @foreach ($departments as $department)
                           <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$department->name}}</td>
+                            <td>{{$department->dep_name}}</td>
                             <td>
                                 <a href="#" department-id="{{$department->id}}" title="Edit" class="btn btn-warning btn-edit-department"><i class="fas fa-edit"></i></a>
                                 <a href="#" department-id="{{$department->id}}" title="Delete" class="btn btn-danger btn-delete-department"><i class="fas fa-trash"></i></a>
@@ -78,7 +78,7 @@
 <div class="modal fade in" id="modalCreateDepartment" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
+        <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-create">
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Buat Departemen Baru</h4>
@@ -186,6 +186,18 @@
             }
         });
 
+        $(document).on('blur', "input[type=text]", function () {
+          $(this).val(function (_, val) {
+            return val.toUpperCase();
+          });
+        });
+
+        $(document).on('keyup', "input[type=text]", function () {
+          $(this).val(function (_, val) {
+            return val.toUpperCase();
+          });
+        });
+
         $('#table').DataTable({
           "paging": true,
           "lengthChange": true,
@@ -199,7 +211,7 @@
         $('.btn-add-department').click(function(){
             $('#modalCreateDepartment').modal('show');
 
-            $('#form-signup').submit(function(e){
+            $('#form-create').submit(function(e){
                 e.preventDefault();
                 let modal_id = $('#modalCreateDepartment');
                 var formData = new FormData(this);
@@ -214,13 +226,15 @@
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success create');
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorName').text(response.responseJSON.errors.name);
+                        alert('failed created');
+                        location.reload();
                     }
                 })
             })
@@ -239,8 +253,7 @@
                   id:departmentID,
                 },
                 success:function(data){
-                    console.log(data);
-                    $('#name_update').val(data.name);
+                    $('#name_update').val(data.dep_name);
                     $('#form-edit').data('id',departmentID);
                 },
                 error:function(response){
@@ -265,13 +278,15 @@
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success update');
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorName').text(response.responseJSON.errors.name);
+                        alert('failed edited');
+                        location.reload();
                     }
                 })
             })
@@ -293,13 +308,15 @@
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success deleted');
                         location.reload();
                     },
                     error:function(response){
-                        console.log('success failed');
+                        alert('failed deleted');
+                        location.reload();
                     }
                 })
             })
