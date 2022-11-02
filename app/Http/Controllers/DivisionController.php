@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Department;
+use App\Models\Division;
 use Illuminate\Support\Facades\Auth;
 
-class DepartmentController extends Controller
+class DivisionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
-        return view('department.index', compact('departments'));
+        $divisions = Division::all();
+        return view('division.index', compact('divisions'));
     }
 
     /**
@@ -40,13 +40,13 @@ class DepartmentController extends Controller
         $this->validate($request,[
             'name'   => 'required',
         ]);
-        $department = new department();
-        $department->dep_name = $request->name;
-        $department->created_by = Auth::User()->id;
-        $department->updated_by = Auth::User()->id;
-        $department->save();
+        $division = new division();
+        $division->div_name = $request->name;
+        $division->created_by = Auth::User()->id;
+        $division->updated_by = Auth::User()->id;
+        $division->save();
 
-        return redirect(route('department.index'));
+        return redirect(route('division.index'));
     }
 
     /**
@@ -69,9 +69,9 @@ class DepartmentController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-        $department = Department::find($id);
+        $division = Division::find($id);
 
-        return $department;
+        return $division;
 
     }
     /**
@@ -87,11 +87,11 @@ class DepartmentController extends Controller
             'name'=>'required'
         ]);
         $id = $request->id;
-        $department = Department::find($id);
-        $department->dep_name = $request->name;
-        $department->updated_by = Auth::User()->id;
-        $department->save();
-        return redirect(route('department.index'));
+        $division = Division::find($id);
+        $division->div_name = $request->name;
+        $division->updated_by = Auth::User()->id;
+        $division->save();
+        return redirect(route('division.index'));
     }
 
     /**
@@ -103,8 +103,8 @@ class DepartmentController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $department = Department::find($id);
-        $department->delete();
-        return redirect(route('department.index'));
+        $division = Division::find($id);
+        $division->delete();
+        return redirect(route('division.index'));
     }
 }

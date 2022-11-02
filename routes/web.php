@@ -89,5 +89,11 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/department/edit','App\Http\Controllers\DepartmentController@edit')->name('department.edit');
     Route::post('/department/update','App\Http\Controllers\DepartmentController@update')->name('department.update');
     Route::post('/department/delete','App\Http\Controllers\DepartmentController@destroy')->name('department.delete');
+
+    Route::get('/division','App\Http\Controllers\DivisionController@index')->name('division.index');
+    Route::post('/division/create','App\Http\Controllers\DivisionController@store')->name('division.create');
+    Route::post('/division/edit','App\Http\Controllers\DivisionController@edit')->name('division.edit');
+    Route::post('/division/update','App\Http\Controllers\DivisionController@update')->name('division.update');
+    Route::post('/division/delete','App\Http\Controllers\DivisionController@destroy')->name('division.delete');
 });
 

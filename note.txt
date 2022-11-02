@@ -1,10 +1,10 @@
 data yag dijadikan master sendiri:
 
-1. employment status
-2. level
-3. grade category
-4. division
-5. department
+1. employment status (on progress)
+2. level (on progress)
+3. grade category (on progress)
+4. division (done)
+5. department (done)
 
 -------------------------------------------------------
 
