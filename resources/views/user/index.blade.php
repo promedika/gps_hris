@@ -271,11 +271,9 @@
           <label for="employment_status">EMPLOYMENT STATUS</label>
           <select class="form-control" id="employment_status" name="employment_status"required>
               <option value="" style="display:none;">CHOOSE STATUS</option>
-              @foreach ($emp_stats as $emp_stat)
-              <option value="{{$emp_stat->id}}">
-                {{$emp_stat->emp_stat_name}}
-              </option>
-              @endforeach
+              <option value="KARYAWAN TETAP">KARYAWAN TETAP</option>
+              <option value="KARYAWAN KONTRAK">KARYAWAN KONTRAK</option>
+              <option value="PROBATION">PROBATION</option>
           </select>
           <span id="errorDepartment" class="text-red"></span>
         </div>

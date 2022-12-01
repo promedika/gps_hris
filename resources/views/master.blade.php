@@ -127,10 +127,66 @@
               </li>
 
               <li class="nav-item">
-                <a href="{{route('jabatan.index')}}" class="nav-link" style="color: #343a40;">
+                <a href="{{route('Level.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-building"></i>
+                    Level
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('Jabatan.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-user-tie"></i></i>
                     Jabatan
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-building"></i>
+              <p>
+                Area
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @if (Auth::user()->jabatan !=1)
+              <li class="nav-item">
+                <a href="{{route('indonesia_provinces.index')}}" class="nav-link" style="color: #343a40;">
+                    <i class="nav-icon fa fa-building"></i>
+                    <p>
+                    Master Provinsi
+                    </p>
+                </a>
+              </li>
+              @endif
+              <li class="nav-item">
+                <a href="{{route('indonesia_cities.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-building"></i>
+                    Master Kabupaten
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('indonesia_districts.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-building"></i>
+                    Master Kecamatan
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('indonesia_villages.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-building"></i></i>
+                    Master Village
                   </p>
                 </a>
               </li>

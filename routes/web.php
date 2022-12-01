@@ -64,11 +64,11 @@ Route::group(['middleware'=>'auth'], function() {
     // Route::get('dropdown', [DropdownController::class, 'index']);
     Route::post('api/fetch-cities',[DropdownController::class, 'fetchCities']);
 
-    Route::get('/jabatan','App\Http\Controllers\JabatanController@index')->name('jabatan.index');
-    Route::post('/jabatan/create','App\Http\Controllers\JabatanController@store')->name('jabatan.create');
-    Route::post('/jabatan/edit','App\Http\Controllers\JabatanController@edit')->name('jabatan.edit');
-    Route::post('/jabatan/update','App\Http\Controllers\JabatanController@update')->name('jabatan.update');
-    Route::post('/jabatan/delete','App\Http\Controllers\JabatanController@destroy')->name('jabatan.delete');
+    Route::get('/jabatan','App\Http\Controllers\JabatanController@index')->name('Jabatan.index');
+    Route::post('/jabatan/create','App\Http\Controllers\JabatanController@store')->name('Jabatan.create');
+    Route::post('/jabatan/edit','App\Http\Controllers\JabatanController@edit')->name('Jabatan.edit');
+    Route::post('/jabatan/update','App\Http\Controllers\JabatanController@update')->name('Jabatan.update');
+    Route::post('/jabatan/delete','App\Http\Controllers\JabatanController@destroy')->name('Jabatan.delete');
 
    Route::get('/kpi','App\Http\Controllers\KpiController@create')->name('kpi.postkpi'); 
    
@@ -95,5 +95,36 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/division/edit','App\Http\Controllers\DivisionController@edit')->name('division.edit');
     Route::post('/division/update','App\Http\Controllers\DivisionController@update')->name('division.update');
     Route::post('/division/delete','App\Http\Controllers\DivisionController@destroy')->name('division.delete');
+
+    Route::get('/indonesia_provinces','App\Http\Controllers\indonesia_provincesController@index')->name('indonesia_provinces.index');
+    Route::post('/indonesia_provinces/create','App\Http\Controllers\indonesia_provincesController@store')->name('indonesia_provinces.create');
+    Route::post('/indonesia_provinces/edit','App\Http\Controllers\indonesia_provincesController@edit')->name('indonesia_provinces.edit');
+    Route::post('/indonesia_provinces/update','App\Http\Controllers\indonesia_provincesController@update')->name('indonesia_provinces.update');
+    Route::post('/indonesia_provinces/delete','App\Http\Controllers\indonesia_provincesController@destroy')->name('indonesia_provinces.delete');
+    
+    Route::get('/indonesia_cities','App\Http\Controllers\indonesia_citiesController@index')->name('indonesia_cities.index');
+    Route::post('/indonesia_cities/create','App\Http\Controllers\indonesia_citiesController@store')->name('indonesia_cities.create');
+    Route::post('/indonesia_cities/edit','App\Http\Controllers\indonesia_citiesController@edit')->name('indonesia_cities.edit');
+    Route::post('/indonesia_cities/update','App\Http\Controllers\indonesia_citiesController@update')->name('indonesia_cities.update');
+    Route::post('/indonesia_cities/delete','App\Http\Controllers\indonesia_citiesController@destroy')->name('indonesia_cities.delete');
+
+    Route::get('/indonesia_districts','App\Http\Controllers\indonesia_districtsController@index')->name('indonesia_districts.index');
+    Route::post('/indonesia_districts/create','App\Http\Controllers\indonesia_districtsController@store')->name('indonesia_districts.create');
+    Route::post('/indonesia_districts/edit','App\Http\Controllers\indonesia_districtsController@edit')->name('indonesia_districts.edit');
+    Route::post('/indonesia_districts/update','App\Http\Controllers\indonesia_districtsController@update')->name('indonesia_districts.update');
+    Route::post('/indonesia_districts/delete','App\Http\Controllers\indonesia_districtsController@destroy')->name('indonesia_districts.delete');
+
+    Route::get('/indonesia_villages','App\Http\Controllers\indonesia_villagesController@index')->name('indonesia_villages.index');
+    Route::post('/indonesia_villages/create','App\Http\Controllers\indonesia_villagesController@store')->name('indonesia_villages.create');
+    Route::post('/indonesia_villages/edit','App\Http\Controllers\indonesia_villagesController@edit')->name('indonesia_villages.edit');
+    Route::post('/indonesia_villages/update','App\Http\Controllers\indonesia_villagesController@update')->name('indonesia_villages.update');
+    Route::post('/indonesia_villages/delete','App\Http\Controllers\indonesia_villagesController@destroy')->name('indonesia_villages.delete');
+
+    Route::get('/level','App\Http\Controllers\LevelController@index')->name('Level.index');
+    Route::post('/level/create','App\Http\Controllers\LevelController@store')->name('Level.create');
+    Route::post('/level/edit','App\Http\Controllers\LevelController@edit')->name('Level.edit');
+    Route::post('/level/update','App\Http\Controllers\LevelController@update')->name('Level.update');
+    Route::post('/level/delete','App\Http\Controllers\LevelController@destroy')->name('Level.delete');
+
 });
 

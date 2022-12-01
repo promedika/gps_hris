@@ -41,7 +41,7 @@ class JabatanController extends Controller
             'name'   => 'required',
         ]);
         $jabatan = new jabatan();
-        $jabatan->name = $request->name;
+        $jabatan->jab_name = $request->name;
         $jabatan->created_by = Auth::User()->id;
         $jabatan->updated_by = Auth::User()->id;
         $jabatan->save();
@@ -88,7 +88,7 @@ class JabatanController extends Controller
         ]);
         $id = $request->id;
         $jabatan = Jabatan::find($id);
-        $jabatan->name = $request->name;
+        $jabatan->jab_name = $request->name;
         $jabatan->updated_by = Auth::User()->id;
         $jabatan->save();
         return redirect(route('jabatan.index'));

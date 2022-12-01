@@ -5,7 +5,6 @@
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 @endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -35,7 +34,7 @@
               <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-jabatan"><i class="fa solid fa-plus"></i></a>
+                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-Jabatan"><i class="fa solid fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -52,7 +51,7 @@
                           @foreach ($jabatans as $jabatan)
                           <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$jabatan->name}}</td>
+                            <td>{{$jabatan->jab_name}}</td>
                             <td>
                                 <a href="#" jabatan-id="{{$jabatan->id}}" title="Edit" class="btn btn-warning btn-edit-jabatan"><i class="fas fa-edit"></i></a>
                                 <a href="#" jabatan-id="{{$jabatan->id}}" title="Delete" class="btn btn-danger btn-delete-jabatan"><i class="fas fa-trash"></i></a>
@@ -78,10 +77,10 @@
 <div class="modal fade in" id="modalCreateJabatan" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
+        <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-create">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Create New Jabatan</h4>
+          <h4 class="modal-title">Buat Jabatan Baru</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -90,7 +89,7 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="form-group">
-            <label for="name">Jabatan Name</label>
+            <label for="name">Nama Jabatan</label>
             <input type="text" name="name" id="name" class="form-control" required>
             <span id="errorName" class="text-red"></span>
           </div>
@@ -169,14 +168,6 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/jszip/jszip.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
 <script>
     $(document).ready(function(){
@@ -184,6 +175,18 @@
             headers: {
                 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $(document).on('blur', "input[type=text]", function () {
+          $(this).val(function (_, val) {
+            return val.toUpperCase();
+          });
+        });
+
+        $(document).on('keyup', "input[type=text]", function () {
+          $(this).val(function (_, val) {
+            return val.toUpperCase();
+          });
         });
 
         $('#table').DataTable({
@@ -196,15 +199,15 @@
           "responsive": true,
         });
 
-        $('.btn-add-jabatan').click(function(){
+        $('.btn-add-Jabatan').click(function(){
             $('#modalCreateJabatan').modal('show');
 
-            $('#form-signup').submit(function(e){
+            $('#form-create').submit(function(e){
                 e.preventDefault();
                 let modal_id = $('#modalCreateJabatan');
                 var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('jabatan.create')}}",
+                    url:"{{route('Jabatan.create')}}",
                     type:'POST',
                     data:formData,
                     processData: false,
@@ -214,33 +217,35 @@
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success create');
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorName').text(response.responseJSON.errors.name);
+                        alert('success created');
+                        location.reload();
                     }
                 })
             })
         })
 
 
+       
         $('.btn-edit-jabatan').click(function(){
             $('#modalEditJabatan').modal('show');
             var jabatanID = $(this).attr('jabatan-id');
             var id = $('#id').val(jabatanID);
             
             $.ajax({
-                url:"{{route('jabatan.edit')}}",
+                url:"{{route('Jabatan.edit')}}",
                 type:'POST',
                 data:{
                   id:jabatanID,
                 },
                 success:function(data){
-                    console.log(data);
-                    $('#name_update').val(data.name);
+                    $('#name_update').val(data.jab_name);
                     $('#form-edit').data('id',jabatanID);
                 },
                 error:function(response){
@@ -255,9 +260,8 @@
                 let jabatanID = $(this).data('id');
                 var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('jabatan.update')}}",
+                    url:"{{route('Jabatan.update')}}",
                     type:'POST',
-                    data:formData,
                     data:{
                       id:jabatanID,
                       name:$('#name_update').val(),
@@ -265,13 +269,15 @@
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success update');
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorName').text(response.responseJSON.errors.name);
+                        alert('Success edited');
+                        location.reload();
                     }
                 })
             })
@@ -285,7 +291,7 @@
                 e.preventDefault();
                 let modal_id = $('#modalDeleteJabatan');
                 $.ajax({
-                    url:"{{route('jabatan.delete')}}",
+                    url:"{{route('Jabatan.delete')}}",
                     type:'POST',
                     data:{
                       id:jabatanID,
@@ -293,13 +299,15 @@
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success deleted');
                         location.reload();
                     },
                     error:function(response){
-                        console.log('success failed');
+                        alert('failed deleted');
+                        location.reload();
                     }
                 })
             })
