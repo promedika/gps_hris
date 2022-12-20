@@ -156,7 +156,7 @@
             <ul class="nav nav-treeview">
               @if (Auth::user()->jabatan !=1)
               <li class="nav-item">
-                <a href="{{route('indonesia_provinces.index')}}" class="nav-link" style="color: #343a40;">
+                <a href="{{route('indonesia_province.index')}}" class="nav-link" style="color: #343a40;">
                     <i class="nav-icon fa fa-building"></i>
                     <p>
                     Master Provinsi

@@ -35,7 +35,7 @@
               <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-indonesia_provinces"><i class="fa solid fa-plus"></i></a>
+                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add-Indonesia_province"><i class="fa solid fa-plus"></i></a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -51,15 +51,15 @@
                         </thead>
                         <tbody>
                           @php $no = 1; @endphp
-                          @foreach ($indonesia_provinces as $indonesia_provinces)
+                          @foreach ($indonesia_provinces as $indonesia_province)
                           <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$indonesia_provinces->code}}</td>
-                            <td>{{$indonesia_provinces->name}}</td>
-                            <td>{{$indonesia_provinces->meta}}</td>
+                            <td>{{$indonesia_province->code}}</td>
+                            <td>{{$indonesia_province->name}}</td>
+                            <td>{{$indonesia_province->meta}}</td>
                             <td>
-                                <a href="#" indonesia_provinces-id="{{$indonesia_provinces->id}}" title="Edit" class="btn btn-warning btn-edit-indonesia_provinces"><i class="fas fa-edit"></i></a>
-                                <a href="#" indonesia_provinces-id="{{$indonesia_provinces->id}}" title="Delete" class="btn btn-danger btn-delete-indonesia_provinces"><i class="fas fa-trash"></i></a>
+                                <a href="#" indonesia_province-id="{{$indonesia_province->id}}" title="Edit" class="btn btn-warning btn-edit-Indonesia_province"><i class="fas fa-edit"></i></a>
+                                <a href="#" indonesia_province-id="{{$indonesia_province->id}}" title="Delete" class="btn btn-danger btn-delete-Indonesia_province"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                           @endforeach
@@ -79,7 +79,7 @@
 </div>
 
 <!-- The Modal Add -->
-<div class="modal fade in" id="modalCreateIndonesia_provinces" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalCreateIndonesia_province" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-create">
@@ -111,7 +111,7 @@
 </div>
 
 <!-- The Modal Edit -->
-<div class="modal fade in" id="modalEditIndonesia_provinces" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalEditIndonesia_province" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
@@ -143,7 +143,7 @@
 </div>
 
 <!-- The Modal Delete -->
-<div class="modal fade in" id="modalDeleteIndonesia_provinces" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalDeleteIndonesia_province" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
@@ -212,15 +212,15 @@
           "responsive": true,
         });
 
-        $('.btn-add-indonesia_provinces').click(function(){
-            $('#modalCreateIndonesia_provinces').modal('show');
+        $('.btn-add-Indonesia_province').click(function(){
+            $('#modalCreateIndonesia_province').modal('show');
 
             $('#form-create').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalCreateIndonesia_provinces');
+                let modal_id = $('#modalCreateIndonesia_province');
                 var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('indonesia_provinces.create')}}",
+                    url:"{{route('Indonesia_province.create')}}",
                     type:'POST',
                     data:formData,
                     processData: false,
@@ -245,13 +245,13 @@
         })
 
 
-        $('.btn-edit-indonesia_provinces').click(function(){
-            $('#modalEditIndonesia_provinces').modal('show');
+        $('.btn-edit-Indonesia_province').click(function(){
+            $('#modalEditIndonesia_province').modal('show');
             var ID = $(this).attr('id');
             var id = $('#id').val(ID);
             
             $.ajax({
-                url:"{{route('indonesia_provinces.edit')}}",
+                url:"{{route('Indonesia_province.edit')}}",
                 type:'POST',
                 data:{
                   id:ID,
@@ -268,11 +268,11 @@
 
             $('#form-edit').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalEditIndonesia_provinces');
+                let modal_id = $('#modalEditIndonesia_province');
                 let ID = $(this).data('id');
                 var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('indonesia_provinces.update')}}",
+                    url:"{{route('Indonesia_province.update')}}",
                     type:'POST',
                     data:{
                       id:ID,
@@ -295,15 +295,15 @@
             })
         })
 
-        $('.btn-delete-indonesia_provinces').click(function(){
-          $('#modalDeleteIndonesia_provinces').modal('show');
-          var ID = $(this).attr('indonesia_provinces-id');
+        $('.btn-delete-Indonesia_province').click(function(){
+          $('#modalDeleteIndonesia_province').modal('show');
+          var ID = $(this).attr('Indonesia_province-id');
           var id = $('#id_delete').val(ID);
           $('#form-delete').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalDeleteIndonesia_provinces');
+                let modal_id = $('#modalDeleteIndonesia_province');
                 $.ajax({
-                    url:"{{route('indonesia_provinces.delete')}}",
+                    url:"{{route('Indonesia_province.delete')}}",
                     type:'POST',
                     data:{
                       id:ID,
