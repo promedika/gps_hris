@@ -36,18 +36,17 @@ class Indonesia_provinceController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $this->validate($request,[
-            'id'  =>'required',
-            'code'=>'required',
             'name'=>'required',
-            'meta'=>'required',
         ]);
+
+        $last_data = Indonesia_province::latest('id')->first();
+
+        $code = $last_data->code + 1;
+
         $indonesia_province = new Indonesia_province();
-        $indonesia_province->id = $request->id;
-        $indonesia_province->code = $request->code;
+        $indonesia_province->code = $code;
         $indonesia_province->name = $request->name;
-        $indonesia_province->meta = $request->meta;
         $indonesia_province->created_by = Auth::User()->id;
         $indonesia_province->updated_by = Auth::User()->id;
         $indonesia_province->save();
@@ -77,9 +76,7 @@ class Indonesia_provinceController extends Controller
     {
         $id = $request->id;
         $indonesia_province = Indonesia_province::find($id);
-
         return $indonesia_province;
-
     }
     /**
      * Update the specified resource in storage.
@@ -93,12 +90,21 @@ class Indonesia_provinceController extends Controller
         $this->validate($request,[
             'name'=>'required'
         ]);
+
         $id = $request->id;
         $indonesia_province = Indonesia_province::find($id);
         $indonesia_province->name = $request->name;
         $indonesia_province->updated_by = Auth::User()->id;
-        $indonesia_province->save();
-        return redirect(route('indonesia_province.index'));
+
+        $return = 'Success';
+
+        try {
+            $indonesia_province->save();
+        } catch (Exception $e) {
+            $return = 'Failed';
+        }
+
+        return $return;
     }
 
     /**
@@ -109,9 +115,17 @@ class Indonesia_provinceController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = $request->id;
+        $id = (int) $request->id;
         $indonesia_province = Indonesia_province::find($id);
-        $indonesia_province->delete();
-        return redirect(route('indonesia_province.index'));
+        
+        $return = 'Success';
+
+        try {
+            $indonesia_province->delete();
+        } catch (Exception $e) {
+            $return = 'Failed';
+        }
+
+        return $return;
     }
 }

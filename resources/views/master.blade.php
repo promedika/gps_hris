@@ -168,11 +168,12 @@
                 <a href="{{route('indonesia_cities.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
                     <i class="nav-icon fa fa-building"></i>
-                    Master Kabupaten
+                    Master Kabupaten/Kota
                   </p>
                 </a>
               </li>
 
+              {{--
               <li class="nav-item">
                 <a href="{{route('indonesia_districts.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
@@ -190,6 +191,7 @@
                   </p>
                 </a>
               </li>
+              --}}
             </ul>
           </li>
 

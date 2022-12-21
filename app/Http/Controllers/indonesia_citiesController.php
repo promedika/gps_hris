@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use App\Models\indonesia_cities;
+use App\Models\Indonesia_province;
 
 class indonesia_citiesController extends Controller
 {
@@ -16,8 +17,9 @@ class indonesia_citiesController extends Controller
      */
     public function index()
     {
+        $indonesia_provinces = Indonesia_province::all();
         $indonesia_cities = indonesia_cities::all();
-        return view('indonesia_cities.index', compact('indonesia_cities'));
+        return view('indonesia_cities.index', compact('indonesia_cities','indonesia_provinces'));
     }
 
     /**
@@ -39,15 +41,30 @@ class indonesia_citiesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
+            'province'   => 'required',
             'name'   => 'required',
         ]);
-        $indonesia_cities = new department();
-        $indonesia_cities->prov_name = $request->name;
+
+        $last_data = indonesia_cities::where('province_code',$request->province)->latest('id')->first();
+        
+        $province_code = $last_data->code + 1;
+        
+        $indonesia_cities = new indonesia_cities();
+        $indonesia_cities->code = $province_code;
+        $indonesia_cities->province_code = $request->province;
+        $indonesia_cities->name = $request->name;
         $indonesia_cities->created_by = Auth::User()->id;
         $indonesia_cities->updated_by = Auth::User()->id;
-        $indonesia_cities->save();
+        
+        $return = 'Success';
 
-        return redirect(route('indonesia_cities.index'));
+        try {
+            $indonesia_cities->save();
+        } catch (Exception $e) {
+            $return = 'Failed';
+        }
+
+        return $return;
     }
 
     /**
@@ -70,10 +87,11 @@ class indonesia_citiesController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
+        $indonesia_provinces = Indonesia_province::all();
         $indonesia_cities = indonesia_cities::find($id);
+        $provinces_edit = Indonesia_province::where('code',$indonesia_cities->province_code)->first('name');
 
-        return $indonesia_cities;
-
+        return response()->json(['cities' => $indonesia_cities, 'provinces' => $indonesia_provinces, 'provinces_edit' => $provinces_edit]);
     }
     /**
      * Update the specified resource in storage.
@@ -85,14 +103,35 @@ class indonesia_citiesController extends Controller
     public function update(Request $request)
     {
         $this->validate($request,[
-            'name'=>'required'
+            'id'   => 'required',
+            'province'   => 'required',
+            'name'   => 'required',
+            'old_province_code' => 'required',
         ]);
+
         $id = $request->id;
-        $indonesia_cities = indonesia_cities::find($id);
-        $indonesia_cities->prov_name = $request->name;
+
+        $last_data = indonesia_cities::where('province_code',$request->province)->latest('id')->first();
+        
+        $province_code = $last_data->code + 1;
+        
+        $indonesia_cities = indonesia_cities::find($id);;
+        if ($request->province != $request->old_province_code) {
+            $indonesia_cities->code = $province_code;
+        }
+        $indonesia_cities->province_code = $request->province;
+        $indonesia_cities->name = $request->name;
         $indonesia_cities->updated_by = Auth::User()->id;
-        $indonesia_cities->save();
-        return redirect(route('indonesia_cities.index'));
+        
+        $return = 'Success';
+
+        try {
+            $indonesia_cities->save();
+        } catch (Exception $e) {
+            $return = 'Failed';
+        }
+
+        return $return;
     }
 
     /**

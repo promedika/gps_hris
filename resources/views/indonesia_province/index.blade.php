@@ -15,7 +15,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Input Provinsi</h1>
+          <h1 class="m-0">Provinsi</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -43,9 +43,7 @@
                         <thead>
                           <tr>
                             <th>No</th>
-                            <th>Kode</th>
                             <th>Nama Provinsi</th>
-                            <th>Keterangan</th>
                             <th></th>
                           </tr>
                         </thead>
@@ -54,12 +52,10 @@
                           @foreach ($indonesia_provinces as $indonesia_province)
                           <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$indonesia_province->code}}</td>
                             <td>{{$indonesia_province->name}}</td>
-                            <td>{{$indonesia_province->meta}}</td>
                             <td>
-                                <a href="#" indonesia_province-id="{{$indonesia_province->id}}" title="Edit" class="btn btn-warning btn-edit-Indonesia_province"><i class="fas fa-edit"></i></a>
-                                <a href="#" indonesia_province-id="{{$indonesia_province->id}}" title="Delete" class="btn btn-danger btn-delete-Indonesia_province"><i class="fas fa-trash"></i></a>
+                                <a href="javascript:void(0)" indonesia_province-id="{{$indonesia_province->id}}" title="Edit" class="btn btn-warning btn-edit-Indonesia_province"><i class="fas fa-edit"></i></a>
+                                <a href="javascript:void(0)" indonesia_province-id="{{$indonesia_province->id}}" title="Delete" class="btn btn-danger btn-delete-Indonesia_province"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                           @endforeach
@@ -117,11 +113,11 @@
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Edit Provinsi
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h4 class="modal-title">Edit Provinsi</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+          </button>
+        </div>
       <input type="hidden" name="id" id="id" class="form-control">
       <!-- Modal body -->  
       <div class="modal-body">
@@ -234,10 +230,11 @@
                       $('#loader').modal('show');
                     },
                     success:function(data){
-                        location.reload();
+                      alert('success');
+                      location.reload();
                     },
                     error:function(response){
-                        alert('failed created');
+                        alert('failed');
                         location.reload();
                     }
                 })
@@ -245,9 +242,9 @@
         })
 
 
-        $('.btn-edit-Indonesia_province').click(function(){
+        $("body").on("click", ".btn-edit-Indonesia_province", function(e) {
             $('#modalEditIndonesia_province').modal('show');
-            var ID = $(this).attr('id');
+            var ID = $(this).attr('indonesia_province-id');
             var id = $('#id').val(ID);
             
             $.ajax({
@@ -265,37 +262,37 @@
                 }
                 
             })
+        })
 
-            $('#form-edit').submit(function(e){
-                e.preventDefault();
-                let modal_id = $('#modalEditIndonesia_province');
-                let ID = $(this).data('id');
-                var formData = new FormData(this);
-                $.ajax({
-                    url:"{{route('Indonesia_province.update')}}",
-                    type:'POST',
-                    data:{
-                      id:ID,
-                      name:$('#name_update').val(),
-                    },
-                    beforeSend: function() {
-                      modal_id.find('.modal-footer button').prop('disabled',true);
-                      modal_id.find('.modal-header button').prop('disabled',true);
-                      modal_id.modal('hide');
-                      $('#loader').modal('show');
-                    },
-                    success:function(data){
-                        location.reload();
-                    },
-                    error:function(response){
-                        alert('failed edited');
-                        location.reload();
-                    }
-                })
+        $("body").on("submit", "#form-edit", function(e) {
+            e.preventDefault();
+            let modal_id = $('#modalEditIndonesia_province');
+            let ID = $(this).find('#id').val();
+            $.ajax({
+                url:"{{route('Indonesia_province.update')}}",
+                type:'POST',
+                data:{
+                  id:ID,
+                  name:$('#name_update').val(),
+                },
+                beforeSend: function() {
+                  modal_id.find('.modal-footer button').prop('disabled',true);
+                  modal_id.find('.modal-header button').prop('disabled',true);
+                  modal_id.modal('hide');
+                  $('#loader').modal('show');
+                },
+                success:function(data){
+                    alert(data);
+                    location.reload();
+                },
+                error:function(response){
+                    alert(data);
+                    location.reload();
+                }
             })
         })
 
-        $('.btn-delete-Indonesia_province').click(function(){
+        $("body").on("click", ".btn-delete-Indonesia_province", function(e) {
           $('#modalDeleteIndonesia_province').modal('show');
           var ID = $(this).attr('Indonesia_province-id');
           var id = $('#id_delete').val(ID);
@@ -315,11 +312,12 @@
                       $('#loader').modal('show');
                     },
                     success:function(data){
-                        location.reload();
+                      alert(data);
+                      location.reload();
                     },
-                    error:function(response){
-                        alert('failed deleted');
-                        location.reload();
+                    error:function(data){
+                      alert(data);
+                      location.reload();
                     }
                 })
             })

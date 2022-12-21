@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCreatedUpdatedByToDivisionsTable extends Migration
+class AddCreatedUpdatedByToIndonesiaVillagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddCreatedUpdatedByToDivisionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('divisions', function (Blueprint $table) {
+        Schema::table('indonesia_villages', function (Blueprint $table) {
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
         });
@@ -26,7 +26,7 @@ class AddCreatedUpdatedByToDivisionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('divisions', function (Blueprint $table) {
+        Schema::table('indonesia_villages', function (Blueprint $table) {
             //
         });
     }

@@ -97,10 +97,10 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/division/delete','App\Http\Controllers\DivisionController@destroy')->name('division.delete');
 
     Route::get('/indonesia_province','App\Http\Controllers\indonesia_provinceController@index')->name('indonesia_province.index');
-    Route::post('/indonesia_province/create','App\Http\Controllers\indonesia_provinceController@store')->name('indonesia_province.create');
-    Route::post('/indonesia_province/edit','App\Http\Controllers\indonesia_provinceController@edit')->name('indonesia_province.edit');
-    Route::post('/indonesia_province/update','App\Http\Controllers\indonesia_provinceController@update')->name('indonesia_province.update');
-    Route::post('/indonesia_province/delete','App\Http\Controllers\indonesia_provinceController@destroy')->name('indonesia_province.delete');
+    Route::post('/indonesia_province/create','App\Http\Controllers\indonesia_provinceController@store')->name('Indonesia_province.create');
+    Route::post('/indonesia_province/edit','App\Http\Controllers\indonesia_provinceController@edit')->name('Indonesia_province.edit');
+    Route::post('/indonesia_province/update','App\Http\Controllers\indonesia_provinceController@update')->name('Indonesia_province.update');
+    Route::post('/indonesia_province/delete','App\Http\Controllers\indonesia_provinceController@destroy')->name('Indonesia_province.delete');
     
     Route::get('/indonesia_cities','App\Http\Controllers\indonesia_citiesController@index')->name('indonesia_cities.index');
     Route::post('/indonesia_cities/create','App\Http\Controllers\indonesia_citiesController@store')->name('indonesia_cities.create');
