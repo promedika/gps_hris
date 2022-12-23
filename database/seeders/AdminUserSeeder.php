@@ -18,6 +18,7 @@ class AdminUserSeeder extends Seeder
         DB::table('users')->insert([
             'fullname' => 'Super user',
             'nik' =>  '123456',
+            'phone' => '021123456789'
             'password' =>   Hash::make('promedika'),
             'jabatan'  =>  '0',
             'created_by' => '1',

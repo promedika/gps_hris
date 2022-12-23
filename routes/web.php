@@ -53,7 +53,9 @@ Route::group(['middleware'=>'auth'], function() {
     Route::get('/logout','App\Http\Controllers\DashboardController@logout')->name('logout');
     
     Route::get('/users','App\Http\Controllers\UserController@index')->name('dashboard.users.index');
+    Route::get('/user/create','App\Http\Controllers\UserController@create')->name('dashboard.user.create');
     Route::post('/users/create','App\Http\Controllers\UserController@store')->name('dashboard.users.create');
+    Route::post('/user/show','App\Http\Controllers\UserController@show')->name('dashboard.user.show');
     Route::post('/users/edit','App\Http\Controllers\UserController@edit')->name('dashboard.users.edit');
     Route::post('/users/update','App\Http\Controllers\UserController@update')->name('dashboard.users.update');
     Route::post('/users/delete','App\Http\Controllers\UserController@destroy')->name('dashboard.users.delete');

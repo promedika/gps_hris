@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Users
+    Employee
 @endsection
 
 @section('custom_link_css')
@@ -17,12 +17,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Users</h1>
+            <h1 class="m-0">Employee</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
-              <li class="breadcrumb-item active">Users</li>
+              <li class="breadcrumb-item active">Employee</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -37,7 +37,7 @@
           <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <a href="#" title="Add" class="btn btn-primary col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
+                  <a href="{{route('dashboard.user.create')}}" title="Add" class="btn btn-primary col-2 btn-add-user"><i class="fa solid fa-plus"></i></a>
                   <a href="#" title="Add" class="btn btn-success col-2 btn-import-user"><i class="fa solid fa-file-import"></i></a>
                 </div>
                 @if(session()->has('message'))
@@ -58,34 +58,8 @@
                         <th>No</th>
                         <th>Employee No</th>
                         <th>Employee Name</th>
-                        <th>Birth Date</th>
-                        <th>Gender</th>
-                        <th>Religion</th>
-                        <th>Marital Status</th>
-                        <th>Education Level</th>
-                        <th>Join Date</th>
                         <th>Employment Status</th>
-                        <th>Employment Start Date</th>
-                        <th>Employment End Date</th>
-                        <th>Length Of Service</th>
                         <th>Employee Position</th>
-                        <th>Organization Unit</th>
-                        <th>Job Title</th>
-                        <th>Job Status</th>
-                        <th>level</th>
-                        <th>Grade Category</th>
-                        <th>Work Location</th>
-                        <th>Employee Status</th>
-                        <th>Direct Supervisor</th>
-                        <th>Immediate Manager</th>
-                        <th>Termination Date</th>
-                        <th>Terminate Reason</th>
-                        <th>Resignation</th>
-                        <th>Area</th>
-                        <th>Kota</th>
-                        <th>Division</th>
-                        <th>Department</th>
-                        <th>Function</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -95,39 +69,18 @@
                                 <td>{{$user->id}}</td>
                                 <td>{{$user->nik}}</td>
                                 <td>{{$user->fullname}}</td>
-                                <td>{{$user->birth_date}}</td>
-                                <td>{{$user->gender}}</td>
-                                <td>{{$user->religion}}</td>
-                                <td>{{$user->marital_status}}</td>
-                                <td>{{$user->education_level}}</td>
-                                <td>{{$user->join_date}}</td>
                                 <td>{{$user->employment_status}}</td>
-                                <td>{{date('d-m-Y', strtotime($user->start_date))}}</td>
-                                <td>{{date('d-m-Y', strtotime($user->end_date))}}</td>
-                                <td>{{$user->length_of_service}}</td>
                                 <td>{{$user->jabatan}}</td>
-                                <td>{{$user->organization_unit}}</td>
-                                <td>{{$user->job_title}}</td>
-                                <td>{{$user->job_status}}</td>
-                                <td>{{$user->level}}</td>
-                                <td>{{$user->grade_category}}</td>
-                                <td>{{$user->work_location}}</td>
-                                <td>{{$user->employee_status}}</td>
-                                <td>{{$user->direct_supervisor}}</td>
-                                <td>{{$user->immediate_manager}}</td>
-                                <td>{{$user->termination_date}}</td>
-                                <td>{{$user->terminate_reason}}</td>
-                                <td>{{$user->resignation}}</td>
-                                <td>{{$user->area}}</td>
-                                <td>{{$user->kota}}</td>
-                                <td>{{$user->division}}</td>
-                                <td>{{$user->department}}</td>
-                                <td>{{$user->function}}</td>
                                 <td>
-                                  <a href="#" user-id="{{$user->id}}" title="" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
-                                  <a href="#" user-id="{{$user->id}}" data-user="{{$user->first_name.' '.$user->last_name}}" title="" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
-                                  
-                                  </td>
+                                  <!-- <form action="{{route('dashboard.user.show')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$user->id}}">
+                                    <button title="view" class="btn btn-info btn-view-user"><i class="fas fa-eye"></i></button> -->
+                                    <a href="#" user-id="{{$user->id}}" title="view" class="btn btn-info btn-view-user"><i class="fas fa-eye"></i></a>
+                                  <!-- </form> -->
+                                  <a href="#" user-id="{{$user->id}}" title="edit" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
+                                  <a href="#" user-id="{{$user->id}}" data-user="{{$user->first_name.' '.$user->last_name}}" title="delete" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
+                                </td>
                             </tr>
                             @endforeach
                     </tbody>
@@ -178,7 +131,7 @@
 
 <!-- The Modal -->
 <div class="modal fade in" id="modalCreateUser" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <form action="" method="post" accept-charset="utf-8" id="form-signup">
       <!-- Modal Header -->
@@ -807,78 +760,27 @@
         });
 
         $('.btn-import-user').click(function(){
-            $('#modal-import-user').modal('show');
-          });
+          $('#modal-import-user').modal('show');
+        });
 
-          $('#submit').click(function(){
-            $('#modal-import-user').modal('hide');
-                      $('#loader').modal ('show');
-                    });
+        $('#submit').click(function(){
+          $('#modal-import-user').modal('hide');
+          $('#loader').modal ('show');
+        });
 
-        $('.btn-add-user').click(function(){
-            $('#modalCreateUser').modal('show');
-            var site_url = "{{ url('/') }}";
-            $('#area').on('change', function () {
-                var idProvince = this.value;
-                $("#kota").html('');
-
-                jQuery.ajax({
-                    method: "post",
-                    url: site_url + "/api/fetch-cities",
-                    data: {
-                        province_code: idProvince,
-                        _token: '{{csrf_token()}}'
-                    },
-                    beforeSend: function() {
-                    },
-                    success:function(result){
-                        $('#kota').html('<option value="">CHOOSE CITIES</option>');
-                        $.each(result, function( key, value ) {
-                            let val = value.id;
-                            $("#kota").append('<option value="' + val + '">' + value.name + '</option>');
-                        });
-                    }
-                });
-
-            });    
-
-            $('#form-signup').submit(function(e){
-                e.preventDefault();
-                let modal_id = $('#modalCreateUser');
-                var formData = new FormData(this);
-                $.ajax({
-                    url:"{{route('dashboard.users.create')}}",
-                    type:'POST',
-                    data:formData,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    enctype: 'multipart/form-data',
-                    beforeSend: function() {
-                      modal_id.find('.modal-footer button').prop('disabled',true);
-                      modal_id.find('.modal-header button').prop('disabled',true);
-                    },
-                    success:function(data){
-                        console.log('success create');
-                        location.reload();
-                    },
-                    error:function(response){
-                        $('#errorFullName').text(response.responseJSON.errors.fullname);
-                        $('#errorNik').text(response.responseJSON.errors.nik);
-                        $('#errorEmail').text(response.responseJSON.errors.email);
-                        $('#errorPassword').text(response.responseJSON.errors.password);
-                        $('#errorDepartment').text(response.responseJSON.errors.department);
-                        $('#errorJabatan').text(response.responseJSON.errors.jabatan);
-                        $('#errorStartDate').text(response.responseJSON.errors.start_date);
-                        $('#errorEndDate').text(response.responseJSON.errors.end_date);
-
-                        modal_id.find('.modal-footer button').prop('disabled',false);
-                        modal_id.find('.modal-header button').prop('disabled',false);
-                    }
-                })
-            })
-        })
-   
+        jQuery("body").on("click", ".btn-view-user", function(e) {
+          let usrID = $(this).attr('user-id');
+          $.ajax({
+              url:"{{route('dashboard.user.show')}}",
+              type:'POST',
+              data:{
+                id:usrID,
+              },
+              success:function(data){
+                  location.href = data.url;
+              },
+          })
+        });
 
         jQuery("body").on("click", ".btn-edit-user", function(e) {
             $('#modalEditUser').modal('show');

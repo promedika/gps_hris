@@ -37,7 +37,7 @@ class CreateUsersTable extends Migration
             $table->integer('level')->nullable();
             $table->string('address')->nullable();
             $table->integer('grade_category')->nullable();
-            $table->integer('work_location')->nullable();
+            $table->string('work_location')->nullable();
             $table->string('employee_status')->nullable();
             $table->string('direct_supervisor')->nullable();
             $table->string('immediate_manager')->nullable();

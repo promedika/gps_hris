@@ -103,7 +103,7 @@
                 <a href="{{route('dashboard.users.index')}}" class="nav-link" style="color: #343a40;">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
-                    User
+                    Employee
                     </p>
                 </a>
               </li>

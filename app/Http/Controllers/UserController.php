@@ -28,18 +28,30 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(Auth::User()->role != 1){
-        $users = User::all();
-        $emp_stats = EmpStatus::all();
-        $jabatans = Jabatan::all();
-        $levels = Level::all();
-        $grades = GradeCategory::all();
-        $divisions = Division::all();
-        $departments = Department::all();
-        $provinces = Province::pluck('name','code');
-        return view('user.index', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces'));
-        }else{
-        return redirect('error.404');
+        if (Auth::User()->role != 1){
+            $users = User::all();
+            $emp_stats = EmpStatus::all();
+            $jabatans = Jabatan::all();
+            $levels = Level::all();
+            $grades = GradeCategory::all();
+            $divisions = Division::all();
+
+            $departments = Department::all();
+            $dept_arr = [];
+            foreach ($departments as $v) {
+                $dept_arr[$v->dep_name] = $v->id;
+            }
+            
+            $provinces = Province::pluck('name','code');
+
+            foreach ($users as $k => $v) {
+                if (is_null($v->department)) continue;
+                $v->department = array_search($v->department,$dept_arr);
+            }
+
+            return view('user.index', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces'));
+        } else {
+            return redirect('error.404');
         }
     }
 
@@ -50,7 +62,35 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::User()->role != 1){
+            $users = User::all();
+            $emp_stats = EmpStatus::all();
+            $jabatans = Jabatan::all();
+            $levels = Level::all();
+            $grades = GradeCategory::all();
+            $divisions = Division::all();
+            $departments = Department::all();
+            $provinces = Province::pluck('name','code');
+
+            return view('user.create', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces'));
+        } else {
+            return redirect('error.404');
+        }
+    }
+
+    public function hris_custom_date($str_date) {
+        if (is_null($str_date) || empty($str_date) || !isset($str_date) || $str_date == '') {
+            return null;
+        }
+
+        $date = explode('/',$str_date);
+        $day = $date[0];
+        $month = date('m', strtotime($date[1]));
+        $year = $date[2];
+
+        $custom_date = $year.'-'.$month.'-'.$day;
+
+        return $custom_date;
     }
 
     /**
@@ -62,48 +102,63 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request);
         $this->validate($request,[
             'fullname'=>'required',
             'nik'=>'required',
+            'phone'=>'required',
             'password'=>'required',
         ]);
+
         $user = new user();
+        
         $user->nik = $request->nik;
         $user->fullname = $request->fullname;
-        $user->birth_date = $request->birth_date;
+        $user->phone = $request->phone;
+        $user->birth_date = $this->hris_custom_date($request->birth_date);
         $user->password = Hash::make($request->password);
         $user->gender = $request->gender;
         $user->religion = $request->religiion;
         $user->marital_status = $request->marital_status;
         $user->education_level = $request->education_level;
-        $user->join_date = $request->join_date;
+
+        $user->join_date = $this->hris_custom_date($request->join_date);
         $user->employment_status = $request->employment_status;
-        $user->start_date = $request->start_date;
-        $user->end_date = $request->end_date;
+        $user->start_date = $this->hris_custom_date($request->start_date);
+        $user->end_date = $this->hris_custom_date($request->end_date);
         $user->jabatan = $request->jabatan;
         $user->organization_unit = $request->organization_unit;
         $user->job_title = $request->job_title;
         $user->job_status = $request->job_status;
+
         $user->level = $request->level;
         $user->grade_category = $request->grade_category;
         $user->work_location = $request->work_location;
         $user->employee_status = $request->employee_status;
         $user->direct_supervisor = $request->direct_supervisor;
         $user->immediate_manager = $request->immediate_manager;
-        $user->termination_date = $request->termination_date;
+        $user->termination_date = $this->hris_custom_date($request->termination_date);
         $user->terminate_reason = $request->terminate_reason;
         $user->resignation = $request->resignation;
         $user->area = $request->area;
         $user->kota = $request->kota;
         $user->division = $request->division;
         $user->department = $request->department;
+
         $user->function = $request->function;
+
         $user->created_by = Auth::User()->id;
         $user->updated_by = Auth::User()->id;
-        $user->save();
 
-        return redirect(route('dashboard.users.index'));
+        try {
+            $user->save();
+            $return['message'] = 'Success';
+            $return['url'] = route('dashboard.users.index');
+        } catch (Exception $e) {
+            // dd($e->getMessage());
+            $return['message'] = 'Failed';
+        }
+
+        return $return;
     }
 
     /**
@@ -112,9 +167,34 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $id = $request->id;
+
+        $users = User::all();
+        $emp_stats = EmpStatus::all();
+        $jabatans = Jabatan::all();
+        $levels = Level::all();
+        $grades = GradeCategory::all();
+        $divisions = Division::all();
+        $departments = Department::all();
+        $provinces = Province::pluck('name','code');
+
+        $data_arr = [
+            'users' => $users,
+            'emp_stats' => $emp_stats,
+            'jabatans' => $jabatans,
+            'levels' => $levels,
+            'grades' => $grades,
+            'divisions' => $divisions,
+            'departments' => $departments,
+            'provinces' => $provinces,
+            'id' => $id
+        ];
+
+        // return redirect()->route('dashboard.user.show')->with($data_arr);
+        // return Redirect::route('dashboard.user.show',$data_arr);
+        return redirect('dashboard.user.show');
     }
 
     /**
@@ -128,7 +208,6 @@ class UserController extends Controller
         $id = $request->id;
         $user = User::find($id);
         return response()->json(['data' => $user]);
-        return redirect(route('dashboard.users.index'));
     }
 
     /**
