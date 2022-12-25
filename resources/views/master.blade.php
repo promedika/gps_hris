@@ -111,7 +111,7 @@
               <li class="nav-item">
                 <a href="{{route('department.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
-                    <i class="nav-icon fa fa-building"></i>
+                    <i class="nav-icon fa fa-server"></i>
                     Department
                   </p>
                 </a>
@@ -120,7 +120,7 @@
               <li class="nav-item">
                 <a href="{{route('division.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
-                    <i class="nav-icon fa fa-building"></i>
+                    <i class="nav-icon fa fa-server"></i>
                     Division
                   </p>
                 </a>
@@ -129,71 +129,100 @@
               <li class="nav-item">
                 <a href="{{route('Level.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
-                    <i class="nav-icon fa fa-building"></i>
+                    <i class="nav-icon fa fa-server"></i>
                     Level
                   </p>
                 </a>
               </li>
 
               <li class="nav-item">
+                <a href="{{route('Grade_category.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-server"></i>
+                    Grade Category
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('emp_status.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-server"></i>
+                    Employment Status
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('terminate_reason.index')}}" class="nav-link" style="color: #343a40;">
+                  <p>
+                    <i class="nav-icon fa fa-server"></i>
+                    Terminate Reason
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link" style="color: #343a40;">
+                  <i class="nav-icon fa fa-globe-asia"></i>
+                  <p>
+                    Area
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  @if (Auth::user()->jabatan !=1)
+                  <li class="nav-item">
+                    <a href="{{route('indonesia_province.index')}}" class="nav-link" style="color: #343a40;">
+                        <i class="nav-icon fa fa-map-marker-alt"></i>
+                        <p>
+                        Master Provinsi
+                        </p>
+                    </a>
+                  </li>
+                  @endif
+                  <li class="nav-item">
+                    <a href="{{route('indonesia_cities.index')}}" class="nav-link" style="color: #343a40;">
+                      <p>
+                        <i class="nav-icon fa fa-map-marker-alt"></i>
+                        Master Kabupaten/Kota
+                      </p>
+                    </a>
+                  </li>
+    
+                  {{--
+                  <li class="nav-item">
+                    <a href="{{route('indonesia_districts.index')}}" class="nav-link" style="color: #343a40;">
+                      <p>
+                        <i class="nav-icon fa fa-building"></i>
+                        Master Kecamatan
+                      </p>
+                    </a>
+                  </li>
+    
+                  <li class="nav-item">
+                    <a href="{{route('indonesia_villages.index')}}" class="nav-link" style="color: #343a40;">
+                      <p>
+                        <i class="nav-icon fa fa-building"></i></i>
+                        Master Village
+                      </p>
+                    </a>
+                  </li>
+                  --}}
+                </ul>
+              </li>
+
+              {{-- <li class="nav-item">
                 <a href="{{route('Jabatan.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
-                    <i class="nav-icon fa fa-user-tie"></i></i>
+                    <i class="nav-icon fa fa-server"></i></i>
                     Jabatan
                   </p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-building"></i>
-              <p>
-                Area
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              @if (Auth::user()->jabatan !=1)
-              <li class="nav-item">
-                <a href="{{route('indonesia_province.index')}}" class="nav-link" style="color: #343a40;">
-                    <i class="nav-icon fa fa-building"></i>
-                    <p>
-                    Master Provinsi
-                    </p>
-                </a>
-              </li>
-              @endif
-              <li class="nav-item">
-                <a href="{{route('indonesia_cities.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fa fa-building"></i>
-                    Master Kabupaten/Kota
-                  </p>
-                </a>
-              </li>
-
-              {{--
-              <li class="nav-item">
-                <a href="{{route('indonesia_districts.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fa fa-building"></i>
-                    Master Kecamatan
-                  </p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{route('indonesia_villages.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fa fa-building"></i></i>
-                    Master Village
-                  </p>
-                </a>
-              </li>
-              --}}
-            </ul>
-          </li>
+          
 
           <li class="nav-item">
             <a href="#" class="nav-link">

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Level;
+use App\Models\GradeCategory;
 use Illuminate\Support\Facades\Auth;
 
-class LevelController extends Controller
+class GradeCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class LevelController extends Controller
      */
     public function index()
     {
-        $levels = Level::all();
-        return view('level.index', compact('levels'));
+        $GradeCategory = GradeCategory::all();
+        return view('grade_category.index', compact('GradeCategory'));
     }
 
     /**
@@ -39,16 +39,16 @@ class LevelController extends Controller
     {
         $this->validate($request,[
             'level'   => 'required',
-            'name'   => 'required',
+            'grade_name' => 'required',
         ]);
-        $level = new level();
+        $level = new GradeCategory();
         $level->level = $request->level;
-        $level->lev_name = $request->name;
+        $level->grade_name = $request->grade_name;
         $level->created_by = Auth::User()->id;
         $level->updated_by = Auth::User()->id;
         $level->save();
 
-        return redirect(route('level.index'));
+        return redirect(route('Grade_category.index'));
     }
 
     /**
@@ -71,9 +71,10 @@ class LevelController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-        $level = Level::find($id);
+        $GradeCategory = GradeCategory::find($id);
 
-        return $level;
+        return $GradeCategory;
+
     }
     /**
      * Update the specified resource in storage.
@@ -85,16 +86,17 @@ class LevelController extends Controller
     public function update(Request $request)
     {
         $this->validate($request,[
-            'level'=>'required',
-            'name'=>'required',
+            'name' => 'required',
+            'grade_name' => 'required'
         ]);
         $id = $request->id;
-        $level = Level::find($id);
-        $level->level = $request->level;
-        $level->lev_name = $request->name;
-        $level->updated_by = Auth::User()->id;
-        $level->save();
-        return redirect(route('level.index'));
+        $GradeCategory = GradeCategory::find($id);
+        $GradeCategory->level = $request->level;
+        $GradeCategory->grade_name = $request->grade_name;
+        $GradeCategory->updated_by = Auth::User()->id;
+        $GradeCategory->save();
+
+        return redirect(route('Grade_category.index'));
     }
 
     /**
@@ -106,10 +108,9 @@ class LevelController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $level = Level::find($id);
-        $level->delete();
+        $GradeCategory = GradeCategory::find($id);
+        $GradeCategory->delete();
 
-        return $level;
-        // return view('level.index', compact('levels'));
+        return $GradeCategory;
     }
 }   

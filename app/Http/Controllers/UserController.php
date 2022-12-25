@@ -17,7 +17,7 @@ use App\Models\Level;
 use App\Models\Division;
 use App\Models\Department;
 use PhpParser\Node\Stmt\Switch_;
-use Laravolt\Indonesia\Models\Province;
+use Laravolt\Indonesia\Models\Province;;
 
 class UserController extends Controller
 {
@@ -45,6 +45,13 @@ class UserController extends Controller
             $provinces = Province::pluck('name','code');
 
             foreach ($users as $k => $v) {
+                if ($v->employee_status == 'active') {
+                    $usr_id = $v->id;
+                    $user_los = User::find($usr_id);
+                    $user_los->length_of_service = $this->hris_length_of_service($v->start_date);
+                    $user_los->save();
+                }
+
                 if (is_null($v->department)) continue;
                 $v->department = array_search($v->department,$dept_arr);
             }
@@ -93,6 +100,17 @@ class UserController extends Controller
         return $custom_date;
     }
 
+    public function hris_length_of_service($start_date) {
+        // dd(date('Y-m-d'));
+        $firstDate = date_create(date('Y-m-d',strtotime($start_date)));
+        $endDate = date_create(date('Y-m-d'));
+
+        $difDate = date_diff($firstDate,$endDate);
+
+        $return = $difDate->y.' Year '.$difDate->m.' Month '.$difDate->d.' Day';
+        return $return;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -101,7 +119,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request,[
             'fullname'=>'required',
             'nik'=>'required',
@@ -109,53 +126,63 @@ class UserController extends Controller
             'password'=>'required',
         ]);
 
-        $user = new user();
-        
-        $user->nik = $request->nik;
-        $user->fullname = $request->fullname;
-        $user->phone = $request->phone;
-        $user->birth_date = $this->hris_custom_date($request->birth_date);
-        $user->password = Hash::make($request->password);
-        $user->gender = $request->gender;
-        $user->religion = $request->religiion;
-        $user->marital_status = $request->marital_status;
-        $user->education_level = $request->education_level;
+        $check = User::where('nik',$request->nik)->where('phone',$request->phone)->get();
+    
+        if (count($check) > 0) {
+            $return['message'] = 'Employee Already Exist!';
+            $return['url'] = route('dashboard.user.create');
+        }
+        else {
+            $user = new user();
+            
+            $user->nik = $request->nik;
+            $user->fullname = $request->fullname;
+            $user->phone = $request->phone;
+            $user->birth_date = $this->hris_custom_date($request->birth_date);
+            $user->password = Hash::make($request->password);
+            $user->gender = $request->gender;
+            $user->religion = $request->religion;
+            $user->marital_status = $request->marital_status;
+            $user->education_level = $request->education_level;
 
-        $user->join_date = $this->hris_custom_date($request->join_date);
-        $user->employment_status = $request->employment_status;
-        $user->start_date = $this->hris_custom_date($request->start_date);
-        $user->end_date = $this->hris_custom_date($request->end_date);
-        $user->jabatan = $request->jabatan;
-        $user->organization_unit = $request->organization_unit;
-        $user->job_title = $request->job_title;
-        $user->job_status = $request->job_status;
+            $user->join_date = $this->hris_custom_date($request->join_date);
+            $user->employment_status = $request->employment_status;
+            $user->start_date = $this->hris_custom_date($request->start_date);
+            $user->end_date = $this->hris_custom_date($request->end_date);
+            $user->jabatan = $request->jabatan;
+            $user->organization_unit = $request->organization_unit;
+            $user->job_title = $request->job_title;
+            $user->job_status = $request->job_status;
 
-        $user->level = $request->level;
-        $user->grade_category = $request->grade_category;
-        $user->work_location = $request->work_location;
-        $user->employee_status = $request->employee_status;
-        $user->direct_supervisor = $request->direct_supervisor;
-        $user->immediate_manager = $request->immediate_manager;
-        $user->termination_date = $this->hris_custom_date($request->termination_date);
-        $user->terminate_reason = $request->terminate_reason;
-        $user->resignation = $request->resignation;
-        $user->area = $request->area;
-        $user->kota = $request->kota;
-        $user->division = $request->division;
-        $user->department = $request->department;
+            $user->level = $request->level;
+            $user->grade_category = $request->grade_category;
+            $user->work_location = $request->work_location;
+            $user->employee_status = $request->employee_status;
+            $user->direct_supervisor = $request->direct_supervisor;
+            $user->immediate_manager = $request->immediate_manager;
+            $user->termination_date = $this->hris_custom_date($request->termination_date);
+            $user->terminate_reason = $request->terminate_reason;
+            $user->resignation = $request->resignation;
+            $user->area = $request->area;
+            $user->kota = $request->kota;
+            $user->division = $request->division;
+            $user->department = $request->department;
 
-        $user->function = $request->function;
+            $user->function = $request->function;
 
-        $user->created_by = Auth::User()->id;
-        $user->updated_by = Auth::User()->id;
+            $user->length_of_service = $this->hris_length_of_service($user->start_date);
 
-        try {
-            $user->save();
-            $return['message'] = 'Success';
-            $return['url'] = route('dashboard.users.index');
-        } catch (Exception $e) {
-            // dd($e->getMessage());
-            $return['message'] = 'Failed';
+            $user->created_by = Auth::User()->id;
+            $user->updated_by = Auth::User()->id;
+
+            try {
+                $user->save();
+                $return['message'] = 'Success';
+                $return['url'] = route('dashboard.users.index');
+            } catch (Exception $e) {
+                // dd($e->getMessage());
+                $return['message'] = 'Failed';
+            }
         }
 
         return $return;
@@ -167,11 +194,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
-        $id = $request->id;
-
-        $users = User::all();
+        $users = User::find($id);
         $emp_stats = EmpStatus::all();
         $jabatans = Jabatan::all();
         $levels = Level::all();
@@ -194,7 +219,8 @@ class UserController extends Controller
 
         // return redirect()->route('dashboard.user.show')->with($data_arr);
         // return Redirect::route('dashboard.user.show',$data_arr);
-        return redirect('dashboard.user.show');
+        // return redirect('dashboard.user.show');
+        return view('user.show', compact('data_arr'));
     }
 
     /**
@@ -260,6 +286,7 @@ class UserController extends Controller
         $user->department = $request->department;
         $user->function = $request->function;
         $user->updated_by = Auth::User()->id;
+        $user->length_of_service = $this->hris_length_of_service($user->start_date);
         $user->save();
         return redirect(route('dashboard.users.index'));
     }

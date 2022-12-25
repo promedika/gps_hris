@@ -177,11 +177,13 @@
                         <div class="form-group">
                           <label for="employment_status">EMPLOYMENT STATUS <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="employment_status" name="employment_status" required>
-                              <option value="" style="display:none;">CHOOSE EMPLOYMENT STATUS</option>
-                              <option value="KARYAWAN TETAP">KARYAWAN TETAP</option>
-                              <option value="KARYAWAN KONTRAK">KARYAWAN KONTRAK</option>
-                              <option value="PROBATION">PROBATION</option>
-                          </select>
+                            <option value="" style="display:none;">CHOOSE EMPLOYMENT STATUS</option>
+                            @foreach ($emp_stats as $emp_stat)
+                            <option value="{{$emp_stat->id}}">
+                              {{$emp_stat->status_name}}
+                            </option>
+                            @endforeach
+                        </select>
                           <span id="errorDepartment" class="text-red"></span>
                         </div>
                       </div>
@@ -327,7 +329,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="level">LEVEL <span style="color: red;">*</span></label>
-                          <select class="form-control select2" id="level" name="level" >
+                          <select class="form-control select2" id="level" name="level" required>
                               <option value="" style="display:none;">CHOOSE LEVEL</option>
                               @foreach ($levels as $level)
                               <option value="{{$level->id}}">
@@ -354,7 +356,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="grade_category">GRADE CATEGORY <span style="color: red;">*</span></label>
-                          <select class="form-control select2" id="grade_category" name="grade_category" >
+                          <select class="form-control select2" id="grade_category" name="grade_category" required>
                               <option value="" style="display:none;">CHOOSE GRADE CATEGORY</option>
                               @foreach ($grades as $grade)
                               <option value="{{$grade->id}}">
@@ -480,6 +482,18 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on('blur', "input[type=text]", function () {
+      $(this).val(function (_, val) {
+        return val.toUpperCase();
+      });
+    });
+
+    $(document).on('keyup', "input[type=text]", function () {
+      $(this).val(function (_, val) {
+        return val.toUpperCase();
+      });
+    });
+
     //Initialize Select2 Elements
     $('.select2').select2({
       theme: 'bootstrap4'
@@ -538,7 +552,13 @@ $(document).ready(function () {
                 location.reload();
             }
         })
-    }) 
+    })
+
+    $(document).on('keyup', "input[type=number]", function (e) {
+      e.preventDefault;
+      let check = /^\d+$/.test($(this).val());
+      if (!check) { $(this).val(''); alert('Input must be a number'); }
+    });
 });
 </script>
 @endsection

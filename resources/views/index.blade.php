@@ -52,7 +52,7 @@
               <div class="inner">
                 <h3>0</h3>
 
-                <p>Resignation Employee</p>
+                <p>InActive Employee</p>
               </div>
               <div class="icon">
                 <i class="ion ion-android-exit"></i>

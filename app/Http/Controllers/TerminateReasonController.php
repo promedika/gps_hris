@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Level;
+use App\Models\TerminateReason;
 use Illuminate\Support\Facades\Auth;
 
-class LevelController extends Controller
+class TerminateReasonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class LevelController extends Controller
      */
     public function index()
     {
-        $levels = Level::all();
-        return view('level.index', compact('levels'));
+        $datas = TerminateReason::all();
+        return view('terminate_reason.index', compact('datas'));
     }
 
     /**
@@ -38,17 +38,15 @@ class LevelController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'level'   => 'required',
-            'name'   => 'required',
+            'name' => 'required',
         ]);
-        $level = new level();
-        $level->level = $request->level;
-        $level->lev_name = $request->name;
-        $level->created_by = Auth::User()->id;
-        $level->updated_by = Auth::User()->id;
-        $level->save();
+        $data = new TerminateReason();
+        $data->name = $request->name;
+        $data->created_by = Auth::User()->id;
+        $data->updated_by = Auth::User()->id;
+        $data->save();
 
-        return redirect(route('level.index'));
+        return redirect(route('terminate_reason.index'));
     }
 
     /**
@@ -71,9 +69,9 @@ class LevelController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-        $level = Level::find($id);
+        $data = TerminateReason::find($id);
 
-        return $level;
+        return $data;
     }
     /**
      * Update the specified resource in storage.
@@ -85,16 +83,15 @@ class LevelController extends Controller
     public function update(Request $request)
     {
         $this->validate($request,[
-            'level'=>'required',
-            'name'=>'required',
+            'name' => 'required',
         ]);
         $id = $request->id;
-        $level = Level::find($id);
-        $level->level = $request->level;
-        $level->lev_name = $request->name;
-        $level->updated_by = Auth::User()->id;
-        $level->save();
-        return redirect(route('level.index'));
+        $data = TerminateReason::find($id);
+        $data->name = $request->name;
+        $data->updated_by = Auth::User()->id;
+        $data->save();
+
+        return redirect(route('terminate_reason.index'));
     }
 
     /**
@@ -106,10 +103,9 @@ class LevelController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $level = Level::find($id);
-        $level->delete();
+        $data = TerminateReason::find($id);
+        $data->delete();
 
-        return $level;
-        // return view('level.index', compact('levels'));
+        return $data;
     }
 }   

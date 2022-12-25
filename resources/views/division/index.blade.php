@@ -311,6 +311,12 @@
                 })
             })
         })
+
+        $(document).on('keyup', "input[type=number]", function (e) {
+          e.preventDefault;
+          let check = /^\d+$/.test($(this).val());
+          if (!check) { $(this).val(''); alert('Input must be a number'); }
+        });
     })
 </script>
 @endsection

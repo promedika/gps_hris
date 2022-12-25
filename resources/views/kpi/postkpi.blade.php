@@ -104,11 +104,18 @@ $(document).ready(function () {
   var stepper = new Stepper($('.bs-stepper')[0])
 
   $('.btn-next').click(function(){
-            stepper.next()
-          });
-    $('.btn-previous').click(function(){
+    stepper.next()
+  });
+
+  $('.btn-previous').click(function(){
     stepper.previous()
-    });
+  });
+
+  $(document).on('keyup', "input[type=number]", function (e) {
+    e.preventDefault;
+    let check = /^\d+$/.test($(this).val());
+    if (!check) { $(this).val(''); alert('Input must be a number'); }
+  });
 
 });
 </script>

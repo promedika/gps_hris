@@ -43,6 +43,7 @@
                           <tr>
                             <th>No</th>
                             <th>Level</th>
+                            <th>Name</th>
                             <th></th>
                           </tr>
                         </thead>
@@ -51,7 +52,8 @@
                           @foreach ($levels as $level)
                           <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$level->name}}</td>
+                            <td>{{$level->level}}</td>
+                            <td>{{$level->lev_name}}</td>
                             <td>
                                 <a href="#" level-id="{{$level->id}}" title="Edit" class="btn btn-warning btn-edit-level"><i class="fas fa-edit"></i></a>
                                 <a href="#" level-id="{{$level->id}}" title="Delete" class="btn btn-danger btn-delete-level"><i class="fas fa-trash"></i></a>
@@ -80,7 +82,7 @@
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-create">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Buat Level Baru</h4>
+          <h4 class="modal-title">Create New Level</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -89,7 +91,12 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="form-group">
-            <label for="name">Nama Level</label>
+            <label for="level">Level</label>
+            <input type="text" name="level" id="level" class="form-control" required>
+            <span id="errorLevel" class="text-red"></span>
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
             <input type="text" name="name" id="name" class="form-control" required>
             <span id="errorName" class="text-red"></span>
           </div>
@@ -121,8 +128,13 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-          <label for="name">Nama Level</label>
-          <input type="text" name="name" id="name_update" value="{{old('name')}}" class="form-control" required>
+          <label for="level">Level</label>
+          <input type="text" name="level" id="level_update" value="{{old('level')}}" class="form-control" required>
+          <span id="errorLevel" class="text-red"></span>
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" name="name" id="name_update" value="{{old('lev_name')}}" class="form-control" required>
           <span id="errorName" class="text-red"></span>
         </div>
       </div>
@@ -221,10 +233,11 @@
                       $('#loader').modal('show');
                     },
                     success:function(data){
+                        // alert('Success created');
                         location.reload();
                     },
                     error:function(response){
-                        alert('Failed created');
+                        // alert('Failed created');
                         location.reload();
                     }
                 })
@@ -245,11 +258,13 @@
                   id:levelID,
                 },
                 success:function(data){
-                    $('#name_update').val(data.name);
+                    $('#level_update').val(data.level);
+                    $('#name_update').val(data.lev_name);
                     $('#form-edit').data('id',levelID);
                 },
                 error:function(response){
-                    $('#errorName').text(response.responseJSON.errors.name);
+                    $('#errorLevel').text(response.responseJSON.errors.level);
+                    $('#errorName').text(response.responseJSON.errors.lev_name);
                 }
                 
             })
@@ -264,6 +279,7 @@
                     type:'POST',
                     data:{
                       id:levelID,
+                      level:$('#level_update').val(),
                       name:$('#name_update').val(),
                     },
                     beforeSend: function() {
@@ -273,10 +289,11 @@
                       $('#loader').modal('show');
                     },
                     success:function(data){
+                        // alert('Success edited');
                         location.reload();
                     },
                     error:function(response){
-                        alert('Failed edited');
+                        // alert('Failed edited');
                         location.reload();
                     }
                 })
@@ -303,6 +320,7 @@
                       $('#loader').modal('show');
                     },
                     success:function(data){
+                        alert('Success deleted');
                         location.reload();
                     },
                     error:function(response){
@@ -312,6 +330,12 @@
                 })
             })
         })
+
+        $(document).on('keyup', "input[type=number]", function (e) {
+          e.preventDefault;
+          let check = /^\d+$/.test($(this).val());
+          if (!check) { $(this).val(''); alert('Input must be a number'); }
+        });
     })
 </script>
 @endsection

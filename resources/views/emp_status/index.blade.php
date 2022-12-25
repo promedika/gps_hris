@@ -1,11 +1,10 @@
 @extends('master')
 @section('title')
-    Kategori Pertanyaan
+Employment Status
 @endsection
 @section('custom_link_css')
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 @endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -15,12 +14,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Kategori Pertanyaan</h1>
+          <h1 class="m-0">Employment Status</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
-            <li class="breadcrumb-item active">Kategori Pertanyaan</li>
+            <li class="breadcrumb-item active">Employment Status</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -35,34 +34,27 @@
               <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <a href="#" title="Add" class="btn btn-primary col-2 btn-add-kategori"><i class="fa solid fa-plus"></i></a>
+                      <a href="#" title="Add" class="btn btn-primary btn-block col-2 btn-add"><i class="fa solid fa-plus"></i></a>
                     </div>
-                    @if(session()->has('message'))
-                    <div class="alert alert-danger mt-2">
-                        {{ session()->get('message') }}
-                    </div>
-                @endif
                     <!-- /.card-header -->
                     <div class="card-body">
                       <table class="table table-bordered table-hover" id="table">
                         <thead>
                           <tr>
                             <th>No</th>
-                            <th>Kategori</th>
-                            <th>Nama</th>
+                            <th>Name</th>
                             <th></th>
                           </tr>
                         </thead>
                         <tbody>
                           @php $no = 1; @endphp
-                          @foreach ($katPers as $KatPer)
+                          @foreach ($datas as $data)
                           <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$katPer->kategori}}</td>
-                            <td>{{$katPer->nama}}</td>
+                            <td>{{$data->status_name}}</td>
                             <td>
-                                <a href="#" outlet-id="{{$katPer->id}}" title="Edit" class="btn btn-warning btn-edit-kategori"><i class="fas fa-edit"></i></a>
-                                <a href="#" outlet-id="{{$katPer->id}}" title="Delete" class="btn btn-danger btn-delete-kategori"><i class="fas fa-trash"></i></a>
+                                <a href="#" btn-id="{{$data->id}}" title="Edit" class="btn btn-warning btn-edit"><i class="fas fa-edit"></i></a>
+                                <a href="#" btn-id="{{$data->id}}" title="Delete" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></a>
                             </td>
                           </tr>
                           @endforeach
@@ -82,13 +74,13 @@
 </div>
 
 <!-- The Modal Add -->
-<div class="modal fade in" id="modalCreateKategori" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalCreate" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-signup">
+        <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-create">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Buat Kategori Baru</h4>
+          <h4 class="modal-title">Create New Employment Status</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -97,21 +89,16 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="form-group">
-            <label for="kategori">Kategori Pertanyaan</label>
-            <input type="text" name="kategori" id="kategori" class="form-control" required>
-            <span id="errorKategori" class="text-red"></span>
-          </div>
-          <div class="form-group">
-            <label for="nama">Nama Kategori</label>
-            <input type="text" name="nama" id="nama" class="form-control" required>
-            <span id="errorNama" class="text-red"></span>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-control" required>
+            <span id="errorName" class="text-red"></span>
           </div>
         </div>
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Simpan</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
         </form>
       </div>
@@ -119,13 +106,13 @@
 </div>
 
 <!-- The Modal Edit -->
-<div class="modal fade in" id="modalEditKategori" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalEdit" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-edit">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Ubah Kategori</h4>
+        <h4 class="modal-title">Edit Employment Status
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -134,20 +121,16 @@
       <!-- Modal body -->  
       <div class="modal-body">
         <div class="form-group">
-            <label for="kategori">Kategori Pertanyaan</label>
-            <input type="text" name="kategori" id="kategori_update" class="form-control" required>
-            <span id="errorKategori" class="text-red"></span>
-          </div>
-          <div class="form-group">
-            <label for="nama">Nama Kategori</label>
-            <input type="text" name="nama" id="nama_update" class="form-control" required>
-            <span id="errorNama" class="text-red"></span>
+          <label for="name">Name</label>
+          <input type="text" name="name" id="name" value="{{old('status_name')}}" class="form-control" required>
+          <span id="errorNameEdit" class="text-red"></span>
+        </div>
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
       </form>
     </div>
@@ -155,13 +138,13 @@
 </div>
 
 <!-- The Modal Delete -->
-<div class="modal fade in" id="modalDeleteKategori" data-backdrop="static" data-keyboard="false">
+<div class="modal fade in" id="modalDelete" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <form action="javascript:void(0)" method="post" accept-charset="utf-8" id="form-delete">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Hapus Kategori</h4>
+          <h4 class="modal-title">Delete Employment Status</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -170,8 +153,8 @@
   
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Simpan</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
         </form>
       </div>
@@ -185,14 +168,6 @@
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/jszip/jszip.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('/assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
 <script>
     $(document).ready(function(){
@@ -200,6 +175,18 @@
             headers: {
                 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $(document).on('blur', "input[type=text]", function () {
+          $(this).val(function (_, val) {
+            return val.toUpperCase();
+          });
+        });
+
+        $(document).on('keyup', "input[type=text]", function () {
+          $(this).val(function (_, val) {
+            return val.toUpperCase();
+          });
         });
 
         $('#table').DataTable({
@@ -212,15 +199,15 @@
           "responsive": true,
         });
 
-        $('.btn-add-kategori').click(function(){
-            $('#modalCreateKategori').modal('show');
+        $('.btn-add').click(function(){
+            $('#modalCreate').modal('show');
 
-            $('#form-signup').submit(function(e){
+            $('#form-create').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalCreateKategori');
+                let modal_id = $('#modalCreate');
                 var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('kategori.create')}}",
+                    url:"{{route('emp_status.create')}}",
                     type:'POST',
                     data:formData,
                     processData: false,
@@ -230,100 +217,100 @@
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success create');
+                        alert('Success created');
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorKategori').text(response.responseJSON.errors.kategori);
-                        $('#errorNama').text(response.responseJSON.errors.nama);
+                        alert('Failed created');
+                        location.reload();
                     }
-
-                    
                 })
             })
         })
 
 
-        $('.btn-edit-kategori').click(function(){
-            $('#modalEditKategori').modal('show');
-            var kategoriID = $(this).attr('kategori-id');
-            var id = $('#id').val(kategoriID);
+       
+        $('.btn-edit').click(function(){
+            $('#modalEdit').modal('show');
+            var btnID = $(this).attr('btn-id');
+            var id = $('#id').val(btnID);
             
             $.ajax({
-                url:"{{route('kategori.edit')}}",
+                url:"{{route('emp_status.edit')}}",
                 type:'POST',
                 data:{
-                  id:kategoriID,
+                  id:btnID,
                 },
                 success:function(data){
-                    console.log('success edit');
-                    $('#kategori_update').val(data.data.kategori);
-                    $('#nama_update').val(data.data.nama);
-                    $('#form-edit').data('id',kategoriID);
+                    $('#name_update').val(data.status_name);
+                    $('#form-edit').data('id',btnID);
                 },
                 error:function(response){
-                    $('#errorKategori').text(response.responseJSON.errors.kategori);
-                    $('#errorNama').text(response.responseJSON.errors.nama);
+                    $('#errorNameEdit').text(response.responseJSON.errors.status_name);
                 }
                 
             })
 
             $('#form-edit').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalEditKategori');
-                let kategoriID = $(this).data('id');
+                let modal_id = $('#modalEdit');
+                let ID = $(this).data('id');
                 var formData = new FormData(this);
                 $.ajax({
-                    url:"{{route('kategori.update')}}",
+                    url:"{{route('emp_status.update')}}",
                     type:'POST',
-                    data:formData,
                     data:{
-                      id:kategoriID,
-                      kategori:$('#kategori_update').val(),
-                      nama:$('#nama_update').val(),
+                      id:ID,
+                      name:$('#name_update').val()
                     },
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success update');
+                        alert('Success edited');
                         location.reload();
                     },
                     error:function(response){
-                        $('#errorKategori').text(response.responseJSON.errors.kategori);
-                        $('#errorNama').text(response.responseJSON.errors.nama);
+                        alert('Failed edited');
+                        location.reload();
                     }
                 })
             })
         })
 
-        $('.btn-delete-kategori').click(function(){
-          $('#modalDeleteKategori').modal('show');
-          var kategoriID = $(this).attr('kategori-id');
-          var id = $('#id_delete').val(kategoriID);
+        $('.btn-delete').click(function(){
+          $('#modalDelete').modal('show');
+          var ID = $(this).attr('btn-id');
+          var id = $('#id_delete').val(ID);
           $('#form-delete').submit(function(e){
                 e.preventDefault();
-                let modal_id = $('#modalDeleteKategori');
-                // var formData = new FormData(this);
+                let modal_id = $('#modalDelete');
                 $.ajax({
-                    url:"{{route('kategori.delete')}}",
+                    url:"{{route('emp_status.delete')}}",
                     type:'POST',
                     data:{
-                      id:kategoriID,
+                      id:ID,
                     },
                     beforeSend: function() {
                       modal_id.find('.modal-footer button').prop('disabled',true);
                       modal_id.find('.modal-header button').prop('disabled',true);
+                      modal_id.modal('hide');
+                      $('#loader').modal('show');
                     },
                     success:function(data){
-                        console.log('success deleted');
+                        alert('Success deleted');
                         location.reload();
                     },
                     error:function(response){
-                        console.log('success failed');
+                        alert('failed deleted');
+                        location.reload();
                     }
                 })
             })

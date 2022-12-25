@@ -72,12 +72,7 @@
                                 <td>{{$user->employment_status}}</td>
                                 <td>{{$user->jabatan}}</td>
                                 <td>
-                                  <!-- <form action="{{route('dashboard.user.show')}}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{$user->id}}">
-                                    <button title="view" class="btn btn-info btn-view-user"><i class="fas fa-eye"></i></button> -->
-                                    <a href="#" user-id="{{$user->id}}" title="view" class="btn btn-info btn-view-user"><i class="fas fa-eye"></i></a>
-                                  <!-- </form> -->
+                                  <a href="{{route('dashboard.user.show', ['id' => $user->id])}}" user-id="{{$user->id}}" title="view" class="btn btn-info btn-view-user"><i class="fas fa-eye"></i></a>
                                   <a href="#" user-id="{{$user->id}}" title="edit" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
                                   <a href="#" user-id="{{$user->id}}" data-user="{{$user->first_name.' '.$user->last_name}}" title="delete" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
                                 </td>
@@ -704,7 +699,7 @@
       <form action="" method="post" accept-charset="utf-8" id="form-delete">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Hapus P.I.C</h4>
+        <h4 class="modal-title">Delete Employee</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -766,20 +761,6 @@
         $('#submit').click(function(){
           $('#modal-import-user').modal('hide');
           $('#loader').modal ('show');
-        });
-
-        jQuery("body").on("click", ".btn-view-user", function(e) {
-          let usrID = $(this).attr('user-id');
-          $.ajax({
-              url:"{{route('dashboard.user.show')}}",
-              type:'POST',
-              data:{
-                id:usrID,
-              },
-              success:function(data){
-                  location.href = data.url;
-              },
-          })
         });
 
         jQuery("body").on("click", ".btn-edit-user", function(e) {
@@ -906,7 +887,7 @@
             })
         })
 
-          jQuery("body").on("click", ".btn-delete-user", function(e) {
+        jQuery("body").on("click", ".btn-delete-user", function(e) {
           $('#modalDeleteUser').find('.modal-body span').text($(this).data("user"));
           $('#modalDeleteUser').modal('show');
           var usrID = $(this).attr('user-id');
@@ -935,6 +916,12 @@
                 })
             })
         })
+
+        $(document).on('keyup', "input[type=number]", function (e) {
+          e.preventDefault;
+          let check = /^\d+$/.test($(this).val());
+          if (!check) { $(this).val(''); alert('Input must be a number'); }
+        });
     })
 </script>
 @endsection

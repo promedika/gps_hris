@@ -55,7 +55,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::get('/users','App\Http\Controllers\UserController@index')->name('dashboard.users.index');
     Route::get('/user/create','App\Http\Controllers\UserController@create')->name('dashboard.user.create');
     Route::post('/users/create','App\Http\Controllers\UserController@store')->name('dashboard.users.create');
-    Route::post('/user/show','App\Http\Controllers\UserController@show')->name('dashboard.user.show');
+    Route::get('/user/show/{id}','App\Http\Controllers\UserController@show')->name('dashboard.user.show');
     Route::post('/users/edit','App\Http\Controllers\UserController@edit')->name('dashboard.users.edit');
     Route::post('/users/update','App\Http\Controllers\UserController@update')->name('dashboard.users.update');
     Route::post('/users/delete','App\Http\Controllers\UserController@destroy')->name('dashboard.users.delete');
@@ -127,6 +127,24 @@ Route::group(['middleware'=>'auth'], function() {
     Route::post('/level/edit','App\Http\Controllers\LevelController@edit')->name('Level.edit');
     Route::post('/level/update','App\Http\Controllers\LevelController@update')->name('Level.update');
     Route::post('/level/delete','App\Http\Controllers\LevelController@destroy')->name('Level.delete');
+
+    Route::get('/grade_category','App\Http\Controllers\GradeCategoryController@index')->name('Grade_category.index');
+    Route::post('/grade_category/create','App\Http\Controllers\GradeCategoryController@store')->name('Grade_category.create');
+    Route::post('/grade_category/edit','App\Http\Controllers\GradeCategoryController@edit')->name('Grade_category.edit');
+    Route::post('/grade_category/update','App\Http\Controllers\GradeCategoryController@update')->name('Grade_category.update');
+    Route::post('/grade_category/delete','App\Http\Controllers\GradeCategoryController@destroy')->name('Grade_category.delete');
+
+    Route::get('/emp_status','App\Http\Controllers\EmpStatusController@index')->name('emp_status.index');
+    Route::post('/emp_status/create','App\Http\Controllers\EmpStatusController@store')->name('emp_status.create');
+    Route::post('/emp_status/edit','App\Http\Controllers\EmpStatusController@edit')->name('emp_status.edit');
+    Route::post('/emp_status/update','App\Http\Controllers\EmpStatusController@update')->name('emp_status.update');
+    Route::post('/emp_status/delete','App\Http\Controllers\EmpStatusController@destroy')->name('emp_status.delete');
+
+    Route::get('/terminate_reason','App\Http\Controllers\TerminateReasonController@index')->name('terminate_reason.index');
+    Route::post('/terminate_reason/create','App\Http\Controllers\TerminateReasonController@store')->name('terminate_reason.create');
+    Route::post('/terminate_reason/edit','App\Http\Controllers\TerminateReasonController@edit')->name('terminate_reason.edit');
+    Route::post('/terminate_reason/update','App\Http\Controllers\TerminateReasonController@update')->name('terminate_reason.update');
+    Route::post('/terminate_reason/delete','App\Http\Controllers\TerminateReasonController@destroy')->name('terminate_reason.delete');
 
 });
 

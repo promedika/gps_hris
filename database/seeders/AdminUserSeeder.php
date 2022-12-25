@@ -18,14 +18,15 @@ class AdminUserSeeder extends Seeder
         DB::table('users')->insert([
             'fullname' => 'Super user',
             'nik' =>  '123456',
-            'phone' => '021123456789'
-            'password' =>   Hash::make('promedika'),
+            'phone' => '021123456789',
+            'password' => Hash::make('promedika'),
             'jabatan'  =>  '0',
             'created_by' => '1',
             'updated_by' => '1',
             'start_date' => '2022-05-09',
             'end_date' => '3022-05-09',
-            'job_status' => 'active'
+            'job_status' => 'active',
+            'employee_status' => 'active'
         ]);
     }
 }
