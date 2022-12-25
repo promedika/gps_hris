@@ -45,7 +45,7 @@ class UserController extends Controller
             $provinces = Province::pluck('name','code');
 
             foreach ($users as $k => $v) {
-                if ($v->employee_status == 'active') {
+                if ($v->employee_status == 'ACTIVE') {
                     $usr_id = $v->id;
                     $user_los = User::find($usr_id);
                     $user_los->length_of_service = $this->hris_length_of_service($v->start_date);
@@ -205,7 +205,7 @@ class UserController extends Controller
         $departments = Department::all();
         $provinces = Province::pluck('name','code');
 
-        $data_arr = [
+        $datas = [
             'users' => $users,
             'emp_stats' => $emp_stats,
             'jabatans' => $jabatans,
@@ -217,10 +217,7 @@ class UserController extends Controller
             'id' => $id
         ];
 
-        // return redirect()->route('dashboard.user.show')->with($data_arr);
-        // return Redirect::route('dashboard.user.show',$data_arr);
-        // return redirect('dashboard.user.show');
-        return view('user.show', compact('data_arr'));
+        return view('user.show', compact('datas'));
     }
 
     /**

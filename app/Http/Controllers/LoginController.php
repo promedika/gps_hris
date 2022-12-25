@@ -18,7 +18,7 @@ class LoginController extends Controller
             $phone = $request->phone;
             $password = $request->password;
 
-            if(Auth::attempt(['phone' => $phone, 'password' => $password, 'employee_status' => 'active',])) {
+            if(Auth::attempt(['phone' => $phone, 'password' => $password, 'employee_status' => 'ACTIVE',])) {
                 return redirect('/');
             }else{
                 return redirect()->back()->with('message', 'Login Gagal, Pastikan nomor telepon dan password sudah benar!');
