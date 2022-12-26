@@ -142,6 +142,20 @@
                         </div>
                       </div>
 
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="role">ROLE SYSTEM <span style="color: red;">*</span></label>
+                          <select class="form-control select2" id="role" name="role" required>
+                              <option value="" style="display:none;">CHOOSE ROLE SYSTEM</option>
+                              <option value="0">SUPER ADMIN</option>
+                              <option value="1">ADMIN</option>
+                              <option value="2">MEMBER</option>
+                              <option value="3">REPORT</option>
+                          </select>
+                          <span id="errorRole" class="text-red"></span>
+                        </div>
+                      </div>
+
                     </div>
                     <!-- /.row -->
                   </div>
@@ -385,71 +399,6 @@
                       </div>
 
                     </div>
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-
-                <!-- Employee Terminate -->
-                <div class="card card-info">
-                  <div class="card-header">
-                    <h3 class="card-title">Employee Terminate</h3>
-
-                    <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                    <div class="row">
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="end_date">EMPLOYMENT END DATE</label>
-                          <div class="input-group datepicker" data-target-input="nearest" data-toggle="datetimepicker">
-                            <input type="text" name="end_date" id="end_date" class="form-control" placeholder="DD/Month/YYYY" readonly>
-                            <div class="input-group-append" >
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                          </div>
-                          <span id="errorEndDate" class="text-red"></span>
-                        </div>
-                        <div class="form-group">
-                          <label for="termination_date">TERMINATION DATE</label>
-                          <div class="input-group datepicker" data-target-input="nearest" data-toggle="datetimepicker">
-                            <input type="text" name="termination_date" id="termination_date" class="form-control" placeholder="DD/Month/YYYY" readonly>
-                            <div class="input-group-append" >
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                          </div>
-                          <span id="errorTerminationDate" class="text-red"></span>
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="terminate_reason">TERMINATE REASON</label>
-                          <input type="text" name="terminate_reason" id="terminate_reason" class="form-control">
-                          <span id="errorTerminateReason" class="text-red"></span>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="resignation">RESIGNATION</label>
-                          <div class="custom-file">
-                            <input type="file" name="resignation" class="custom-file-input" id="resignation">
-                            <label class="custom-file-label" for="v">Choose file</label>
-                          </div>
-                          <span id="errorResignation" class="text-red"></span>
-                        </div>
-                      </div>
-
-                      <input type="hidden" value="" name="function" id="function" class="form-control">
-
-                      </div>
-                    </div>
-                    <!-- /.row -->
                   </div>
                   <!-- /.card-body -->
                 </div>

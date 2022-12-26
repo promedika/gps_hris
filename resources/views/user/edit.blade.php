@@ -22,7 +22,9 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
+              @if (Auth::user()->role == 0 || Auth::user()->role == 1)
               <li class="breadcrumb-item"><a href="{{route('dashboard.users.index')}}">Employee</a></li>
+              @endif
               <li class="breadcrumb-item active">Edit Employee</li>
 
             </ol>
@@ -141,6 +143,20 @@
                               <option value="STRATA 3" @php if ($datas->education_level == 'STRATA 3') { echo 'selected'; } @endphp >STRATA 3</option>
                           </select>
                           <span id="errorEducationLevel" class="text-red"></span>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="role">ROLE SYSTEM <span style="color: red;">*</span></label>
+                          <select class="form-control select2" id="role" name="role" required>
+                              <option value="" style="display:none;">CHOOSE ROLE SYSTEM</option>
+                              <option value="0" @php if ($datas->role == '0') { echo 'selected'; } @endphp >SUPER ADMIN</option>
+                              <option value="1" @php if ($datas->role == '1') { echo 'selected'; } @endphp >ADMIN</option>
+                              <option value="2" @php if ($datas->role == '2') { echo 'selected'; } @endphp >MEMBER</option>
+                              <option value="3" @php if ($datas->role == '3') { echo 'selected'; } @endphp >REPORT</option>
+                          </select>
+                          <span id="errorRole" class="text-red"></span>
                         </div>
                       </div>
 
@@ -416,7 +432,7 @@
                         <div class="form-group">
                           <label for="end_date">EMPLOYMENT END DATE</label>
                           <div class="input-group datepicker" data-target-input="nearest" data-toggle="datetimepicker">
-                            <input type="text" name="end_date" id="end_date" class="form-control" placeholder="DD/Month/YYYY" readonly>
+                            <input type="text" name="end_date" id="end_date" class="form-control" placeholder="DD/Month/YYYY" value="{{$datas->end_date}}" readonly>
                             <div class="input-group-append" >
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -426,7 +442,7 @@
                         <div class="form-group">
                           <label for="termination_date">TERMINATION DATE</label>
                           <div class="input-group datepicker" data-target-input="nearest" data-toggle="datetimepicker">
-                            <input type="text" name="termination_date" id="termination_date" class="form-control" placeholder="DD/Month/YYYY" readonly>
+                            <input type="text" name="termination_date" id="termination_date" class="form-control" placeholder="DD/Month/YYYY" value="{{$datas->termination_date}}" readonly>
                             <div class="input-group-append" >
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -438,7 +454,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="terminate_reason">TERMINATE REASON</label>
-                          <input type="text" name="terminate_reason" id="terminate_reason" class="form-control">
+                          <input type="text" name="terminate_reason" id="terminate_reason" class="form-control" value="{{$datas->terminate_reason}}">
                           <span id="errorTerminateReason" class="text-red"></span>
                         </div>
 
@@ -446,9 +462,11 @@
                           <label for="resignation">RESIGNATION</label>
                           <div class="custom-file">
                             <input type="file" name="resignation" class="custom-file-input" id="resignation">
-                            <label class="custom-file-label" for="v">Choose file</label>
+                            <label class="custom-file-label label-resignation" for="resignation">Choose File</label>
                           </div>
-                          <span id="errorResignation" class="text-red"></span>
+                          @if (isset($datas->resignation))
+                          <a href="{{asset('/assets/resignation').'/'.$datas->resignation}}" target="_blank"><span class="text-info">View File</span></a>
+                          @endif
                         </div>
                       </div>
 
@@ -488,6 +506,12 @@ $(document).ready(function () {
         headers: {
             'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    $(document).on('change', "input[name=resignation]", function (e) {
+      // let fileName = $(this).val().split('\\').pop();
+      let fileName = $(this).val().replace(/.*(\/|\\)/, '');
+      $('.label-resignation').text(fileName);
     });
 
     $(document).on('blur', "input[type=text]", function () {
@@ -539,6 +563,22 @@ $(document).ready(function () {
 
     $('#form-edit').submit(function(e){
         e.preventDefault();
+
+        // check file extension
+        fileName = document.querySelector('#resignation').value;
+        regex = new RegExp('[^.]+$');
+        extension = fileName.match(regex);
+
+        if (fileName != '') {
+          if (extension[0] == 'pdf' || extension[0] == 'jpg' || extension[0] == 'png') {
+            // do nothing
+          }
+          else {
+            alert('Extension File Must .pdf or .jpg or .png');
+            return false;
+          }
+        }
+
         var formData = new FormData(this);
         $.ajax({
             url:"{{route('dashboard.users.update')}}",

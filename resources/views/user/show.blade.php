@@ -22,7 +22,9 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
+              @if (Auth::user()->role == 0 || Auth::user()->role == 1)
               <li class="breadcrumb-item"><a href="{{route('dashboard.users.index')}}">Employee</a></li>
+              @endif
               <li class="breadcrumb-item active">Show Employee</li>
 
             </ol>
@@ -116,6 +118,10 @@
                   <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link active" href="#gps_emp_status" data-toggle="tab">Employee Status</a></li>
                     <li class="nav-item"><a class="nav-link" href="#gps_emp_structure" data-toggle="tab">Employee Structure</a></li>
+
+                    @if ($datas->employee_status == 'INACTIVE')
+                    <li class="nav-item"><a class="nav-link" href="#gps_emp_terminate" data-toggle="tab">Employee Terminate</a></li>
+                    @endif
                   </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
@@ -238,6 +244,38 @@
                         </div>
                       </form>
                     </div>
+                    <!-- /.tab-pane -->
+
+                    @if ($datas->employee_status == 'INACTIVE')
+                    <div class="tab-pane" id="gps_emp_terminate">
+                      <form class="form-horizontal">
+                        <div class="form-group row">
+                          <label for="end_date" class="col-sm-2 col-form-label">Employment End Date</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" value="{{date('d M Y', strtotime($datas->end_date))}}" style="background-color: #FFFFFF;" readonly>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="termination_date" class="col-sm-2 col-form-label">Termination Date</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" value="{{date('d M Y', strtotime($datas->termination_date))}}" style="background-color: #FFFFFF;" readonly>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="terminate_reason" class="col-sm-2 col-form-label">Termination Reason</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" value="{{$datas->terminate_reason}}" style="background-color: #FFFFFF;" readonly>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="resignation" class="col-sm-2 col-form-label">Resignation</label>
+                          <div class="col-sm-10">
+                            <a href="{{asset('/assets/resignation').'/'.$datas->resignation}}" target="_blank" class="btn btn-info">Resignation File</a>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    @endif
                     <!-- /.tab-pane -->
                   </div>
                   <!-- /.tab-content -->

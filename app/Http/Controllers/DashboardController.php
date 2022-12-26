@@ -14,8 +14,14 @@ class DashboardController extends Controller
     }
     public Function index()
     {
-        $users_count = User::all()->count();
-        return view('index', compact('users_count'));
+        $users_active_count = User::where('employee_status','ACTIVE')
+                            ->where('id', '!=','1')
+                            ->get()->count();
+        $users_inactive_count = User::where('employee_status','INACTIVE')
+                            ->where('id', '!=','1')
+                            ->get()->count();
+
+        return view('index', compact('users_active_count','users_inactive_count'));
     }
     public function logout(Request $request)
     {

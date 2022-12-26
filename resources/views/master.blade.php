@@ -52,6 +52,7 @@
           <span><b>{{Auth::User()->fullname}}</b></span>
         </a>
         <div class="dropdown-menu dropdown-menu-md">
+          <a href="{{route('dashboard.user.show', ['id' => Auth::user()->id])}}" user-id="{{Auth::User()->id}}" class="dropdown-item btn-profile" style="text-align: left"><i class="fas fa-user"> Profile</i></a>
           <a href="#" user-id="{{Auth::User()->id}}" class="dropdown-item btn-edit-user-master-password" style="text-align: center"><i class="fas fa-cog"> Ubah Password</i></a>
             <!-- Message End -->
           <a href="{{route('logout')}}" user-id="{{Auth::User()->id}}" class="dropdown-item btn-logout" style="text-align: left"><i class="fas fa-door-open"> Logout</i></a>
@@ -88,7 +89,7 @@
             </a>
           </li>
 
-          
+          @if (Auth::user()->role == 0 || Auth::user()->role == 1)
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
@@ -98,7 +99,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              @if (Auth::user()->jabatan !=1)
               <li class="nav-item">
                 <a href="{{route('dashboard.users.index')}}" class="nav-link" style="color: #343a40;">
                     <i class="nav-icon fas fa-users"></i>
@@ -107,7 +107,7 @@
                     </p>
                 </a>
               </li>
-              @endif
+              
               <li class="nav-item">
                 <a href="{{route('department.index')}}" class="nav-link" style="color: #343a40;">
                   <p>
@@ -171,7 +171,6 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
-                  @if (Auth::user()->jabatan !=1)
                   <li class="nav-item">
                     <a href="{{route('indonesia_province.index')}}" class="nav-link" style="color: #343a40;">
                         <i class="nav-icon fa fa-map-marker-alt"></i>
@@ -180,7 +179,7 @@
                         </p>
                     </a>
                   </li>
-                  @endif
+                  
                   <li class="nav-item">
                     <a href="{{route('indonesia_cities.index')}}" class="nav-link" style="color: #343a40;">
                       <p>
@@ -189,37 +188,9 @@
                       </p>
                     </a>
                   </li>
-    
-                  {{--
-                  <li class="nav-item">
-                    <a href="{{route('indonesia_districts.index')}}" class="nav-link" style="color: #343a40;">
-                      <p>
-                        <i class="nav-icon fa fa-building"></i>
-                        Master Kecamatan
-                      </p>
-                    </a>
-                  </li>
-    
-                  <li class="nav-item">
-                    <a href="{{route('indonesia_villages.index')}}" class="nav-link" style="color: #343a40;">
-                      <p>
-                        <i class="nav-icon fa fa-building"></i></i>
-                        Master Village
-                      </p>
-                    </a>
-                  </li>
-                  --}}
                 </ul>
               </li>
 
-              {{-- <li class="nav-item">
-                <a href="{{route('Jabatan.index')}}" class="nav-link" style="color: #343a40;">
-                  <p>
-                    <i class="nav-icon fa fa-server"></i></i>
-                    Jabatan
-                  </p>
-                </a>
-              </li> --}}
             </ul>
           </li>
           
@@ -269,6 +240,7 @@
               </li>
             </ul>
           </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

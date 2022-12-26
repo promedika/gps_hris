@@ -39,9 +39,10 @@ class UserController extends Controller
             $divisions = Division::all();
 
             $departments = Department::all();
-            $dept_arr = [];
-            foreach ($departments as $v) {
-                $dept_arr[$v->dep_name] = $v->id;
+
+            $emp_stats_arr = [];
+            foreach ($emp_stats as $v) {
+                $emp_stats_arr[$v->status_name] = $v->id;
             }
             
             $provinces = Province::pluck('name','code');
@@ -54,8 +55,8 @@ class UserController extends Controller
                     $user_los->save();
                 }
 
-                if (is_null($v->department)) continue;
-                $v->department = array_search($v->department,$dept_arr);
+                if (is_null($v->employment_status)) continue;
+                $v->employment_status = array_search($v->employment_status,$emp_stats_arr);
             }
 
             return view('user.index', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces'));
@@ -71,8 +72,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (Auth::User()->role != 1){
-            $users = User::all();
+        if (Auth::User()->role == 0 || Auth::User()->role == 1){
+            $users = User::where('employee_status','ACTIVE')->get();
             $emp_stats = EmpStatus::all();
             $jabatans = Jabatan::all();
             $levels = Level::all();
@@ -146,6 +147,7 @@ class UserController extends Controller
             $user->religion = $request->religion;
             $user->marital_status = $request->marital_status;
             $user->education_level = $request->education_level;
+            $user->role = $request->role;
 
             $user->join_date = $this->hris_custom_date($request->join_date);
             $user->employment_status = $request->employment_status;
@@ -210,11 +212,17 @@ class UserController extends Controller
                 ->where('users.id',$id)
                 ->first();
 
+        if (!isset($datas)) {
+            return redirect('error.404');
+        }
+
         // custom role name
-        $role = 'Admin';
+        $role = 'Super Admin';
         if ($datas->role == 1) {
-            $role = 'Member';
+            $role = 'Admin';
         } else if ($datas->role == 2) {
+            $role = 'Member';
+        } else if ($datas->role == 3) {
             $role = 'Report';
         }
         $datas->role_name = $role;
@@ -244,7 +252,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::User()->role != 1){
+        if (Auth::User()->role == 0 || Auth::User()->role == 1){
             $datas = DB::table('users')
                     ->join('emp_statuses', 'emp_statuses.id', '=', 'users.employment_status')
                     ->join('levels', 'levels.id', '=', 'users.level')
@@ -257,14 +265,9 @@ class UserController extends Controller
                     ->where('users.id',$id)
                     ->first();
 
-            // custom role name
-            $role = 'Admin';
-            if ($datas->role == 1) {
-                $role = 'Member';
-            } else if ($datas->role == 2) {
-                $role = 'Report';
+            if (!isset($datas)) {
+                return redirect('error.404');
             }
-            $datas->role_name = $role;
 
             // custom direct_supervisor name
             $direct_supervisor = '-';
@@ -283,9 +286,12 @@ class UserController extends Controller
             $datas->join_date = date('d/M/Y', strtotime($datas->join_date));
             $datas->start_date = date('d/M/Y', strtotime($datas->start_date));
 
+            $datas->end_date = isset($datas->end_date) ? date('d/M/Y', strtotime($datas->end_date)) : '';
+            $datas->termination_date = isset($datas->termination_date) ? date('d/M/Y', strtotime($datas->termination_date)) : '';
+
             $datas->immediate_manager_name = $immediate_manager;
 
-            $users = User::all();
+            $users = User::where('users.employee_status','ACTIVE')->get();
             $emp_stats = EmpStatus::all();
             $jabatans = Jabatan::all();
             $levels = Level::all();
@@ -295,16 +301,10 @@ class UserController extends Controller
             $provinces = Province::pluck('name','code');
             $cities = indonesia_cities::where('province_code', $datas->area)->get();
 
-            // dd($datas,$emp_stats,$jabatans,$levels,$grades,$divisions,$departments,$provinces, $cities);
-
             return view('user.edit', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces','datas','cities'));
         } else {
             return redirect('error.404');
         }
-
-        // $id = $request->id;
-        // $user = User::find($id);
-        // return response()->json(['data' => $user]);
     }
 
     /**
@@ -319,9 +319,8 @@ class UserController extends Controller
         $this->validate($request,[
             'fullname'=>'required',
             'nik'=>'required',
+            'phone'=>'required',
         ]);
-
-        // dd($request);
         
         $id = $request->id;
         $user = User::find($id);
@@ -339,11 +338,12 @@ class UserController extends Controller
         $user->religion = $request->religion;
         $user->marital_status = $request->marital_status;
         $user->education_level = $request->education_level;
+        $user->role = $request->role;
 
         $user->join_date = $this->hris_custom_date($request->join_date);
         $user->employment_status = $request->employment_status;
         $user->start_date = $this->hris_custom_date($request->start_date);
-        $user->end_date = $this->hris_custom_date($request->end_date);
+        
         $user->jabatan = $request->jabatan;
         $user->organization_unit = $request->organization_unit;
         $user->job_title = $request->job_title;
@@ -355,9 +355,7 @@ class UserController extends Controller
         $user->employee_status = $request->employee_status;
         $user->direct_supervisor = $request->direct_supervisor;
         $user->immediate_manager = $request->immediate_manager;
-        $user->termination_date = $this->hris_custom_date($request->termination_date);
-        $user->terminate_reason = $request->terminate_reason;
-        $user->resignation = $request->resignation;
+        
         $user->area = $request->area;
         $user->kota = $request->kota;
         $user->division = $request->division;
@@ -368,6 +366,34 @@ class UserController extends Controller
         $user->length_of_service = $this->hris_length_of_service($user->start_date);
 
         $user->updated_by = Auth::User()->id;
+
+        if (isset($request->end_date)) {
+            $user->end_date = $this->hris_custom_date($request->end_date);
+        }
+
+        if (isset($request->termination_date)) {
+            $user->termination_date = $this->hris_custom_date($request->termination_date);
+        }
+
+        if (isset($request->terminate_reason)) {
+            $user->terminate_reason = $request->terminate_reason;
+        }
+
+        if (isset($request->resignation)) {
+            $file       = $request->file('resignation');
+            $filename    = $user->nik.'_'.time().'_'.$file->hashName();
+           
+            $tmp_path = $_FILES["resignation"]["tmp_name"];
+
+            // declare full path and filename
+            $target_file = public_path('/assets/resignation/');
+
+
+            // move file upload to storage
+            $file->move($target_file, $filename);
+
+            $user->resignation = $filename;
+        }
 
         try {
             $user->save();

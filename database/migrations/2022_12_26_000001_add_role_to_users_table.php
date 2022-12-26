@@ -14,7 +14,7 @@ class AddRoleToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            // note for role : 0 -> admin, 1 -> member, 2 -> report
+            // note for role : 0 -> super admin, 1 -> admin, 2 -> member, 3 -> report
             $table->integer('role')->nullable();
         });
     }
