@@ -64,9 +64,11 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @php $no = 1; @endphp
                       @foreach ($users as $user)
+                        @php if ($user->nik == '123456789') continue; @endphp
                             <tr>
-                                <td>{{$user->id}}</td>
+                                <td>{{$no++}}</td>
                                 <td>{{$user->nik}}</td>
                                 <td>{{$user->fullname}}</td>
                                 <td>{{$user->employment_status}}</td>
@@ -74,7 +76,7 @@
                                 <td>
                                   <a href="{{route('dashboard.user.show', ['id' => $user->id])}}" user-id="{{$user->id}}" title="view" class="btn btn-info btn-view-user"><i class="fas fa-eye"></i></a>
                                   <a href="#" user-id="{{$user->id}}" title="edit" class="btn btn-warning btn-edit-user"><i class="fas fa-edit"></i></a>
-                                  <a href="#" user-id="{{$user->id}}" data-user="{{$user->first_name.' '.$user->last_name}}" title="delete" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
+                                  <a href="#" user-id="{{$user->id}}" data-user="{{$user->fullname}}" title="delete" class="btn btn-danger btn-delete-user"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach

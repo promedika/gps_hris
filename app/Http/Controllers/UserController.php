@@ -17,7 +17,8 @@ use App\Models\Level;
 use App\Models\Division;
 use App\Models\Department;
 use PhpParser\Node\Stmt\Switch_;
-use Laravolt\Indonesia\Models\Province;;
+use Laravolt\Indonesia\Models\Province;
+use DB;
 
 class UserController extends Controller
 {
@@ -196,26 +197,40 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $users = User::find($id);
-        $emp_stats = EmpStatus::all();
-        $jabatans = Jabatan::all();
-        $levels = Level::all();
-        $grades = GradeCategory::all();
-        $divisions = Division::all();
-        $departments = Department::all();
-        $provinces = Province::pluck('name','code');
+        $datas = DB::table('users')
+                ->join('emp_statuses', 'emp_statuses.id', '=', 'users.employment_status')
+                ->join('levels', 'levels.id', '=', 'users.level')
+                ->join('grade_categories', 'grade_categories.id', '=', 'users.grade_category')
+                ->join('indonesia_provinces', 'indonesia_provinces.code', '=', 'users.area')
+                ->join('indonesia_cities', 'indonesia_cities.id', '=', 'users.kota')
+                ->join('divisions', 'divisions.id', '=', 'users.division')
+                ->join('departments', 'departments.id', '=', 'users.department')
+                ->select('users.*','emp_statuses.status_name','levels.level','levels.lev_name','grade_categories.level as grade_level','grade_categories.grade_name','indonesia_provinces.name as provinces','indonesia_cities.name as cities','divisions.div_name','departments.dep_name')
+                ->where('users.id',$id)
+                ->first();
 
-        $datas = [
-            'users' => $users,
-            'emp_stats' => $emp_stats,
-            'jabatans' => $jabatans,
-            'levels' => $levels,
-            'grades' => $grades,
-            'divisions' => $divisions,
-            'departments' => $departments,
-            'provinces' => $provinces,
-            'id' => $id
-        ];
+        // custom role name
+        $role = 'Admin';
+        if ($datas->role == 1) {
+            $role = 'Member';
+        } else if ($datas->role == 2) {
+            $role = 'Report';
+        }
+        $datas->role_name = $role;
+
+        // custom direct_supervisor name
+        $direct_supervisor = '-';
+        if (!is_null($datas->direct_supervisor)) {
+            $direct_supervisor = User::find($datas->direct_supervisor)->fullname;
+        }
+        $datas->direct_supervisor_name = $direct_supervisor;
+
+        // custom immediate_manager name
+        $immediate_manager = '-';
+        if (!is_null($datas->immediate_manager)) {
+            $immediate_manager = User::find($datas->immediate_manager)->fullname;
+        }
+        $datas->immediate_manager_name = $immediate_manager;
 
         return view('user.show', compact('datas'));
     }

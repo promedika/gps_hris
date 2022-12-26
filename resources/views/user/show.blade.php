@@ -45,9 +45,9 @@
                          alt="User profile picture">
                   </div>
 
-                  <h3 class="profile-username text-center">{{$datas['users']->fullname}}</h3>
+                  <h3 class="profile-username text-center">{{$datas->fullname}}</h3>
 
-                  <p class="text-muted text-center">{{$datas['users']->jabatan}}</p>
+                  <p class="text-muted text-center">{{$datas->jabatan}}</p>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -63,46 +63,46 @@
                   <strong>NIK</strong>
 
                   <p class="text-muted">
-                    {{$datas['users']->nik}}
+                    {{$datas->nik}}
                   </p>
 
                   <hr>
 
                   <strong>Phone Number</strong>
 
-                  <p class="text-muted">{{$datas['users']->phone}}</p>
+                  <p class="text-muted">{{$datas->phone}}</p>
 
                   <hr>
 
                   <strong>Birth Date</strong>
 
                   <p class="text-muted">
-                    {{date('d M Y', strtotime($datas['users']->birth_date))}}
+                    {{date('d M Y', strtotime($datas->birth_date))}}
                   </p>
 
                   <hr>
 
                   <strong>Gender</strong>
 
-                  <p class="text-muted">{{$datas['users']->gender}}</p>
+                  <p class="text-muted">{{$datas->gender}}</p>
 
                   <hr>
 
                   <strong>Marital Status</strong>
 
-                  <p class="text-muted">{{$datas['users']->marital_status}}</p>
+                  <p class="text-muted">{{$datas->marital_status}}</p>
 
                   <hr>
 
                   <strong>Religion</strong>
 
-                  <p class="text-muted">{{$datas['users']->religion}}</p>
+                  <p class="text-muted">{{$datas->religion}}</p>
 
                   <hr>
 
                   <strong>Education Level</strong>
 
-                  <p class="text-muted">{{$datas['users']->education_level}}</p>
+                  <p class="text-muted">{{$datas->education_level}}</p>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -124,49 +124,55 @@
                         <div class="form-group row">
                           <label for="join_date" class="col-sm-2 col-form-label">Join Date</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{date('d M Y', strtotime($datas['users']->join_date))}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{date('d M Y', strtotime($datas->join_date))}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="employment_start_date" class="col-sm-2 col-form-label">Employment Start Date</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{date('d M Y', strtotime($datas['users']->start_date))}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{date('d M Y', strtotime($datas->start_date))}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="employment_status" class="col-sm-2 col-form-label">Employment Status</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->employment_status}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->status_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="employee_position" class="col-sm-2 col-form-label">Employee Position</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->jabatan}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->jabatan}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="job_title" class="col-sm-2 col-form-label">Job Title</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->job_title}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->job_title}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="job_status" class="col-sm-2 col-form-label">Job Status</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->job_status}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->job_status}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="organization_unit" class="col-sm-2 col-form-label">Organization Unit</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->organization_unit}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->organization_unit}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="employee_status" class="col-sm-2 col-form-label">Employee Status</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->employee_status}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->employee_status}}" style="background-color: #FFFFFF;" readonly>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="role" class="col-sm-2 col-form-label">Role System</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" value="{{$datas->role_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                       </form>
@@ -176,51 +182,57 @@
                     <div class="tab-pane" id="gps_emp_structure">
                       <form class="form-horizontal">
                         <div class="form-group row">
-                          <label for="join_date" class="col-sm-2 col-form-label">Join Date</label>
+                          <label for="direct_supervisor" class="col-sm-2 col-form-label">Direct Supervisor</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{date('d M Y', strtotime($datas['users']->join_date))}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->direct_supervisor_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="employment_start_date" class="col-sm-2 col-form-label">Employment Start Date</label>
+                          <label for="immediate_manager" class="col-sm-2 col-form-label">Immediate Manager</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{date('d M Y', strtotime($datas['users']->start_date))}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->immediate_manager_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="employment_status" class="col-sm-2 col-form-label">Employment Status</label>
+                          <label for="department" class="col-sm-2 col-form-label">Department</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->employment_status}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->dep_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="employee_position" class="col-sm-2 col-form-label">Employee Position</label>
+                          <label for="division" class="col-sm-2 col-form-label">Division</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->jabatan}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->div_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="job_title" class="col-sm-2 col-form-label">Job Title</label>
+                          <label for="level" class="col-sm-2 col-form-label">Level</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->job_title}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->level}} - {{$datas->lev_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="job_status" class="col-sm-2 col-form-label">Job Status</label>
+                          <label for="grade_category" class="col-sm-2 col-form-label">Grade Category</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->job_status}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->grade_level}} - {{$datas->grade_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="organization_unit" class="col-sm-2 col-form-label">Organization Unit</label>
+                          <label for="area" class="col-sm-2 col-form-label">Area</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->organization_unit}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->provinces}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="employee_status" class="col-sm-2 col-form-label">Employee Status</label>
+                          <label for="city" class="col-sm-2 col-form-label">City</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas['users']->employee_status}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->cities}}" style="background-color: #FFFFFF;" readonly>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="work_location" class="col-sm-2 col-form-label">Work Location</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" value="{{$datas->work_location}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                       </form>
