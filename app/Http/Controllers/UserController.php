@@ -18,6 +18,7 @@ use App\Models\Division;
 use App\Models\Department;
 use PhpParser\Node\Stmt\Switch_;
 use Laravolt\Indonesia\Models\Province;
+use App\Models\indonesia_cities;
 use DB;
 
 class UserController extends Controller
@@ -241,11 +242,69 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $id = $request->id;
-        $user = User::find($id);
-        return response()->json(['data' => $user]);
+        if (Auth::User()->role != 1){
+            $datas = DB::table('users')
+                    ->join('emp_statuses', 'emp_statuses.id', '=', 'users.employment_status')
+                    ->join('levels', 'levels.id', '=', 'users.level')
+                    ->join('grade_categories', 'grade_categories.id', '=', 'users.grade_category')
+                    ->join('indonesia_provinces', 'indonesia_provinces.code', '=', 'users.area')
+                    ->join('indonesia_cities', 'indonesia_cities.id', '=', 'users.kota')
+                    ->join('divisions', 'divisions.id', '=', 'users.division')
+                    ->join('departments', 'departments.id', '=', 'users.department')
+                    ->select('users.*','emp_statuses.status_name','levels.level as lev_level','levels.lev_name','grade_categories.level as grade_level','grade_categories.grade_name','indonesia_provinces.name as provinces','indonesia_cities.name as cities','divisions.div_name','departments.dep_name')
+                    ->where('users.id',$id)
+                    ->first();
+
+            // custom role name
+            $role = 'Admin';
+            if ($datas->role == 1) {
+                $role = 'Member';
+            } else if ($datas->role == 2) {
+                $role = 'Report';
+            }
+            $datas->role_name = $role;
+
+            // custom direct_supervisor name
+            $direct_supervisor = '-';
+            if (!is_null($datas->direct_supervisor)) {
+                $direct_supervisor = User::find($datas->direct_supervisor)->fullname;
+            }
+            $datas->direct_supervisor_name = $direct_supervisor;
+
+            // custom immediate_manager name
+            $immediate_manager = '-';
+            if (!is_null($datas->immediate_manager)) {
+                $immediate_manager = User::find($datas->immediate_manager)->fullname;
+            }
+
+            $datas->birth_date = date('d/M/Y', strtotime($datas->birth_date));
+            $datas->join_date = date('d/M/Y', strtotime($datas->join_date));
+            $datas->start_date = date('d/M/Y', strtotime($datas->start_date));
+
+            $datas->immediate_manager_name = $immediate_manager;
+
+            $users = User::all();
+            $emp_stats = EmpStatus::all();
+            $jabatans = Jabatan::all();
+            $levels = Level::all();
+            $grades = GradeCategory::all();
+            $divisions = Division::all();
+            $departments = Department::all();
+            $provinces = Province::pluck('name','code');
+            $cities = indonesia_cities::where('province_code', $datas->area)->get();
+
+            // dd($datas,$emp_stats,$jabatans,$levels,$grades,$divisions,$departments,$provinces, $cities);
+
+            return view('user.edit', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces','datas','cities'));
+        } else {
+            return redirect('error.404');
+        }
+
+        // $id = $request->id;
+        // $user = User::find($id);
+        // return response()->json(['data' => $user]);
     }
 
     /**
@@ -262,45 +321,64 @@ class UserController extends Controller
             'nik'=>'required',
         ]);
 
+        // dd($request);
         
         $id = $request->id;
         $user = User::find($id);
-        $user->nik = $request->nik;
-        $user->fullname = $request->fullname;
+
         if($request->password !='' && strlen(trim($request->password)) > 0){
             $user->password = Hash::make($request->password);
         }
-        $user->birth_date = $request->birthdate;
+
+        $user->nik = $request->nik;
+        $user->fullname = $request->fullname;
+        $user->phone = $request->phone;
+        $user->birth_date = $this->hris_custom_date($request->birth_date);
+        $user->password = Hash::make($request->password);
         $user->gender = $request->gender;
-        $user->religion = $request->religiion;
+        $user->religion = $request->religion;
         $user->marital_status = $request->marital_status;
         $user->education_level = $request->education_level;
-        $user->join_date = $request->join_date;
+
+        $user->join_date = $this->hris_custom_date($request->join_date);
         $user->employment_status = $request->employment_status;
-        $user->start_date = $request->start_date;
-        $user->end_date = $request->end_date;
+        $user->start_date = $this->hris_custom_date($request->start_date);
+        $user->end_date = $this->hris_custom_date($request->end_date);
         $user->jabatan = $request->jabatan;
         $user->organization_unit = $request->organization_unit;
         $user->job_title = $request->job_title;
         $user->job_status = $request->job_status;
+
         $user->level = $request->level;
         $user->grade_category = $request->grade_category;
         $user->work_location = $request->work_location;
         $user->employee_status = $request->employee_status;
         $user->direct_supervisor = $request->direct_supervisor;
         $user->immediate_manager = $request->immediate_manager;
-        $user->termination_date = $request->termination_date;
+        $user->termination_date = $this->hris_custom_date($request->termination_date);
         $user->terminate_reason = $request->terminate_reason;
         $user->resignation = $request->resignation;
         $user->area = $request->area;
         $user->kota = $request->kota;
         $user->division = $request->division;
         $user->department = $request->department;
+
         $user->function = $request->function;
-        $user->updated_by = Auth::User()->id;
+
         $user->length_of_service = $this->hris_length_of_service($user->start_date);
-        $user->save();
-        return redirect(route('dashboard.users.index'));
+
+        $user->updated_by = Auth::User()->id;
+
+        try {
+            $user->save();
+            $return['message'] = 'Success';
+            $return['url'] = route('dashboard.users.index');
+        } catch (Exception $e) {
+            // dd($e->getMessage());
+            $return['message'] = 'Failed';
+        }
+
+        return $return;
     }
 
     /**

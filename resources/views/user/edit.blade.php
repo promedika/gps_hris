@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    Create Employee
+    Edit Employee
 @endsection
 @section('custom_link_css')
 <!-- Select 2 -->
@@ -17,13 +17,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create Employee </h1>
+            <h1>Edit Employee </h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Beranda</a></li>
               <li class="breadcrumb-item"><a href="{{route('dashboard.users.index')}}">Employee</a></li>
-              <li class="breadcrumb-item active">Create Employee</li>
+              <li class="breadcrumb-item active">Edit Employee</li>
 
             </ol>
           </div>
@@ -34,8 +34,10 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <form action="" method="post" accept-charset="utf-8" id="form-signup" enctype="multipart/form-data">
+            <form action="" method="post" accept-charset="utf-8" id="form-edit" enctype="multipart/form-data">
                 @csrf
+
+                <input type="hidden" name="id" value="{{$datas->id}}" readonly>
 
                 <!-- Employee Personal Data -->
                 <div class="card card-info">
@@ -55,12 +57,12 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="nik">EMPLOYEE NO (NIK) <span style="color: red;">*</span></label>
-                          <input type="number" name="nik" id="nik" class="form-control" required>
+                          <input type="number" name="nik" id="nik" class="form-control" value="{{$datas->nik}}" readonly>
                           <span id="errorNik" class="text-red"></span>
                         </div>
                         <div class="form-group">
                           <label for="fullname">EMPLOYEE NAME <span style="color: red;">*</span></label>
-                          <input type="text" name="fullname" id="fullname" class="form-control" required>
+                          <input type="text" name="fullname" id="fullname" class="form-control" value="{{$datas->fullname}}" required>
                           <span id="errorFullName" class="text-red"></span>
                         </div>
                       </div>
@@ -68,13 +70,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="phone">PHONE NUMBER <span style="color: red;">*</span></label>
-                          <input type="number" name="phone" id="phone" class="form-control" required>
+                          <input type="number" name="phone" id="phone" class="form-control" value="{{$datas->phone}}" readonly>
                           <span id="errorFullName" class="text-red"></span>
                         </div>
                         <div class="form-group">
                           <label for="birth_date">BIRTH DATE <span style="color: red;">*</span></label>
                           <div class="input-group datepicker" data-target-input="nearest" data-toggle="datetimepicker">
-                            <input type="text" name="birth_date" id="birth_date" class="form-control" placeholder="DD/Month/YYYY" readonly required>
+                            <input type="text" name="birth_date" id="birth_date" class="form-control" placeholder="DD/Month/YYYY" value="{{$datas->birth_date}}" readonly required>
                             <div class="input-group-append" >
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -90,8 +92,8 @@
                           <label for="gender">GENDER <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="gender" name="gender" required>
                               <option value="" style="display:none;">CHOOSE GENDER</option>
-                              <option value="MEN">MEN</option>
-                              <option value="WOMEN">WOMEN</option>
+                              <option value="MEN" @php if ($datas->gender == 'MEN') { echo 'selected'; } @endphp >MEN</option>
+                              <option value="WOMEN" @php if ($datas->gender == 'WOMEN') { echo 'selected'; } @endphp >WOMEN</option>
                           </select>
                           <span id="errorGender" class="text-red"></span>
                         </div>
@@ -99,12 +101,12 @@
                           <label for="religion">RELIGION <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="religion" name="religion" required>
                               <option value="" style="display:none;">CHOOSE RELIGION</option>
-                              <option value="ISLAM">ISLAM</option>
-                              <option value="CHRISTIAN">CHRISTIAN</option>
-                              <option value="CATHOLIC">CATHOLIC</option>
-                              <option value="HINDUISM">HINDUISM</option>
-                              <option value="BUDDHISM">BUDDHISM</option>
-                              <option value="OTHER">OTHER</option>
+                              <option value="ISLAM" @php if ($datas->religion == 'ISLAM') { echo 'selected'; } @endphp >ISLAM</option>
+                              <option value="CHRISTIAN" @php if ($datas->religion == 'CHRISTIAN') { echo 'selected'; } @endphp >CHRISTIAN</option>
+                              <option value="CATHOLIC" @php if ($datas->religion == 'CATHOLIC') { echo 'selected'; } @endphp >CATHOLIC</option>
+                              <option value="HINDUISM" @php if ($datas->religion == 'HINDUISM') { echo 'selected'; } @endphp >HINDUISM</option>
+                              <option value="BUDDHISM" @php if ($datas->religion == 'BUDDHISM') { echo 'selected'; } @endphp >BUDDHISM</option>
+                              <option value="OTHER" @php if ($datas->religion == 'OTHER') { echo 'selected'; } @endphp >OTHER</option>
                           </select>
                           <span id="errorReligion" class="text-red"></span>
                         </div>
@@ -115,11 +117,11 @@
                           <label for="marital_status">MARITAL STATUS <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="marital_status" name="marital_status" required>
                               <option value="" style="display:none;">CHOOSE MARITAL STATUS</option>
-                              <option value="SINGLE">SINGLE</option>
-                              <option value="MARRIED">MARRIED</option>
-                              <option value="DIVORCED">DIVORCED</option>
-                              <option value="WIDOW">WIDOW</option>
-                              <option value="WIDOWER">WIDOWER</option>
+                              <option value="SINGLE" @php if ($datas->marital_status == 'SINGLE') { echo 'selected'; } @endphp >SINGLE</option>
+                              <option value="MARRIED" @php if ($datas->marital_status == 'MARRIED') { echo 'selected'; } @endphp >MARRIED</option>
+                              <option value="DIVORCED" @php if ($datas->marital_status == 'DIVORCED') { echo 'selected'; } @endphp >DIVORCED</option>
+                              <option value="WIDOW" @php if ($datas->marital_status == 'WIDOW') { echo 'selected'; } @endphp >WIDOW</option>
+                              <option value="WIDOWER" @php if ($datas->marital_status == 'WIDOWER') { echo 'selected'; } @endphp >WIDOWER</option>
                           </select>
                           <span id="errorMaritalStatus" class="text-red"></span>
                         </div>
@@ -127,16 +129,16 @@
                           <label for="education_level">EDUCATION LEVEL <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="education_level" name="education_level" required>
                               <option value="" style="display:none;">CHOOSE EDUCATION LEVEL</option>
-                              <option value="SD">SD</option>
-                              <option value="SMP">SMP</option>
-                              <option value="SMA/SMK">SMA/SMK</option>
-                              <option value="DIPLOMA 1">DIPLOMA 1</option>
-                              <option value="DIPLOMA 2">DIPLOMA 2</option>
-                              <option value="DIPLOMA 3">DIPLOMA 3</option>
-                              <option value="DIPLOMA 4">DIPLOMA 4</option>
-                              <option value="STRATA 1">STRATA 1</option>
-                              <option value="STRATA 2">STRATA 2</option>
-                              <option value="STRATA 3">STRATA 3</option>
+                              <option value="SD" @php if ($datas->education_level == 'SD') { echo 'selected'; } @endphp >SD</option>
+                              <option value="SMP" @php if ($datas->education_level == 'SMP') { echo 'selected'; } @endphp >SMP</option>
+                              <option value="SMA/SMK" @php if ($datas->education_level == 'SMA/SMK') { echo 'selected'; } @endphp >SMA/SMK</option>
+                              <option value="DIPLOMA 1" @php if ($datas->education_level == 'DIPLOMA 1') { echo 'selected'; } @endphp >DIPLOMA 1</option>
+                              <option value="DIPLOMA 2" @php if ($datas->education_level == 'DIPLOMA 2') { echo 'selected'; } @endphp >DIPLOMA 2</option>
+                              <option value="DIPLOMA 3" @php if ($datas->education_level == 'DIPLOMA 3') { echo 'selected'; } @endphp >DIPLOMA 3</option>
+                              <option value="DIPLOMA 4" @php if ($datas->education_level == 'DIPLOMA 4') { echo 'selected'; } @endphp >DIPLOMA 4</option>
+                              <option value="STRATA 1" @php if ($datas->education_level == 'STRATA 1') { echo 'selected'; } @endphp >STRATA 1</option>
+                              <option value="STRATA 2" @php if ($datas->education_level == 'STRATA 2') { echo 'selected'; } @endphp >STRATA 2</option>
+                              <option value="STRATA 3" @php if ($datas->education_level == 'STRATA 3') { echo 'selected'; } @endphp >STRATA 3</option>
                           </select>
                           <span id="errorEducationLevel" class="text-red"></span>
                         </div>
@@ -168,7 +170,7 @@
                         <div class="form-group">
                           <label for="join_date">JOIN DATE <span style="color: red;">*</span></label>
                           <div class="input-group datepicker" data-target-input="nearest" data-toggle="datetimepicker">
-                            <input type="text" name="join_date" id="join_date" class="form-control" placeholder="DD/Month/YYYY" readonly required>
+                            <input type="text" name="join_date" id="join_date" class="form-control" placeholder="DD/Month/YYYY" value="{{$datas->join_date}}" readonly required>
                             <div class="input-group-append" >
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -180,7 +182,7 @@
                           <select class="form-control select2" id="employment_status" name="employment_status" required>
                             <option value="" style="display:none;">CHOOSE EMPLOYMENT STATUS</option>
                             @foreach ($emp_stats as $emp_stat)
-                            <option value="{{$emp_stat->id}}">
+                            <option value="{{$emp_stat->id}}" @php if ($datas->employment_status == $emp_stat->id) { echo 'selected'; } @endphp >
                               {{$emp_stat->status_name}}
                             </option>
                             @endforeach
@@ -193,7 +195,7 @@
                         <div class="form-group">
                           <label for="start_date">EMPLOYMENT START DATE <span style="color: red;">*</span></label>
                           <div class="input-group datepicker" data-target-input="nearest" data-toggle="datetimepicker">
-                            <input type="text" name="start_date" id="start_date" class="form-control" placeholder="DD/Month/YYYY" readonly required>
+                            <input type="text" name="start_date" id="start_date" class="form-control" placeholder="DD/Month/YYYY" value="{{$datas->start_date}}" readonly required>
                             <div class="input-group-append" >
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -202,7 +204,7 @@
                         </div>
                         <div class="form-group">
                           <label for="Jabatan">EMPLOYEE POSITION <span style="color: red;">*</span></label>
-                          <input type="text" name="jabatan" id="jabatan" class="form-control" required>
+                          <input type="text" name="jabatan" id="jabatan" class="form-control" value="{{$datas->jabatan}}" required>
                           <span id="errorJabatan" class="text-red"></span>
                         </div>
                       </div>
@@ -212,8 +214,8 @@
                           <label for="job_title">JOB TITLE <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="job_title" name="job_title" required>
                               <option value="" style="display:none;">CHOOSE JOB TITLE</option>
-                              <option value="DIRECT WORKER">DIRECT WORKER</option>
-                              <option value="NON DIRECT WORKER">NON DIRECT WORKER</option>
+                              <option value="DIRECT WORKER" @php if ($datas->job_title == 'DIRECT WORKER') { echo 'selected'; } @endphp >DIRECT WORKER</option>
+                              <option value="NON DIRECT WORKER" @php if ($datas->job_title == 'NON DIRECT WORKER') { echo 'selected'; } @endphp>NON DIRECT WORKER</option>
                           </select>
                           <span id="errorJobTitle" class="text-red"></span>
                         </div>
@@ -221,8 +223,8 @@
                           <label for="organization_unit">ORGANIZATION UNIT <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="organization_unit" name="organization_unit" required>
                               <option value="" style="display:none;">CHOOSE ORGANIZATION UNIT</option>
-                              <option value="OPERATIONAL">OPERATIONAL</option>
-                              <option value="CORPORATE">CORPORATE</option>
+                              <option value="OPERATIONAL" @php if ($datas->organization_unit == 'OPERATIONAL') { echo 'selected'; } @endphp >OPERATIONAL</option>
+                              <option value="CORPORATE" @php if ($datas->organization_unit == 'CORPORATE') { echo 'selected'; } @endphp >CORPORATE</option>
                           </select>
                           <span id="errorOrganizationUnit" class="text-red"></span>
                         </div>
@@ -233,8 +235,8 @@
                           <label for="job_status">JOB STATUS <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="job_status" name="job_status" required>
                               <option value="" style="display:none;">CHOOSE JOB STATUS</option>
-                              <option value="ACTIVE">ACTIVE</option>
-                              <option value="INACTIVE">INACTIVE</option>
+                              <option value="ACTIVE" @php if ($datas->job_status == 'ACTIVE') { echo 'selected'; } @endphp >ACTIVE</option>
+                              <option value="INACTIVE" @php if ($datas->job_status == 'INACTIVE') { echo 'selected'; } @endphp >INACTIVE</option>
                           </select>
                           <span id="errorJobStatus" class="text-red"></span>
                         </div>
@@ -242,8 +244,8 @@
                           <label for="employee_status">EMPLOYEE STATUS <span style="color: red;">*</span></label>
                           <select class="form-control select2" id="employee_status" name="employee_status" required>
                               <option value="" style="display:none;">CHOOSE EMPLOYEE STATUS</option>
-                              <option value="ACTIVE">ACTIVE</option>
-                              <option value="INACTIVE">INACTIVE</option>
+                              <option value="ACTIVE" @php if ($datas->employee_status == 'ACTIVE') { echo 'selected'; } @endphp >ACTIVE</option>
+                              <option value="INACTIVE" @php if ($datas->employee_status == 'INACTIVE') { echo 'selected'; } @endphp >INACTIVE</option>
                           </select>
                           <span id="errorJobStatus" class="text-red"></span>
                         </div>
@@ -277,7 +279,7 @@
                           <select class="form-control select2" id="direct_supervisor" name="direct_supervisor">
                               <option value="" style="display:none;">CHOOSE DIRECT SUPERVISOR</option>
                               @foreach ($users as $user)
-                              <option value="{{$user->id}}">
+                              <option value="{{$user->id}}" @php if ($datas->direct_supervisor == $user->id) { echo 'selected'; } @endphp >
                                 {{$user->fullname}}
                               </option>
                               @endforeach
@@ -289,7 +291,7 @@
                           <select class="form-control select2" id="department" name="department" required>
                               <option value="" style="display:none;">CHOOSE DEPARTMENT</option>
                               @foreach ($departments as $department)
-                              <option value="{{$department->id}}">
+                              <option value="{{$department->id}}" @php if ($datas->department == $department->id) { echo 'selected'; } @endphp >
                                 {{$department->dep_name}}
                               </option>
                               @endforeach
@@ -306,7 +308,7 @@
                           <select class="form-control select2" id="immediate_manager" name="immediate_manager">
                               <option value="" style="display:none;">CHOOSE MANAGER</option>
                               @foreach ($users as $user)
-                              <option value="{{$user->id}}">
+                              <option value="{{$user->id}}" @php if ($datas->immediate_manager == $user->id) { echo 'selected'; } @endphp>
                                 {{$user->fullname}}
                               </option>
                               @endforeach
@@ -318,7 +320,7 @@
                           <select class="form-control select2" id="division" name="division" required>
                               <option value="" style="display:none;">CHOOSE DIVISION</option>
                               @foreach ($divisions as $division)
-                              <option value="{{$division->id}}">
+                              <option value="{{$division->id}}" @php if ($datas->division == $division->id) { echo 'selected'; } @endphp>
                                 {{$division->div_name}}
                               </option>
                               @endforeach
@@ -333,7 +335,7 @@
                           <select class="form-control select2" id="level" name="level" required>
                               <option value="" style="display:none;">CHOOSE LEVEL</option>
                               @foreach ($levels as $level)
-                              <option value="{{$level->id}}">
+                              <option value="{{$level->id}}" @php if ($datas->level == $level->id) { echo 'selected'; } @endphp >
                                 {{$level->lev_name}}
                               </option>
                               @endforeach
@@ -345,7 +347,7 @@
                           <select class="form-control select2" id="area" name="area">
                             <option value="" style="display: none">CHOOSE AREA</option>
                             @foreach ($provinces as $id => $name)
-                              <option value="{{$id}}">
+                              <option value="{{$id}}" @php if ($datas->area == $id) { echo 'selected'; } @endphp>
                                 {{$name}}
                               </option>
                               @endforeach
@@ -360,7 +362,7 @@
                           <select class="form-control select2" id="grade_category" name="grade_category" required>
                               <option value="" style="display:none;">CHOOSE GRADE CATEGORY</option>
                               @foreach ($grades as $grade)
-                              <option value="{{$grade->id}}">
+                              <option value="{{$grade->id}}" @php if ($datas->grade_category == $grade->id) { echo 'selected'; } @endphp >
                                 {{$grade->grade_name}}
                               </option>
                               @endforeach
@@ -369,17 +371,22 @@
                         </div>
                         <div class="form-group">
                           <label for="kota">CITY <span style="color: red;">*</span></label>
-                          <select name="kota" id="kota" class="form-control select2">
-                            <option value="">CHOOSE CITIES</option>
-                          <span id="errorCity" class="text-red"></span>
+                          <select class="form-control select2" name="kota" id="kota">
+                            <option value="" style="display: none">CHOOSE CITIES</option>
+                            @foreach ($cities as $key => $value)
+                              <option value="{{$value->id}}" @php if ($datas->kota == $value->id) { echo 'selected'; } @endphp>
+                                {{$value->name}}
+                              </option>
+                              @endforeach
                           </select>
+                          <span id="errorCity" class="text-red"></span>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="work_location">WORK LOCATION <span style="color: red;">*</span></label>
-                          <input type="text" name="work_location" id="work_location" class="form-control" required>
+                          <input type="text" name="work_location" id="work_location" class="form-control" value="{{$datas->work_location}}" required>
                           <span id="errorWork_Location" class="text-red"></span>
                         </div>
                       </div>
@@ -520,6 +527,7 @@ $(document).ready(function () {
             beforeSend: function() {
             },
             success:function(result){
+                $('#kota option').remove();
                 $('#kota').html('<option value="">CHOOSE CITIES</option>');
                 $.each(result, function( key, value ) {
                     let val = value.id;
@@ -529,11 +537,11 @@ $(document).ready(function () {
         });
     });
 
-    $('#form-signup').submit(function(e){
+    $('#form-edit').submit(function(e){
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
-            url:"{{route('dashboard.users.create')}}",
+            url:"{{route('dashboard.users.update')}}",
             type:'POST',
             data:formData,
             processData: false,
