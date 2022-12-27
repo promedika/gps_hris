@@ -114,9 +114,13 @@
       <div class="modal-body">
         <div class="form-group">
           <p><font color="red">* Format file harus .xlsx atau .xls</font></p>
-          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/user_template.xlsx')}}">Download Template</a><br><br>
-          <label for="name">Pilih File</label>
-          <input type="file" name="file" class="name" id="name" accept=".xlsx, .xls" required >
+          <a class="btn btn-sm btn-info" href="{{asset('/assets/template/employee_template.xlsx')}}">Download Template</a><br><br>
+          <!-- <label for="name">Pilih File</label> -->
+          <div class="custom-file">
+            <input type="file" name="file" class="custom-file-input name" id="import_file" accept=".xlsx, .xls" required>
+            <label class="custom-file-label label-file" for="file">Choose File</label>
+          </div>
+          <!-- <input type="file" name="file" class="name" id="import_file" accept=".xlsx, .xls" required > -->
           <span id="errorName" class="text-red"></span>
         </div>
       </div>
@@ -192,11 +196,16 @@
           "responsive": true,
         });
 
+        $(document).on('change', "input[name=file]", function (e) {
+          let fileName = $(this).val().replace(/.*(\/|\\)/, '');
+          $('.label-file').text(fileName);
+        });
+
         $('.btn-import-user').click(function(){
           $('#modal-import-user').modal('show');
         });
 
-        $('#submit').click(function(){
+        $('#modal-import-user #submit').click(function(){
           $('#modal-import-user').modal('hide');
           $('#loader').modal ('show');
         });

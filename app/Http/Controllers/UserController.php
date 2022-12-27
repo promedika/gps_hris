@@ -468,8 +468,10 @@ class UserController extends Controller
         // move file upload to storage
         move_uploaded_file($tmp_path, $target_file);
         try {
-            Excel::import(new UsersImport,$target_file);
-            $return = 'User Berhasil di Import !';
+            $import = new UsersImport();
+            $import_data = Excel::import($import, $target_file);
+            
+            $return = 'Success';
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             
