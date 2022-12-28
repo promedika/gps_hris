@@ -129,9 +129,10 @@ class UserController extends Controller
             'password'=>'required',
         ]);
 
-        $check = User::where('nik',$request->nik)->where('phone',$request->phone)->get();
+        $check_nik = User::where('nik',$request->nik)->get();
+        $check_phone = User::where('phone',$request->phone)->get();
     
-        if (count($check) > 0) {
+        if (count($check_nik) > 0 || count($check_phone) > 0) {
             $return['message'] = 'Employee Already Exist!';
             $return['url'] = route('dashboard.user.create');
         }
