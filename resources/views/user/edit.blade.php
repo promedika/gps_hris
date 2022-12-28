@@ -454,7 +454,14 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="terminate_reason">TERMINATE REASON</label>
-                          <input type="text" name="terminate_reason" id="terminate_reason" class="form-control" value="{{$datas->terminate_reason}}">
+                          <select class="form-control select2" id="terminate_reason" name="terminate_reason" required>
+                              <option value="" style="display:none;">CHOOSE TERMINATE REASON</option>
+                              @foreach ($terminate_reasons as $terminate_reason)
+                              <option value="{{$terminate_reason->id}}" @php if ($datas->terminate_id == $terminate_reason->id) { echo 'selected'; } @endphp >
+                                {{$terminate_reason->name}}
+                              </option>
+                              @endforeach
+                          </select>
                           <span id="errorTerminateReason" class="text-red"></span>
                         </div>
 

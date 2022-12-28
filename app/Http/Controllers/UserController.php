@@ -16,6 +16,7 @@ use App\Models\Jabatan;
 use App\Models\Level;
 use App\Models\Division;
 use App\Models\Department;
+use App\Models\TerminateReason;
 use PhpParser\Node\Stmt\Switch_;
 use Laravolt\Indonesia\Models\Province;
 use App\Models\indonesia_cities;
@@ -209,7 +210,8 @@ class UserController extends Controller
                 ->join('indonesia_cities', 'indonesia_cities.id', '=', 'users.kota')
                 ->join('divisions', 'divisions.id', '=', 'users.division')
                 ->join('departments', 'departments.id', '=', 'users.department')
-                ->select('users.*','emp_statuses.status_name','levels.level','levels.lev_name','grade_categories.level as grade_level','grade_categories.grade_name','indonesia_provinces.name as provinces','indonesia_cities.name as cities','divisions.div_name','departments.dep_name')
+                ->join('terminate_reasons', 'terminate_reasons.id', '=', 'users.terminate_reason')
+                ->select('users.*','emp_statuses.status_name','levels.level','levels.lev_name','grade_categories.level as grade_level','grade_categories.grade_name','indonesia_provinces.name as provinces','indonesia_cities.name as cities','divisions.div_name','departments.dep_name','terminate_reasons.id as terminate_id','terminate_reasons.name as terminate_name')
                 ->where('users.id',$id)
                 ->first();
 
@@ -262,7 +264,8 @@ class UserController extends Controller
                     ->join('indonesia_cities', 'indonesia_cities.id', '=', 'users.kota')
                     ->join('divisions', 'divisions.id', '=', 'users.division')
                     ->join('departments', 'departments.id', '=', 'users.department')
-                    ->select('users.*','emp_statuses.status_name','levels.level as lev_level','levels.lev_name','grade_categories.level as grade_level','grade_categories.grade_name','indonesia_provinces.name as provinces','indonesia_cities.name as cities','divisions.div_name','departments.dep_name')
+                    ->join('terminate_reasons', 'terminate_reasons.id', '=', 'users.terminate_reason')
+                    ->select('users.*','emp_statuses.status_name','levels.level as lev_level','levels.lev_name','grade_categories.level as grade_level','grade_categories.grade_name','indonesia_provinces.name as provinces','indonesia_cities.name as cities','divisions.div_name','departments.dep_name','terminate_reasons.id as terminate_id','terminate_reasons.name as terminate_name')
                     ->where('users.id',$id)
                     ->first();
 
@@ -299,10 +302,11 @@ class UserController extends Controller
             $grades = GradeCategory::all();
             $divisions = Division::all();
             $departments = Department::all();
+            $terminate_reasons = TerminateReason::all();
             $provinces = Province::pluck('name','code');
             $cities = indonesia_cities::where('province_code', $datas->area)->get();
 
-            return view('user.edit', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces','datas','cities'));
+            return view('user.edit', compact('users','emp_stats','jabatans','levels','grades','divisions','departments','provinces','datas','cities','terminate_reasons'));
         } else {
             return redirect('error.404');
         }

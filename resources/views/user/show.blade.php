@@ -264,7 +264,7 @@
                         <div class="form-group row">
                           <label for="terminate_reason" class="col-sm-2 col-form-label">Termination Reason</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="{{$datas->terminate_reason}}" style="background-color: #FFFFFF;" readonly>
+                            <input type="text" class="form-control" value="{{$datas->terminate_name}}" style="background-color: #FFFFFF;" readonly>
                           </div>
                         </div>
                         <div class="form-group row">
